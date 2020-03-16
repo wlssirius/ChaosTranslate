@@ -1,0 +1,3 @@
+[submodule "submodules/QOnlineTranslator"]
+	path = submodules/QOnlineTranslator
+	url = https://github.com/crow-translate/QOnlineTranslator.git
