@@ -1,6 +1,6 @@
 
 #include <leptonica/allheaders.h>
 #include <tesseract/baseapi.h> // tesseract main header
+#include <qstring.h>
 
-#include "qtextedit.h"
-std::string ocr(QTextEdit* textedit);
+QString ocr();

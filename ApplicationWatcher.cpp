@@ -1,13 +1,20 @@
-#include "screencapture.h"
+#include "ApplicationWatcher.h"
 
-void screenshot_window(HWND handle) {
+RECT ApplicationWatcher::getWindowSize()
+{
+    RECT window_rect = { 0 };
+    GetWindowRect(m_appHandle, &window_rect);
+    return window_rect;
+}
+
+void ApplicationWatcher::capture() {
     RECT client_rect = { 0 };
-    GetClientRect(handle, &client_rect);
+    GetClientRect(m_appHandle, &client_rect);
     int width = client_rect.right - client_rect.left;
     int height = client_rect.bottom - client_rect.top;
     std::cout << width << " * " << height << std::endl;
 
-    HDC hdcScreen = GetDC(handle);
+    HDC hdcScreen = GetDC(m_appHandle);
     HDC hdc = CreateCompatibleDC(hdcScreen);
     HBITMAP hbmp = CreateCompatibleBitmap(hdcScreen, width, height);
     SelectObject(hdc, hbmp);
@@ -56,35 +63,4 @@ void screenshot_window(HWND handle) {
     ReleaseDC(NULL, hdcScreen);
     delete[] bmp_pixels;
 }
-BOOL CALLBACK speichereFenster(HWND hwnd, LPARAM lParam) {
-    const DWORD TITLE_SIZE = 1024;
-    WCHAR windowTitle[TITLE_SIZE];
 
-    GetWindowTextW(hwnd, windowTitle, TITLE_SIZE);
-
-    int length = ::GetWindowTextLength(hwnd);
-    std::wstring title(&windowTitle[0]);
-    if (!IsWindowVisible(hwnd) || length == 0 || title == L"Program Manager") {
-        return TRUE;
-    }
-
-    // Retrieve the pointer passed into this callback, and re-'type' it.
-    // The only way for a C API to pass arbitrary data is by means of a void*.
-    std::vector<std::wstring>& titles =
-        *reinterpret_cast<std::vector<std::wstring>*>(lParam);
-    titles.push_back(title);
-
-    return TRUE;
-}
-
-void capture()
-{
-    PROCESSENTRY32 entry;
-    entry.dwSize = sizeof(PROCESSENTRY32);
-
-    HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
-    HWND hwnd = FindWindow(0, L"ƒ‰ƒ“ƒX‚P‚O");
-    screenshot_window(hwnd);
-
-    CloseHandle(snapshot);
-}
