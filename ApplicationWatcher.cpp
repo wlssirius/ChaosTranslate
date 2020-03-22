@@ -3,23 +3,35 @@
 RECT ApplicationWatcher::getWindowSize()
 {
     RECT window_rect = { 0 };
-    GetWindowRect(m_appHandle, &window_rect);
+    GetClientRect(m_appHandle, &window_rect);
     return window_rect;
 }
 
-void ApplicationWatcher::capture() {
+void ApplicationWatcher::capture(RECT roi) {
     RECT client_rect = { 0 };
     GetClientRect(m_appHandle, &client_rect);
-    int width = client_rect.right - client_rect.left;
-    int height = client_rect.bottom - client_rect.top;
-    std::cout << width << " * " << height << std::endl;
+    int windowWidth = client_rect.right - client_rect.left;
+    int windowHeight = client_rect.bottom - client_rect.top;
 
     HDC hdcScreen = GetDC(m_appHandle);
     HDC hdc = CreateCompatibleDC(hdcScreen);
-    HBITMAP hbmp = CreateCompatibleBitmap(hdcScreen, width, height);
+    HBITMAP hbmp = CreateCompatibleBitmap(hdcScreen, windowWidth, windowHeight);
     SelectObject(hdc, hbmp);
 
-    BitBlt(hdc, 0, 0, width, height, hdcScreen, 0, 0, SRCCOPY);
+    int width = windowWidth;
+    int height = windowHeight;
+
+    if (roi.left == roi.right || roi.top == roi.bottom)
+    {
+        BitBlt(hdc, 0, 0, width, height, hdcScreen, 0, 0, SRCCOPY);
+    }
+    else
+    {
+        width = roi.right - roi.left;
+        height = roi.bottom - roi.top;
+        BitBlt(hdc, 0, 0, width, height, hdcScreen, roi.left, roi.top, SRCCOPY);
+    }
+
 
     BITMAPINFO bmp_info = { 0 };
     bmp_info.bmiHeader.biSize = sizeof(bmp_info.bmiHeader);

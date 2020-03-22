@@ -5,6 +5,7 @@
 #include "qonlinetranslator.h"
 #include "qrubberband.h"
 #include "ApplicationWatcher.h"
+#include "InvisibleCanvas.h"
 
 class RealTimeTranslator : public QMainWindow
 {
@@ -14,7 +15,8 @@ public:
 	RealTimeTranslator(QWidget *parent = Q_NULLPTR);
 
 	void translate(bool clicked);
-	void setRoi(bool clicked);
+	void selectRoi(bool clicked);
+	void setRoi(RECT roi) { m_roi = roi; }
 
 private:
 	Ui::RealTimeTranslatorClass ui;
@@ -25,4 +27,6 @@ private:
 	QOnlineTranslator m_translator;
 
 	ApplicationWatcher m_watcher;
+	RECT m_roi;
+
 };
