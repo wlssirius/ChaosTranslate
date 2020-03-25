@@ -14,6 +14,7 @@ class RealTimeTranslator : public QMainWindow
 public:
 	RealTimeTranslator(QWidget *parent = Q_NULLPTR);
 
+	void captureAndTranslate(bool clicked);
 	void translate(bool clicked);
 	void selectRoi(bool clicked);
 	void setRoi(RECT roi) { m_roi = roi; }
@@ -22,6 +23,7 @@ private:
 	Ui::RealTimeTranslatorClass ui;
 	QPushButton* m_captureButton;
 	QPushButton* m_roiButton;
+	QPushButton* m_translateButton;
 	QTextEdit* m_originalTextEdit;
 	QTextEdit* m_translateTextEdit;
 	QOnlineTranslator m_translator;

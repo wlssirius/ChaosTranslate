@@ -9,9 +9,11 @@ RealTimeTranslator::RealTimeTranslator(QWidget *parent)
 	ui.setupUi(this);
 
     m_captureButton = findChild<QPushButton*>("pushButton");
-	connect(m_captureButton, &QPushButton::clicked, this, &RealTimeTranslator::translate);
+	connect(m_captureButton, &QPushButton::clicked, this, &RealTimeTranslator::captureAndTranslate);
 	m_roiButton = findChild<QPushButton*>("pushButton_2");
 	connect(m_roiButton, &QPushButton::clicked, this, &RealTimeTranslator::selectRoi);
+	m_translateButton = findChild<QPushButton*>("pushButton_3");
+	connect(m_translateButton, &QPushButton::clicked, this, &RealTimeTranslator::translate);
 	m_originalTextEdit = findChild<QTextEdit*>("textEdit");
 	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
 
@@ -30,7 +32,7 @@ RealTimeTranslator::RealTimeTranslator(QWidget *parent)
 	m_watcher.setApplication(FindWindow(0, L"ƒ‰ƒ“ƒX‚P‚O"));
 }
 
-void RealTimeTranslator::translate(bool clicked)
+void RealTimeTranslator::captureAndTranslate(bool clicked)
 {	
 	m_watcher.capture(m_roi);
 	//QString test("hello world");
@@ -52,6 +54,12 @@ void RealTimeTranslator::translate(bool clicked)
 	}
 	m_originalTextEdit->setText(simplified);
 	m_translator.translate(simplified, QOnlineTranslator::Google, QOnlineTranslator::SimplifiedChinese); 
+}
+
+void RealTimeTranslator::translate(bool clicked)
+{
+	QString original = m_originalTextEdit->toPlainText();
+	m_translator.translate(original, QOnlineTranslator::Google, QOnlineTranslator::SimplifiedChinese);
 }
 
 void RealTimeTranslator::selectRoi(bool clicked)
