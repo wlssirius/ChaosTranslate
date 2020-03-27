@@ -6,6 +6,7 @@
 #include "qrubberband.h"
 #include "ApplicationWatcher.h"
 #include "InvisibleCanvas.h"
+#include "Glossary.h"
 
 class RealTimeTranslator : public QMainWindow
 {
@@ -24,11 +25,13 @@ private:
 	QPushButton* m_captureButton;
 	QPushButton* m_roiButton;
 	QPushButton* m_translateButton;
+	QPushButton* m_glossaryButton;
 	QTextEdit* m_originalTextEdit;
 	QTextEdit* m_translateTextEdit;
 	QOnlineTranslator m_translator;
 
 	ApplicationWatcher m_watcher;
+	Glossary m_glossary;
 	RECT m_roi;
 
 };

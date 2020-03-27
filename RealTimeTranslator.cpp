@@ -14,6 +14,8 @@ RealTimeTranslator::RealTimeTranslator(QWidget *parent)
 	connect(m_roiButton, &QPushButton::clicked, this, &RealTimeTranslator::selectRoi);
 	m_translateButton = findChild<QPushButton*>("pushButton_3");
 	connect(m_translateButton, &QPushButton::clicked, this, &RealTimeTranslator::translate);
+	m_glossaryButton = findChild<QPushButton*>("pushButton_4");
+	connect(m_glossaryButton, &QPushButton::clicked, &m_glossary, &Glossary::showGlossaryDialog);
 	m_originalTextEdit = findChild<QTextEdit*>("textEdit");
 	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
 
