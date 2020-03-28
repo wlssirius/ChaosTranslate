@@ -1,14 +1,13 @@
 #include <map>
-#include "ui_Glossary.h"
+#include "ui_GlossaryDialog.h"
 #include "QDialog"
 #include "QString"
 #include "QDialog"
-class Glossary: public QDialog
+class GlossaryDialog: public QDialog
 {
 	Q_OBJECT
 public:
-	Glossary();
-	void showGlossaryDialog();
+	GlossaryDialog();
 
 private:
 	Ui::GlossaryClass ui;

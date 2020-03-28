@@ -15,7 +15,7 @@ RealTimeTranslator::RealTimeTranslator(QWidget *parent)
 	m_translateButton = findChild<QPushButton*>("pushButton_3");
 	connect(m_translateButton, &QPushButton::clicked, this, &RealTimeTranslator::translate);
 	m_glossaryButton = findChild<QPushButton*>("pushButton_4");
-	connect(m_glossaryButton, &QPushButton::clicked, &m_glossary, &Glossary::showGlossaryDialog);
+	connect(m_glossaryButton, &QPushButton::clicked, this, &RealTimeTranslator::showGlossary);
 	m_originalTextEdit = findChild<QTextEdit*>("textEdit");
 	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
 
@@ -72,4 +72,13 @@ void RealTimeTranslator::selectRoi(bool clicked)
 	auto canvas = new InvisibleCanvas(this->m_roi);
 	canvas->showCanvas(windowRect);
 	canvas->show();
+}
+ 
+void RealTimeTranslator::showGlossary(bool clicked)
+{
+	if (m_glossary == nullptr)
+	{
+		m_glossary = new GlossaryDialog();
+	}
+	m_glossary->show();
 }
