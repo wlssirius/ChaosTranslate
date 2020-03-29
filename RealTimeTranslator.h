@@ -6,7 +6,7 @@
 #include "qrubberband.h"
 #include "ApplicationWatcher.h"
 #include "InvisibleCanvas.h"
-#include "GlossaryDialog.h"
+#include "GlossaryManager.h"
 
 class RealTimeTranslator : public QMainWindow
 {
@@ -18,7 +18,6 @@ public:
 	void captureAndTranslate(bool clicked);
 	void translate(bool clicked);
 	void selectRoi(bool clicked);
-	void showGlossary(bool clicked);
 	void setRoi(RECT roi) { m_roi = roi; }
 
 private:
@@ -32,7 +31,7 @@ private:
 	QOnlineTranslator m_translator;
 
 	ApplicationWatcher m_watcher;
-	GlossaryDialog* m_glossary = nullptr;
+	GlossaryManager m_glossary;
 	RECT m_roi;
 
 };

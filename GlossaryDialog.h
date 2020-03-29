@@ -3,6 +3,7 @@
 #include "QDialog"
 #include "QString"
 #include "QDialog"
+#include "qtableview.h"
 class GlossaryDialog: public QDialog
 {
 	Q_OBJECT
@@ -11,6 +12,5 @@ public:
 
 private:
 	Ui::GlossaryClass ui;
-	std::map<QString, QString> m_dictionary;
-
+	QTableView* m_tableView;
 };
