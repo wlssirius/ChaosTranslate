@@ -5,6 +5,12 @@ GlossaryDialog::GlossaryDialog():
 {
 	ui.setupUi(this);
 	m_tableView = findChild<QTableView*>("tableView");
-	m_table
+	if (m_model == nullptr)
+	{
+		m_model = new GlossaryModel();
+	}
+	
+	m_tableView->setModel(m_model);
+	//m_tableView->show();
 }
 

@@ -1,4 +1,7 @@
 #include "GlossaryManager.h"
+#include <QStandardItemModel>
+#include <QTableView>
+
 
 void GlossaryManager::showDialog()
 {
@@ -8,3 +11,4 @@ void GlossaryManager::showDialog()
 	}
 	m_dialog->show();
 }
+

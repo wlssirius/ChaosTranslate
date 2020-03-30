@@ -8,7 +8,6 @@ class GlossaryManager: public QObject
 public:
 	GlossaryManager() {}
 	void showDialog();
-
 private:
 	using dict = std::map<QString, QString>;
 	using languagePair = std::pair<QOnlineTranslator::Language, QOnlineTranslator::Language>;
