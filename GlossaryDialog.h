@@ -3,7 +3,8 @@
 #include "QDialog"
 #include "QString"
 #include "QDialog"
-#include "qtableview.h"
+#include "QPushButton"
+#include "QTableView"
 #include "GlossaryModel.h"
 class GlossaryDialog: public QDialog
 {
@@ -14,5 +15,7 @@ public:
 private:
 	Ui::GlossaryClass ui;
 	QTableView* m_tableView;
+	QPushButton* m_newButton;
+	QPushButton* m_deleteButton;
 	GlossaryModel* m_model = nullptr;
 };

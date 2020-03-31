@@ -7,7 +7,7 @@ GlossaryModel::GlossaryModel(QObject* parent)
 }
 int GlossaryModel::rowCount(const QModelIndex& /*parent*/) const
 {
-    return 2;
+    return m_rowCount;
 }
 int GlossaryModel::columnCount(const QModelIndex& /*parent*/) const
 {
@@ -24,7 +24,7 @@ QVariant GlossaryModel::data(const QModelIndex& index, int role) const
 
 QVariant GlossaryModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole && orientation==Qt::Orientation::Horizontal)
     {
         switch (section)
         {
@@ -39,4 +39,17 @@ QVariant GlossaryModel::headerData(int section, Qt::Orientation orientation, int
         }
     }
     return QVariant();
+}
+
+bool GlossaryModel::insertRows(int row, int count, const QModelIndex& parent)
+{ 
+    beginInsertRows(parent, m_rowCount, m_rowCount);
+    m_rowCount++;
+    endInsertRows();
+    return false;
+}
+
+void GlossaryModel::addNewRow()
+{
+    insertRow(m_rowCount);
 }
