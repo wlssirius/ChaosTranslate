@@ -11,7 +11,7 @@ class GlossaryDialog: public QDialog
 	Q_OBJECT
 public:
 	GlossaryDialog();
-
+	void deleteRow();
 private:
 	Ui::GlossaryClass ui;
 	QTableView* m_tableView;

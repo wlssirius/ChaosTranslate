@@ -1,8 +1,8 @@
 #ifndef MYMODEL_H
 #define MYMODEL_H
-//! [Quoting ModelView Tutorial]
-// mymodel.h
 #include <QAbstractTableModel>
+#include <utility>
+#include <vector>
 class GlossaryModel : public QAbstractTableModel
 {
     Q_OBJECT
@@ -13,12 +13,16 @@ public:
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
     bool insertRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
+    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
+    bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
     void addNewRow();
+    void deleteRow();
 
 private:
-    int m_rowCount = 2;
+    using entry = std::pair<QString, QString>;
+    std::vector<entry> m_glossary;
 
 
 };
-//! [Quoting ModelView Tutorial]
 #endif // MYMODEL_H

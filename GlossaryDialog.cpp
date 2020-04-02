@@ -15,6 +15,15 @@ GlossaryDialog::GlossaryDialog():
 	m_deleteButton = findChild<QPushButton*>("pushButton_2");
 
 	connect(m_newButton, &QPushButton::clicked, m_model, &GlossaryModel::addNewRow);
+	connect(m_deleteButton, &QPushButton::clicked, m_model, &GlossaryModel::deleteRow);
 	m_tableView->setModel(m_model);
 }
 
+void GlossaryDialog::deleteRow()
+{
+	QItemSelectionModel* select = m_tableView->selectionModel();
+	auto selectedRows = select->selectedRows();
+	for (auto row : selectedRows)
+	{
+	}
+}
