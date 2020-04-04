@@ -1,5 +1,6 @@
 
 #include "GlossaryModel.h"
+#include "QMessageBox"
 GlossaryModel::GlossaryModel(QObject* parent)
     : QAbstractTableModel(parent)
 {
@@ -19,6 +20,15 @@ QVariant GlossaryModel::data(const QModelIndex& index, int role) const
         const auto& e = m_glossary[index.row()];
         if (index.column() == 0)
         {
+            //if (e.first.size() == 0)
+            //{
+            //    QMessageBox Msgbox;
+            //    Msgbox.setText("Source Text Can't Be Empty!");
+            //    Msgbox.exec();
+            //    emit editCell(index);
+            //    return false;
+            //}
+            emit emptyWord(index);
             return e.first;
         }
         else if (index.column() == 1)
@@ -56,6 +66,14 @@ bool GlossaryModel::insertRows(int row, int count, const QModelIndex& parent)
     return false;
 }
 
+bool GlossaryModel::removeRows(int row, int count, const QModelIndex& parent)
+{
+    beginRemoveRows(parent, row, row);
+    m_glossary.erase(m_glossary.begin() + row);
+    endRemoveRows();
+    return false;
+}
+
 bool GlossaryModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
     if (role == Qt::EditRole) {
@@ -72,7 +90,7 @@ bool GlossaryModel::setData(const QModelIndex& index, const QVariant& value, int
             e.second = value.toString();
         }
 
-        //emit editCompleted(result);
+        emit dataChanged(index, index);
         return true;
     }
     return false;
@@ -83,11 +101,4 @@ Qt::ItemFlags GlossaryModel::flags(const QModelIndex& index) const
     return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
 }
 
-void GlossaryModel::addNewRow()
-{
-    insertRow(m_glossary.size());
-}
 
-void GlossaryModel::deleteRow()
-{
-}

@@ -16,8 +16,11 @@ public:
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
     bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
     Qt::ItemFlags flags(const QModelIndex& index) const override;
-    void addNewRow();
-    void deleteRow();
+    int getGlossaryCount() { return m_glossary.size(); }
+
+signals:
+    void editCell(const QModelIndex& index) const;
+    void emptyWord(const QModelIndex& index) const;
 
 private:
     using entry = std::pair<QString, QString>;

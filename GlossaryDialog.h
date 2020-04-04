@@ -11,7 +11,10 @@ class GlossaryDialog: public QDialog
 	Q_OBJECT
 public:
 	GlossaryDialog();
-	void deleteRow();
+	void addRow(bool clicked);
+	void deleteRow(bool clicked);
+	void editTable(const QModelIndex& index);
+	void checkEmptyWord(const QModelIndex& index);
 private:
 	Ui::GlossaryClass ui;
 	QTableView* m_tableView;
