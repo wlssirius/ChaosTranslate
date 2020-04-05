@@ -20,15 +20,6 @@ QVariant GlossaryModel::data(const QModelIndex& index, int role) const
         const auto& e = m_glossary[index.row()];
         if (index.column() == 0)
         {
-            //if (e.first.size() == 0)
-            //{
-            //    QMessageBox Msgbox;
-            //    Msgbox.setText("Source Text Can't Be Empty!");
-            //    Msgbox.exec();
-            //    emit editCell(index);
-            //    return false;
-            //}
-            emit emptyWord(index);
             return e.first;
         }
         else if (index.column() == 1)
@@ -61,7 +52,7 @@ QVariant GlossaryModel::headerData(int section, Qt::Orientation orientation, int
 bool GlossaryModel::insertRows(int row, int count, const QModelIndex& parent)
 { 
     beginInsertRows(parent, m_glossary.size(), m_glossary.size());
-    m_glossary.emplace_back();
+    //m_glossary.emplace_back();
     endInsertRows();
     return false;
 }
@@ -83,6 +74,13 @@ bool GlossaryModel::setData(const QModelIndex& index, const QVariant& value, int
         auto& e = m_glossary[index.row()];
         if (index.column() == 0)
         {
+            if (value.toString().size() == 0)
+            {
+                QMessageBox msg;
+                msg.setText("Original Text shouldn't be empty");
+                msg.exec();
+                return false;
+            }
             e.first = value.toString();
         }
         else if(index.column() == 1)
@@ -99,6 +97,12 @@ bool GlossaryModel::setData(const QModelIndex& index, const QVariant& value, int
 Qt::ItemFlags GlossaryModel::flags(const QModelIndex& index) const
 {
     return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+}
+
+void GlossaryModel::addEntry(QString original, QString translate)
+{
+    insertRow(getGlossaryCount());
+    m_glossary.emplace_back(original, translate);
 }
 
 

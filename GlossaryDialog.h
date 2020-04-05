@@ -6,6 +6,7 @@
 #include "QPushButton"
 #include "QTableView"
 #include "GlossaryModel.h"
+#include "NewGlossaryDialog.h"
 class GlossaryDialog: public QDialog
 {
 	Q_OBJECT
@@ -21,4 +22,5 @@ private:
 	QPushButton* m_newButton;
 	QPushButton* m_deleteButton;
 	GlossaryModel* m_model = nullptr;
+	NewGlossaryDialog* m_newGlossaryDialog = nullptr;
 };

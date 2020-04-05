@@ -16,17 +16,23 @@ GlossaryDialog::GlossaryDialog():
 
 	connect(m_newButton, &QPushButton::clicked, this, &GlossaryDialog::addRow);
 	connect(m_deleteButton, &QPushButton::clicked, this, &GlossaryDialog::deleteRow);
-	connect(m_model, &GlossaryModel::editCell, this, &GlossaryDialog::editTable);
 	m_tableView->setModel(m_model); 
 	m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
 void GlossaryDialog::addRow(bool clicked)
 {
-	int rowCount = m_model->getGlossaryCount();
-	m_model->insertRow(rowCount);
-	QModelIndex index = m_model->index(rowCount, 0);
-	editTable(index);
+	//int rowCount = m_model->getGlossaryCount();
+	//m_model->insertRow(rowCount);
+	//QModelIndex index = m_model->index(rowCount, 0);
+	//editTable(index);
+	if (m_newGlossaryDialog != nullptr)
+	{
+		delete m_newGlossaryDialog;
+	}
+	m_newGlossaryDialog = new NewGlossaryDialog();
+	m_newGlossaryDialog->show();
+	connect(m_newGlossaryDialog, &NewGlossaryDialog::addGlossary, m_model, &GlossaryModel::addEntry);
 }
 
 void GlossaryDialog::deleteRow(bool clicked)
