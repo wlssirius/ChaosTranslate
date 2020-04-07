@@ -6,6 +6,7 @@
 class GlossaryModel : public QAbstractTableModel
 {
     Q_OBJECT
+    using entry = std::pair<QString, QString>;
 public:
     GlossaryModel(QObject* parent = nullptr);
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
@@ -19,8 +20,9 @@ public:
     int getGlossaryCount() { return m_glossary.size(); }
     void addEntry(QString original, QString translate);
 
+    const std::vector<entry>& getGlossary() { return m_glossary; }
+
 private:
-    using entry = std::pair<QString, QString>;
     std::vector<entry> m_glossary;
 
 

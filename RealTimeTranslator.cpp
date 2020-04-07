@@ -19,12 +19,6 @@ RealTimeTranslator::RealTimeTranslator(QWidget *parent)
 	m_originalTextEdit = findChild<QTextEdit*>("textEdit");
 	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
 
-	QObject::connect(&m_translator, &QOnlineTranslator::finished, [&] {
-		if (this->m_translator.error() == QOnlineTranslator::NoError)
-			this->m_translateTextEdit->setText(this->m_translator.translation());
-		else
-			this->m_translateTextEdit->setText(this->m_translator.errorString());
-		});
 
 	m_roi.left = 0;
 	m_roi.right = 0;
@@ -55,13 +49,29 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 		simplified.append('\n');
 	}
 	m_originalTextEdit->setText(simplified);
-	m_translator.translate(simplified, QOnlineTranslator::Google, QOnlineTranslator::SimplifiedChinese); 
+	translate(true);
+	//m_translator.translate(simplified, QOnlineTranslator::Google, QOnlineTranslator::SimplifiedChinese); 
 }
 
 void RealTimeTranslator::translate(bool clicked)
 {
 	QString original = m_originalTextEdit->toPlainText();
-	m_translator.translate(original, QOnlineTranslator::Google, QOnlineTranslator::SimplifiedChinese);
+	std::map<QString, QString> dict;
+	auto encoded = m_glossary.encode(original, dict);
+	m_translator.translate(encoded, QOnlineTranslator::Google, QOnlineTranslator::SimplifiedChinese);
+
+	QObject::connect(&m_translator, &QOnlineTranslator::finished, [=] {
+		if (this->m_translator.error() == QOnlineTranslator::NoError)
+		{
+			auto translation = this->m_translator.translation();
+			auto decoded = m_glossary.decode(translation, dict);
+			this->m_translateTextEdit->setText(decoded);
+		}
+		else
+		{
+			this->m_translateTextEdit->setText(this->m_translator.errorString());
+		}
+		});
 }
 
 void RealTimeTranslator::selectRoi(bool clicked)

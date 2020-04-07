@@ -16,6 +16,7 @@ public:
 	void deleteRow(bool clicked);
 	void editTable(const QModelIndex& index);
 	void checkEmptyWord(const QModelIndex& index);
+	auto getGlossary() { return m_model->getGlossary(); }
 private:
 	Ui::GlossaryClass ui;
 	QTableView* m_tableView;

@@ -2,6 +2,14 @@
 #include <QStandardItemModel>
 #include <QTableView>
 
+GlossaryManager::GlossaryManager()
+{
+	m_codes.emplace_back("\"++++\"");
+	m_codes.emplace_back("\"----\"");
+	m_codes.emplace_back("\"====\"");
+	m_codes.emplace_back("\"&&&&\"");
+	m_codes.emplace_back("\"****\"");
+}
 
 void GlossaryManager::showDialog()
 {
@@ -12,3 +20,29 @@ void GlossaryManager::showDialog()
 	m_dialog->show();
 }
 
+QString GlossaryManager::encode(QString text, std::map<QString, QString>& dict)
+{
+	const auto& glossary = m_dialog->getGlossary();
+	int count = 0;
+	for (auto entry : glossary)
+	{
+		const auto& key = entry.first;
+		int id = text.indexOf(key);
+		while (id != -1)
+		{
+			text.replace(id, key.size(), m_codes[count]);
+			id = text.indexOf(key);
+			if (dict.find(m_codes[count]) == dict.end())
+			{
+				dict[m_codes[count]] = key;
+				count++;
+			}
+		}
+	}
+	return text;
+}
+
+QString GlossaryManager::decode(QString text, const std::map<QString, QString>& dict)
+{
+	return text;
+}
