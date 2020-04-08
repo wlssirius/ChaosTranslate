@@ -53,3 +53,12 @@ void GlossaryDialog::editTable(const QModelIndex& index)
 void GlossaryDialog::checkEmptyWord(const QModelIndex& index)
 {
 }
+
+std::vector<std::pair<QString, QString>> GlossaryDialog::getGlossary()
+{
+	if (m_model != nullptr)
+	{
+		return m_model->getGlossary();
+	}
+	return std::vector<std::pair<QString, QString>>();
+}
