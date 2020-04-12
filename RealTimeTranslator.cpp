@@ -30,8 +30,9 @@ RealTimeTranslator::RealTimeTranslator(QWidget *parent)
 
 void RealTimeTranslator::captureAndTranslate(bool clicked)
 {	
+	//replaceTest();
+	//otsuTest();
 	m_watcher.capture(m_roi);
-	//QString test("hello world");
 	QString capture = ocr();
 	QStringList list1 = capture.split('\n');
 	QString simplified;
@@ -50,7 +51,6 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 	}
 	m_originalTextEdit->setText(simplified);
 	translate(true);
-	//m_translator.translate(simplified, QOnlineTranslator::Google, QOnlineTranslator::SimplifiedChinese); 
 }
 
 void RealTimeTranslator::translate(bool clicked)

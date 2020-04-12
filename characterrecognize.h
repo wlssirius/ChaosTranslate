@@ -4,3 +4,5 @@
 #include <qstring.h>
 
 QString ocr();
+void replaceTest();
+void otsuTest();

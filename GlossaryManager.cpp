@@ -4,11 +4,11 @@
 
 GlossaryManager::GlossaryManager()
 {
-	m_codes.emplace_back("\"++++\"");
-	m_codes.emplace_back("\"----\"");
-	m_codes.emplace_back("\"====\"");
-	m_codes.emplace_back("\"&&&&\"");
-	m_codes.emplace_back("\"****\"");
+	m_codes.emplace_back("++++");
+	m_codes.emplace_back("----");
+	m_codes.emplace_back("====");
+	m_codes.emplace_back("&&&&");
+	m_codes.emplace_back("****");
 }
 
 void GlossaryManager::showDialog()
@@ -61,6 +61,8 @@ QString GlossaryManager::decode(QString text, const std::map<QString, QString>& 
 	{
 		return text;
 	}
+	text.replace("¡°", "\"");
+	text.replace("¡±", "\"");
 	for (auto kvp : dict)
 	{
 		const auto& key = kvp.first;

@@ -48,7 +48,7 @@ void ApplicationWatcher::capture(RECT roi) {
     GetDIBits(hdc, hbmp, 0, height, bmp_pixels, &bmp_info, DIB_RGB_COLORS);
 
     BITMAPFILEHEADER bmfHeader;
-    HANDLE bmp_file_handle = CreateFile(LPCWSTR(L"D:\\TestFile.bmp"), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    HANDLE bmp_file_handle = CreateFile(LPCWSTR(L"D:\\TestFile.png"), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
     // Add the size of the headers to the size of the bitmap to get the total file size
     DWORD dwSizeofDIB = (width * 3 + bmp_padding) * height + sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);

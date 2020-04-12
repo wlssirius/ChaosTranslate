@@ -59,7 +59,7 @@ void InvisibleCanvas::mouseReleaseEvent(QMouseEvent* event)
 
 void InvisibleCanvas::loadImage()
 {
-    QImageReader reader("D:/TestFile.bmp");
+    QImageReader reader("D:/TestFile.png");
     reader.setAutoTransform(true);
     const QImage newImage = reader.read();
     m_imageLabel->setPixmap(QPixmap::fromImage(newImage));
