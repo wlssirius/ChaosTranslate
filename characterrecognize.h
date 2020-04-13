@@ -3,6 +3,7 @@
 #include <tesseract/baseapi.h> // tesseract main header
 #include <qstring.h>
 
-QString ocr();
-void replaceTest();
-void otsuTest();
+QString ocr(PIX* image);
+PIX* threshold(PIX* sourceImage, BOX* box);
+void replace(PIX* targetImage, PIX* sourceImage, BOX* box);
+PIX* otsu(PIX* originalImage);

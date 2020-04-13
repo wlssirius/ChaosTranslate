@@ -31,9 +31,16 @@ RealTimeTranslator::RealTimeTranslator(QWidget *parent)
 void RealTimeTranslator::captureAndTranslate(bool clicked)
 {	
 	//replaceTest();
-	//otsuTest();
+	PIX* pix = pixRead("D:/1.png");
+	BOX* roi = new Box();
+	roi->x = 10;
+	roi->y = 100;
+	roi->w = 100;
+	roi->h = 300;
+	PIX* th = threshold(pix, roi);
 	m_watcher.capture(m_roi);
-	QString capture = ocr();
+	pixWrite("D:/1_th.png", th, IFF_PNG);
+	/*QString capture = ocr();
 	QStringList list1 = capture.split('\n');
 	QString simplified;
 	for (auto str : list1)
@@ -50,7 +57,7 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 		simplified.append('\n');
 	}
 	m_originalTextEdit->setText(simplified);
-	translate(true);
+	translate(true);*/
 }
 
 void RealTimeTranslator::translate(bool clicked)
