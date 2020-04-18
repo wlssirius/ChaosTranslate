@@ -29,18 +29,17 @@ RealTimeTranslator::RealTimeTranslator(QWidget *parent)
 }
 
 void RealTimeTranslator::captureAndTranslate(bool clicked)
-{	
-	//replaceTest();
-	PIX* pix = pixRead("D:/1.png");
+{
+	m_watcher.capture();
+	PIX* pix = pixRead("D:\\TestFile.png");
 	BOX* roi = new Box();
-	roi->x = 10;
-	roi->y = 100;
-	roi->w = 100;
-	roi->h = 300;
+	roi->x = m_roi.left;
+	roi->y = m_roi.top;
+	roi->w = m_roi.right-m_roi.left;
+	roi->h = m_roi.bottom - m_roi.top;
 	PIX* th = threshold(pix, roi);
-	m_watcher.capture(m_roi);
 	pixWrite("D:/1_th.png", th, IFF_PNG);
-	/*QString capture = ocr();
+	QString capture = ocr(pix);
 	QStringList list1 = capture.split('\n');
 	QString simplified;
 	for (auto str : list1)
@@ -57,7 +56,7 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 		simplified.append('\n');
 	}
 	m_originalTextEdit->setText(simplified);
-	translate(true);*/
+	translate(true);
 }
 
 void RealTimeTranslator::translate(bool clicked)
@@ -84,7 +83,7 @@ void RealTimeTranslator::translate(bool clicked)
 void RealTimeTranslator::selectRoi(bool clicked)
 {
 	auto windowRect = m_watcher.getWindowSize();
-	m_watcher.capture(windowRect);
+	m_watcher.capture();
 	//m_canvas.showCanvas(windowRect);
 	auto canvas = new InvisibleCanvas(this->m_roi);
 	canvas->showCanvas(windowRect);

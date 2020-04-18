@@ -13,7 +13,7 @@ public:
 	ApplicationWatcher(HWND handle = nullptr) { m_appHandle = handle; }
 
 	void setApplication(HWND handle) { m_appHandle = handle; }
-	void capture(RECT roi);
+	void capture();
 	RECT getWindowSize();
 
 private:

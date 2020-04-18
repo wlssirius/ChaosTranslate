@@ -7,7 +7,7 @@ RECT ApplicationWatcher::getWindowSize()
     return window_rect;
 }
 
-void ApplicationWatcher::capture(RECT roi) {
+void ApplicationWatcher::capture() {
     RECT client_rect = { 0 };
     GetClientRect(m_appHandle, &client_rect);
     int windowWidth = client_rect.right - client_rect.left;
@@ -21,16 +21,8 @@ void ApplicationWatcher::capture(RECT roi) {
     int width = windowWidth;
     int height = windowHeight;
 
-    if (roi.left == roi.right || roi.top == roi.bottom)
-    {
-        BitBlt(hdc, 0, 0, width, height, hdcScreen, 0, 0, SRCCOPY);
-    }
-    else
-    {
-        width = roi.right - roi.left;
-        height = roi.bottom - roi.top;
-        BitBlt(hdc, 0, 0, width, height, hdcScreen, roi.left, roi.top, SRCCOPY);
-    }
+    BitBlt(hdc, 0, 0, width, height, hdcScreen, 0, 0, SRCCOPY);
+  
 
 
     BITMAPINFO bmp_info = { 0 };

@@ -36,7 +36,7 @@ PIX* threshold(PIX* sourceImage, BOX* roi)
     PIX* imgCrop = pixClipRectangle(sourceImage, roi, NULL);
     PIX* thresholded = otsu(imgCrop);
     pixWrite("D:/1_localTh.png", thresholded, IFF_PNG);
-    PIX* pixg = pixConvertTo8(sourceImage, 0);
+    PIX* pixg = pixConvertTo1(sourceImage, 0);
     replace(pixg, thresholded, roi);
     return pixg;
 }
@@ -47,14 +47,14 @@ void replace(PIX* targetImage, PIX* sourceImage, BOX* box)
     l_int32 targetWpl = pixGetWpl(targetImage);
     l_uint32* data = pixGetData(sourceImage);
     l_uint32* targetData = pixGetData(targetImage);
-    for (int i = 0; i < wpl; i++)
+    for (int i = 0; i < wpl * 4; i++)
     {
         for (int j = 0; j < sourceImage->h; j++)
         {
             l_uint32* line = data + j * wpl;
             l_uint32* targetLine = targetData + (box->y+j) * targetWpl;
             l_uint32 value = GET_DATA_BYTE(line, i);
-            SET_DATA_BYTE(targetLine, box->x+i, value);
+             SET_DATA_BYTE(targetLine, box->x+i, value);
         }
     }
 }
