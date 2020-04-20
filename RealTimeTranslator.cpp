@@ -37,9 +37,16 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 	roi->y = m_roi.top;
 	roi->w = m_roi.right-m_roi.left;
 	roi->h = m_roi.bottom - m_roi.top;
-	PIX* th = threshold(pix, roi);
-	pixWrite("D:/1_th.png", th, IFF_PNG);
-	QString capture = ocr(pix);
+	PIX* th;
+	if (roi->w == 0 || roi->h == 0)
+	{
+		th = pix;
+	}
+	else
+	{
+		th = threshold(pix, roi);
+	}
+	QString capture = ocr(th);
 	QStringList list1 = capture.split('\n');
 	QString simplified;
 	for (auto str : list1)

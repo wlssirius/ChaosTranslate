@@ -16,6 +16,12 @@ QString ocr(PIX* pix)
     tess.SetVariable("preserve_interword_spaces", "1");
 
     tess.SetImage(pix);
+    if (tess.FindLinesCreateBlockList())
+    {
+        auto thresholded = tess.GetThresholdedImage();
+        pixWrite("D:/TestFile_Threshold.png", thresholded, IFF_PNG);
+        tess.SetImage(thresholded);
+    }
     tess.Recognize(0);
     auto text = tess.GetUTF8Text();
     QString result = QString::fromUtf8(text); 
@@ -34,11 +40,11 @@ QString ocr(PIX* pix)
 PIX* threshold(PIX* sourceImage, BOX* roi)
 {
     PIX* imgCrop = pixClipRectangle(sourceImage, roi, NULL);
-    PIX* thresholded = otsu(imgCrop);
-    pixWrite("D:/1_localTh.png", thresholded, IFF_PNG);
-    PIX* pixg = pixConvertTo1(sourceImage, 0);
-    replace(pixg, thresholded, roi);
-    return pixg;
+    //PIX* thresholded = otsu(imgCrop);
+    //pixWrite("D:/1_localTh.png", thresholded, IFF_PNG);
+    //PIX* pixg = pixConvertTo1(sourceImage, 0);
+    //replace(pixg, thresholded, roi);
+    return imgCrop;
 }
 
 void replace(PIX* targetImage, PIX* sourceImage, BOX* box)
