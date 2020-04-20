@@ -7,7 +7,7 @@ RECT ApplicationWatcher::getWindowSize()
     return window_rect;
 }
 
-void ApplicationWatcher::capture() {
+PIX* ApplicationWatcher::capture(RECT roi) {
     RECT client_rect = { 0 };
     GetClientRect(m_appHandle, &client_rect);
     int windowWidth = client_rect.right - client_rect.left;
@@ -22,8 +22,6 @@ void ApplicationWatcher::capture() {
     int height = windowHeight;
 
     BitBlt(hdc, 0, 0, width, height, hdcScreen, 0, 0, SRCCOPY);
-  
-
 
     BITMAPINFO bmp_info = { 0 };
     bmp_info.bmiHeader.biSize = sizeof(bmp_info.bmiHeader);
@@ -39,32 +37,16 @@ void ApplicationWatcher::capture() {
     BYTE* bmp_pixels = new BYTE[(width * 3 + bmp_padding) * height];
     GetDIBits(hdc, hbmp, 0, height, bmp_pixels, &bmp_info, DIB_RGB_COLORS);
 
-    BITMAPFILEHEADER bmfHeader;
-    HANDLE bmp_file_handle = CreateFile(LPCWSTR(L"D:\\TestFile.png"), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    Pix* pixd = pixCreate(width, height, 32);
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            pixSetRGBPixel(pixd, x, height - y - 1, bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+2], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+1], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x]);
+        }
+    }
+    PIX* pix1 = pixRead("D:\\TestFile1.bmp");
+    pixWrite("D:/pixd.png", pixd, IFF_PNG);
 
-    // Add the size of the headers to the size of the bitmap to get the total file size
-    DWORD dwSizeofDIB = (width * 3 + bmp_padding) * height + sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
-
-    //Offset to where the actual bitmap bits start.
-    bmfHeader.bfOffBits = (DWORD)sizeof(BITMAPFILEHEADER) + (DWORD)sizeof(BITMAPINFOHEADER);
-
-    //Size of the file
-    bmfHeader.bfSize = dwSizeofDIB;
-
-    //bfType must always be BM for Bitmaps
-    bmfHeader.bfType = 0x4D42; //BM
-
-    DWORD dwBytesWritten = 0;
-    WriteFile(bmp_file_handle, (LPSTR)&bmfHeader, sizeof(BITMAPFILEHEADER), &dwBytesWritten, NULL);
-    WriteFile(bmp_file_handle, (LPSTR)&bmp_info.bmiHeader, sizeof(BITMAPINFOHEADER), &dwBytesWritten, NULL);
-    WriteFile(bmp_file_handle, (LPSTR)bmp_pixels, (width * 3 + bmp_padding) * height, &dwBytesWritten, NULL);
-
-    //Close the handle for the file that was created
-    CloseHandle(bmp_file_handle);
-
-    DeleteDC(hdc);
-    DeleteObject(hbmp);
-    ReleaseDC(NULL, hdcScreen);
     delete[] bmp_pixels;
+    return pixd;
 }
 

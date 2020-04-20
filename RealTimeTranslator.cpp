@@ -30,8 +30,7 @@ RealTimeTranslator::RealTimeTranslator(QWidget *parent)
 
 void RealTimeTranslator::captureAndTranslate(bool clicked)
 {
-	m_watcher.capture();
-	PIX* pix = pixRead("D:\\TestFile.png");
+	PIX* pix = m_watcher.capture(m_roi);
 	BOX* roi = new Box();
 	roi->x = m_roi.left;
 	roi->y = m_roi.top;
@@ -90,7 +89,12 @@ void RealTimeTranslator::translate(bool clicked)
 void RealTimeTranslator::selectRoi(bool clicked)
 {
 	auto windowRect = m_watcher.getWindowSize();
-	m_watcher.capture();
+	RECT emptyRect;
+	emptyRect.left = 0;
+	emptyRect.right = 0;
+	emptyRect.top = 0;
+	emptyRect.bottom = 0;
+	m_watcher.capture(emptyRect);
 	//m_canvas.showCanvas(windowRect);
 	auto canvas = new InvisibleCanvas(this->m_roi);
 	canvas->showCanvas(windowRect);

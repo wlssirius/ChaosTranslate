@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <wchar.h>
 #include <vector>
+#include <leptonica/allheaders.h>
 
 class ApplicationWatcher
 {
@@ -13,7 +14,7 @@ public:
 	ApplicationWatcher(HWND handle = nullptr) { m_appHandle = handle; }
 
 	void setApplication(HWND handle) { m_appHandle = handle; }
-	void capture();
+	PIX* capture(RECT roi);
 	RECT getWindowSize();
 
 private:
