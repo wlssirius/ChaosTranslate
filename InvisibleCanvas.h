@@ -5,13 +5,14 @@
 #include "qlabel.h"
 #include "qobject.h"
 #include <functional>
+#include <leptonica/allheaders.h>
 
 class InvisibleCanvas: public QDialog
 {
 public:
 	InvisibleCanvas(RECT& rect);
 
-    void showCanvas(RECT windowSize);
+    void showCanvas(PIX* img, RECT rect);
     void mousePressEvent(QMouseEvent* event) override;
     void InvisibleCanvas::mouseMoveEvent(QMouseEvent* event) override;
     void InvisibleCanvas::mouseReleaseEvent(QMouseEvent* event) override;

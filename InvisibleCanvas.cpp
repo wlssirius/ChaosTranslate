@@ -4,6 +4,7 @@
 #include "QLayout"
 #include "QImageReader"
 
+
 InvisibleCanvas::InvisibleCanvas(RECT& rect):
 	QDialog(nullptr, 0),
     m_roiRect(rect)
@@ -21,11 +22,25 @@ InvisibleCanvas::InvisibleCanvas(RECT& rect):
     //layout->setContentsMargins(QMargins(0, 0, 0, 0));
 }
 
-void InvisibleCanvas::showCanvas(RECT rect)
+void InvisibleCanvas::showCanvas(PIX* pix, RECT rect)
 {
     setGeometry(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
     setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
-    loadImage();
+
+    QImage qImage(pix->w, pix->h, QImage::Format_ARGB32);
+    for (int y = 0; y < pix->h; y++)
+    {
+        QRgb* destrow = (QRgb*)qImage.scanLine(y);
+        for (int x = 0; x < pix->w; x++)
+        {
+            l_int32 r = 0;
+            l_int32 g = 0;
+            l_int32 b = 0;           
+            pixGetRGBPixel(pix, x, y, &r, &g, &b);
+            destrow[x] = qRgba(r, g, b, 255);
+        }
+    }
+    m_imageLabel->setPixmap(QPixmap::fromImage(qImage));
 }
 
 void InvisibleCanvas::mousePressEvent(QMouseEvent* event)

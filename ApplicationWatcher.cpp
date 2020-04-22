@@ -43,8 +43,7 @@ PIX* ApplicationWatcher::capture(RECT roi) {
             pixSetRGBPixel(pixd, x, height - y - 1, bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+2], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+1], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x]);
         }
     }
-    PIX* pix1 = pixRead("D:\\TestFile1.bmp");
-    pixWrite("D:/pixd.png", pixd, IFF_PNG);
+    //pixWrite("D:/pixd.png", pixd, IFF_PNG);
 
     delete[] bmp_pixels;
     return pixd;

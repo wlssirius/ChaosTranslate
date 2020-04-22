@@ -94,9 +94,9 @@ void RealTimeTranslator::selectRoi(bool clicked)
 	emptyRect.right = 0;
 	emptyRect.top = 0;
 	emptyRect.bottom = 0;
-	m_watcher.capture(emptyRect);
+	PIX* img = m_watcher.capture(emptyRect);
 	//m_canvas.showCanvas(windowRect);
 	auto canvas = new InvisibleCanvas(this->m_roi);
-	canvas->showCanvas(windowRect);
+	canvas->showCanvas(img, windowRect);
 	canvas->show();
 }
