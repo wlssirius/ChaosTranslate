@@ -30,6 +30,7 @@ RealTimeTranslator::RealTimeTranslator(QWidget *parent)
 
 void RealTimeTranslator::captureAndTranslate(bool clicked)
 {
+	m_originalTextEdit->setText("Capturing");
 	PIX* pix = m_watcher.capture(m_roi);
 	BOX* roi = new Box();
 	roi->x = m_roi.left;
@@ -45,6 +46,7 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 	{
 		th = threshold(pix, roi);
 	}
+	m_originalTextEdit->setText("Recognizing");
 	QString capture = ocr(th);
 	QStringList list1 = capture.split('\n');
 	QString simplified;
@@ -71,7 +73,7 @@ void RealTimeTranslator::translate(bool clicked)
 	std::map<QString, QString> dict;
 	auto encoded = m_glossary.encode(original, dict);
 	m_translator.translate(encoded, QOnlineTranslator::Google, QOnlineTranslator::SimplifiedChinese);
-
+	m_translateTextEdit->setText("Translating");
 	QObject::connect(&m_translator, &QOnlineTranslator::finished, [=] {
 		if (this->m_translator.error() == QOnlineTranslator::NoError)
 		{
