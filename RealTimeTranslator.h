@@ -20,6 +20,11 @@ public:
 	void selectRoi(bool clicked);
 	void setRoi(RECT roi) { m_roi = roi; }
 
+signals:
+	void setOriginalText(const QString& text);
+	void setTranslateText(const QString& text);
+
+
 private:
 	Ui::RealTimeTranslatorClass ui;
 	QPushButton* m_captureButton;

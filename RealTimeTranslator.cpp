@@ -2,14 +2,17 @@
 #include <qpushbutton.h>
 #include "characterrecognize.h"
 #include "qdialog.h"
+#include "QtConcurrent/QtConcurrent"
 
-RealTimeTranslator::RealTimeTranslator(QWidget *parent)
+RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 
-    m_captureButton = findChild<QPushButton*>("pushButton");
-	connect(m_captureButton, &QPushButton::clicked, this, &RealTimeTranslator::captureAndTranslate);
+	m_captureButton = findChild<QPushButton*>("pushButton");
+
+	connect(m_captureButton, &QPushButton::clicked, this,
+		[this](bool clicked) { QtConcurrent::run(this, &RealTimeTranslator::captureAndTranslate, clicked); });
 	m_roiButton = findChild<QPushButton*>("pushButton_2");
 	connect(m_roiButton, &QPushButton::clicked, this, &RealTimeTranslator::selectRoi);
 	m_translateButton = findChild<QPushButton*>("pushButton_3");
@@ -17,8 +20,9 @@ RealTimeTranslator::RealTimeTranslator(QWidget *parent)
 	m_glossaryButton = findChild<QPushButton*>("pushButton_4");
 	connect(m_glossaryButton, &QPushButton::clicked, &m_glossary, &GlossaryManager::showDialog);
 	m_originalTextEdit = findChild<QTextEdit*>("textEdit");
+	connect(this, &RealTimeTranslator::setOriginalText, m_originalTextEdit, &QTextEdit::setText);
 	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
-
+	connect(this, &RealTimeTranslator::setTranslateText, m_translateTextEdit, &QTextEdit::setText);
 
 	m_roi.left = 0;
 	m_roi.right = 0;
@@ -30,7 +34,6 @@ RealTimeTranslator::RealTimeTranslator(QWidget *parent)
 
 void RealTimeTranslator::captureAndTranslate(bool clicked)
 {
-	m_originalTextEdit->setText("Capturing");
 	PIX* pix = m_watcher.capture(m_roi);
 	BOX* roi = new Box();
 	roi->x = m_roi.left;
@@ -46,7 +49,7 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 	{
 		th = threshold(pix, roi);
 	}
-	m_originalTextEdit->setText("Recognizing");
+	emit setOriginalText("Recognizing");
 	QString capture = ocr(th);
 	QStringList list1 = capture.split('\n');
 	QString simplified;
@@ -63,7 +66,7 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 		simplified.append(str);
 		simplified.append('\n');
 	}
-	m_originalTextEdit->setText(simplified);
+	emit setOriginalText(simplified);
 	translate(true);
 }
 
@@ -72,18 +75,18 @@ void RealTimeTranslator::translate(bool clicked)
 	QString original = m_originalTextEdit->toPlainText();
 	std::map<QString, QString> dict;
 	auto encoded = m_glossary.encode(original, dict);
+	emit setTranslateText("Translating");
 	m_translator.translate(encoded, QOnlineTranslator::Google, QOnlineTranslator::SimplifiedChinese);
-	m_translateTextEdit->setText("Translating");
 	QObject::connect(&m_translator, &QOnlineTranslator::finished, [=] {
 		if (this->m_translator.error() == QOnlineTranslator::NoError)
 		{
 			auto translation = this->m_translator.translation();
 			auto decoded = m_glossary.decode(translation, dict);
-			this->m_translateTextEdit->setText(decoded);
+			emit setTranslateText(decoded);
 		}
 		else
 		{
-			this->m_translateTextEdit->setText(this->m_translator.errorString());
+			emit setTranslateText(this->m_translator.errorString());
 		}
 		});
 }
@@ -101,4 +104,9 @@ void RealTimeTranslator::selectRoi(bool clicked)
 	auto canvas = new InvisibleCanvas(this->m_roi);
 	canvas->showCanvas(img, windowRect);
 	canvas->show();
+}
+
+void RealTimeTranslator::test()
+{
+	emit setTranslateText("test");
 }
