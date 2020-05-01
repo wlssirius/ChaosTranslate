@@ -19,6 +19,8 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	connect(m_translateButton, &QPushButton::clicked, this, &RealTimeTranslator::translate);
 	m_glossaryButton = findChild<QPushButton*>("pushButton_4");
 	connect(m_glossaryButton, &QPushButton::clicked, &m_glossary, &GlossaryManager::showDialog);
+	m_fontColorButton = findChild<QPushButton*>("pushButton_5");
+	connect(m_fontColorButton, &QPushButton::clicked, this, &RealTimeTranslator::selectFontColor);
 	m_originalTextEdit = findChild<QTextEdit*>("textEdit");
 	connect(this, &RealTimeTranslator::setOriginalText, m_originalTextEdit, &QTextEdit::setText);
 	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
@@ -28,6 +30,8 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	m_roi.right = 0;
 	m_roi.top = 0;
 	m_roi.bottom = 0;
+
+	connect(this, &RealTimeTranslator::beginTranslate, this, &RealTimeTranslator::translate);
 
 	m_watcher.setApplication(FindWindow(0, L"ƒ‰ƒ“ƒX‚P‚O"));
 }
@@ -67,7 +71,8 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 		simplified.append('\n');
 	}
 	emit setOriginalText(simplified);
-	translate(true);
+	emit beginTranslate(true);
+	//translate(true);
 }
 
 void RealTimeTranslator::translate(bool clicked)
@@ -101,12 +106,22 @@ void RealTimeTranslator::selectRoi(bool clicked)
 	emptyRect.bottom = 0;
 	PIX* img = m_watcher.capture(emptyRect);
 	//m_canvas.showCanvas(windowRect);
-	auto canvas = new InvisibleCanvas(this->m_roi);
+	auto canvas = new InvisibleCanvas(InvisibleCanvas::Mode::Color);
+	connect(canvas, &InvisibleCanvas::setROI, this, [this](RECT rect) {this->m_roi = rect; });
 	canvas->showCanvas(img, windowRect);
 	canvas->show();
 }
 
-void RealTimeTranslator::test()
+void RealTimeTranslator::selectFontColor(bool clicked)
 {
-	emit setTranslateText("test");
+	auto windowRect = m_watcher.getWindowSize();
+	RECT emptyRect;
+	emptyRect.left = 0;
+	emptyRect.right = 0;
+	emptyRect.top = 0;
+	emptyRect.bottom = 0;
+	PIX* img = m_watcher.capture(emptyRect);
+	auto canvas = new InvisibleCanvas(InvisibleCanvas::Mode::Color);
+	canvas->showCanvas(img, windowRect);
+	canvas->show();
 }

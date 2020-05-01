@@ -7,22 +7,31 @@
 #include <functional>
 #include <leptonica/allheaders.h>
 
+
+
 class InvisibleCanvas: public QDialog
 {
+    Q_OBJECT
 public:
-	InvisibleCanvas(RECT& rect);
-
+    enum class Mode
+    {
+        ROI,
+        Color
+    };
+	InvisibleCanvas(Mode mode);
     void showCanvas(PIX* img, RECT rect);
     void mousePressEvent(QMouseEvent* event) override;
     void InvisibleCanvas::mouseMoveEvent(QMouseEvent* event) override;
     void InvisibleCanvas::mouseReleaseEvent(QMouseEvent* event) override;
 
+signals:
+    void setROI(RECT rect);
+
 private:
-    std::function<void(RECT)> m_callback;
-    void loadImage();
+    Mode m_mode;
     QRubberBand* m_rubberBand = nullptr;
     QPoint m_origin;
     QPoint m_endPoint;
     QLabel* m_imageLabel;
-    RECT& m_roiRect;
+    RECT m_roiRect;
 };

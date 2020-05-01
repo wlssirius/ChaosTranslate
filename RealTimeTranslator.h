@@ -18,17 +18,19 @@ public:
 	void captureAndTranslate(bool clicked);
 	void translate(bool clicked);
 	void selectRoi(bool clicked);
+	void selectFontColor(bool clicked);
 	void setRoi(RECT roi) { m_roi = roi; }
 
 signals:
 	void setOriginalText(const QString& text);
 	void setTranslateText(const QString& text);
-
+	void beginTranslate(bool clicked);
 
 private:
 	Ui::RealTimeTranslatorClass ui;
 	QPushButton* m_captureButton;
 	QPushButton* m_roiButton;
+	QPushButton* m_fontColorButton;
 	QPushButton* m_translateButton;
 	QPushButton* m_glossaryButton;
 	QTextEdit* m_originalTextEdit;
