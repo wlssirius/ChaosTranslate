@@ -4,6 +4,7 @@
 #include "qtextedit.h"
 #include "qonlinetranslator.h"
 #include "qrubberband.h"
+#include "qcheckbox.h"
 #include "ApplicationWatcher.h"
 #include "InvisibleCanvas.h"
 #include "GlossaryManager.h"
@@ -27,6 +28,8 @@ signals:
 	void beginTranslate(bool clicked);
 
 private:
+	void thresholdByFontColor(PIX* pix);
+
 	Ui::RealTimeTranslatorClass ui;
 	QPushButton* m_captureButton;
 	QPushButton* m_roiButton;
@@ -35,10 +38,11 @@ private:
 	QPushButton* m_glossaryButton;
 	QTextEdit* m_originalTextEdit;
 	QTextEdit* m_translateTextEdit;
+	QCheckBox* m_fontColorCheckBox;
 	QOnlineTranslator m_translator;
 
 	ApplicationWatcher m_watcher;
 	GlossaryManager m_glossary;
 	RECT m_roi;
-
+	QColor m_color;
 };

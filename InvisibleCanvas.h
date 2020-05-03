@@ -6,7 +6,7 @@
 #include "qobject.h"
 #include <functional>
 #include <leptonica/allheaders.h>
-
+#include <QColor>
 
 
 class InvisibleCanvas: public QDialog
@@ -26,6 +26,7 @@ public:
 
 signals:
     void setROI(RECT rect);
+    void setColor(QColor color);
 
 private:
     Mode m_mode;

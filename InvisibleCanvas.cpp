@@ -58,7 +58,7 @@ void InvisibleCanvas::mouseMoveEvent(QMouseEvent* event)
 
 void InvisibleCanvas::mouseReleaseEvent(QMouseEvent* event)
 {
-    if (m_mode == Mode::Color)
+    if (m_mode == Mode::ROI)
     {
         m_endPoint = event->pos();
         m_rubberBand->hide();
@@ -74,7 +74,10 @@ void InvisibleCanvas::mouseReleaseEvent(QMouseEvent* event)
     }
     else
     {
-        
+        int x = event->pos().x();
+        int y = event->pos().y();
+        QColor color = m_imageLabel->pixmap()->toImage().pixelColor(x, y);
+        emit setColor(color);
     }
     this->destroy();
 }
