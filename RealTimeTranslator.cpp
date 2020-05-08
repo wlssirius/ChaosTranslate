@@ -18,6 +18,7 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	m_translateButton = findChild<QPushButton*>("pushButton_3");
 	connect(m_translateButton, &QPushButton::clicked, this, &RealTimeTranslator::translate);
 	m_glossaryButton = findChild<QPushButton*>("pushButton_4");
+	m_glossaryButton->setHidden(true);
 	connect(m_glossaryButton, &QPushButton::clicked, &m_glossary, &GlossaryManager::showDialog);
 	m_fontColorButton = findChild<QPushButton*>("pushButton_5");
 	connect(m_fontColorButton, &QPushButton::clicked, this, &RealTimeTranslator::selectFontColor);
