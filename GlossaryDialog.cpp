@@ -20,6 +20,18 @@ GlossaryDialog::GlossaryDialog():
 	m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
+GlossaryDialog::~GlossaryDialog()
+{
+	if (m_newGlossaryDialog != nullptr)
+	{
+		delete m_newGlossaryDialog;
+	}
+	if (m_model != nullptr)
+	{
+		delete m_model;
+	}
+}
+
 void GlossaryDialog::addRow(bool clicked)
 {
 	//int rowCount = m_model->getGlossaryCount();

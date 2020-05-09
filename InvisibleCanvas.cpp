@@ -38,7 +38,7 @@ void InvisibleCanvas::showCanvas(PIX* pix, RECT rect)
 
 void InvisibleCanvas::mousePressEvent(QMouseEvent* event)
 {
-    if (m_mode == Mode::Color)
+    if (m_mode == Mode::ROI)
     {
         m_origin = event->pos();
         if (!m_rubberBand)
@@ -50,7 +50,7 @@ void InvisibleCanvas::mousePressEvent(QMouseEvent* event)
 
 void InvisibleCanvas::mouseMoveEvent(QMouseEvent* event)
 {
-    if (m_mode == Mode::Color)
+    if (m_mode == Mode::ROI)
     {
         m_rubberBand->setGeometry(QRect(m_origin, event->pos()).normalized());
     }

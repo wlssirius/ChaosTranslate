@@ -4,11 +4,16 @@
 
 GlossaryManager::GlossaryManager()
 {
-	m_codes.emplace_back("++++");
-	m_codes.emplace_back("----");
-	m_codes.emplace_back("====");
-	m_codes.emplace_back("&&&&");
-	m_codes.emplace_back("****");
+	m_dialog = nullptr;
+	//m_codes.emplace_back("++++");
+	//m_codes.emplace_back("----");
+	//m_codes.emplace_back("====");
+	//m_codes.emplace_back("&&&&");
+	//m_codes.emplace_back("****");
+}
+
+GlossaryManager::~GlossaryManager()
+{
 }
 
 void GlossaryManager::showDialog()

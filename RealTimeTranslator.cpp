@@ -113,11 +113,11 @@ void RealTimeTranslator::selectRoi(bool clicked)
 	emptyRect.top = 0;
 	emptyRect.bottom = 0;
 	PIX* img = m_watcher.capture(emptyRect);
-	//m_canvas.showCanvas(windowRect);
-	auto canvas = new InvisibleCanvas(InvisibleCanvas::Mode::ROI);
-	connect(canvas, &InvisibleCanvas::setROI, this, [this](RECT rect) {this->m_roi = rect; });
-	canvas->showCanvas(img, windowRect);
-	canvas->show();
+	////m_canvas.showCanvas(windowRect);
+	//auto canvas = new InvisibleCanvas(InvisibleCanvas::Mode::ROI);
+	//connect(canvas, &InvisibleCanvas::setROI, this, [this](RECT rect) {this->m_roi = rect; });
+	//canvas->showCanvas(img, windowRect);
+	//canvas->show();
 }
 
 void RealTimeTranslator::selectFontColor(bool clicked)

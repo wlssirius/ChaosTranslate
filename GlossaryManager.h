@@ -7,6 +7,7 @@ class GlossaryManager: public QObject
 	Q_OBJECT
 public:
 	GlossaryManager();
+	~GlossaryManager();
 	void showDialog();
 	QString encode(QString text, std::map<QString, QString>& dict);
 	QString decode(QString text, const std::map<QString, QString>& dict);
