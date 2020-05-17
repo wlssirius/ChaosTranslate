@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="RealTimeTranslator">
-    </qresource>
+  <qresource prefix="RealTimeTranslator">
+    <file>Resources/Chaos.png</file>
+  </qresource>
 </RCC>

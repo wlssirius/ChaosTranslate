@@ -9,18 +9,18 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 {
 	ui.setupUi(this);
 
-	m_captureButton = findChild<QPushButton*>("pushButton");
+	m_captureButton = findChild<QPushButton*>("captureButton");
 
 	connect(m_captureButton, &QPushButton::clicked, this,
 		[this](bool clicked) { QtConcurrent::run(this, &RealTimeTranslator::captureAndTranslate, clicked); });
-	m_roiButton = findChild<QPushButton*>("pushButton_2");
+	m_roiButton = findChild<QPushButton*>("ROIButton");
 	connect(m_roiButton, &QPushButton::clicked, this, &RealTimeTranslator::selectRoi);
-	m_translateButton = findChild<QPushButton*>("pushButton_3");
+	m_translateButton = findChild<QPushButton*>("translateButton");
 	connect(m_translateButton, &QPushButton::clicked, this, &RealTimeTranslator::translate);
-	m_glossaryButton = findChild<QPushButton*>("pushButton_4");
+	m_glossaryButton = findChild<QPushButton*>("glossaryButton");
 	m_glossaryButton->setHidden(true);
 	connect(m_glossaryButton, &QPushButton::clicked, &m_glossary, &GlossaryManager::showDialog);
-	m_fontColorButton = findChild<QPushButton*>("pushButton_5");
+	m_fontColorButton = findChild<QPushButton*>("fontColorButton");
 	connect(m_fontColorButton, &QPushButton::clicked, this, &RealTimeTranslator::selectFontColor);
 	m_originalTextEdit = findChild<QTextEdit*>("textEdit");
 	connect(this, &RealTimeTranslator::setOriginalText, m_originalTextEdit, &QTextEdit::setText);
