@@ -16,6 +16,7 @@ public:
 	void setApplication(HWND handle) { m_appHandle = handle; }
 	PIX* capture(RECT roi);
 	RECT getWindowSize();
+	void getHWND();
 
 private:
 	HWND m_appHandle;

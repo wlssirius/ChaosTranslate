@@ -1,4 +1,5 @@
 #include "ApplicationWatcher.h"
+#include "winuser.h"
 
 RECT ApplicationWatcher::getWindowSize()
 {
@@ -49,3 +50,35 @@ PIX* ApplicationWatcher::capture(RECT roi) {
     return pixd;
 }
 
+BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam);
+
+void ApplicationWatcher::getHWND()
+{
+    std::cout << "Finding all open windows" << std::endl;
+    int i = 0;
+    if (EnumWindows(EnumWindowsProc, (LPARAM)&i)) {
+        std::cout << i << " windows are open\n" << "Call was successful...\n" << std::endl;
+    }
+    else {
+        std::cout << "Call was unsuccessful...\n" << std::endl;
+    }
+    std::cin.get();
+}
+
+BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
+{
+    int* i = (int*)lParam;
+    ++(*i);
+    int length = GetWindowTextLengthA(hWnd);
+    std::vector<char> WindowTitle(length + 1); 
+    HICON icon = (HICON)GetClassLong(hWnd, GCLP_HICON);
+    length = GetWindowTextA(hWnd, &WindowTitle[0], length + 1);
+    if (length > 0) {
+        WindowTitle[length] = 0;
+        std::cout << &WindowTitle[0] << std::endl;
+    }
+    else {
+        std::cout << "(none)" << std::endl;
+    }
+    return TRUE;
+}

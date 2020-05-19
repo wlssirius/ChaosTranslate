@@ -31,6 +31,7 @@ private:
 	void thresholdByFontColor(PIX* pix);
 
 	Ui::RealTimeTranslatorClass ui;
+	QPushButton* m_selectAppButton;
 	QPushButton* m_captureButton;
 	QPushButton* m_roiButton;
 	QPushButton* m_fontColorButton;

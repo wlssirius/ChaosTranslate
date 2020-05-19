@@ -9,8 +9,9 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 {
 	ui.setupUi(this);
 
+	m_selectAppButton = findChild<QPushButton*>("selectAppButton");
+	connect(m_selectAppButton, &QPushButton::clicked, this, [this](bool clicked) {this->m_watcher.getHWND(); });
 	m_captureButton = findChild<QPushButton*>("captureButton");
-
 	connect(m_captureButton, &QPushButton::clicked, this,
 		[this](bool clicked) { QtConcurrent::run(this, &RealTimeTranslator::captureAndTranslate, clicked); });
 	m_roiButton = findChild<QPushButton*>("ROIButton");
