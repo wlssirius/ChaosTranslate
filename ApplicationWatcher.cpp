@@ -50,35 +50,27 @@ PIX* ApplicationWatcher::capture(RECT roi) {
     return pixd;
 }
 
-BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam);
 
-void ApplicationWatcher::getHWND()
+using appInfo = std::pair<std::string, HICON>;
+std::vector<appInfo> ApplicationWatcher::getAppInfoList()
 {
-    std::cout << "Finding all open windows" << std::endl;
-    int i = 0;
-    if (EnumWindows(EnumWindowsProc, (LPARAM)&i)) {
-        std::cout << i << " windows are open\n" << "Call was successful...\n" << std::endl;
-    }
-    else {
-        std::cout << "Call was unsuccessful...\n" << std::endl;
-    }
-    std::cin.get();
-}
+    auto EnumWindowsProc = [](HWND hWnd, LPARAM lParam)
+    {
+        auto apps = (std::vector<appInfo>*)lParam;
+        int length = GetWindowTextLengthA(hWnd);
+        std::string title;
+        title.reserve(length+1);
+        GetWindowTextA(hWnd, const_cast<char*>(title.c_str()), length + 1);
+        HICON icon = (HICON)GetClassLong(hWnd, GCLP_HICON);
+        if (length > 0 && icon!=NULL) 
+        {
+            int length = GetWindowTextLengthA(hWnd);
+            apps->emplace_back(title, icon);
+        }
+        return TRUE;
+    };
 
-BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
-{
-    int* i = (int*)lParam;
-    ++(*i);
-    int length = GetWindowTextLengthA(hWnd);
-    std::vector<char> WindowTitle(length + 1); 
-    HICON icon = (HICON)GetClassLong(hWnd, GCLP_HICON);
-    length = GetWindowTextA(hWnd, &WindowTitle[0], length + 1);
-    if (length > 0) {
-        WindowTitle[length] = 0;
-        std::cout << &WindowTitle[0] << std::endl;
-    }
-    else {
-        std::cout << "(none)" << std::endl;
-    }
-    return TRUE;
+    std::vector<appInfo> apps;
+    EnumWindows(EnumWindowsProc, (LPARAM)&apps);
+    return apps;
 }

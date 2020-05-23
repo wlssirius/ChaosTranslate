@@ -3,6 +3,7 @@
 #include "characterrecognize.h"
 #include "qdialog.h"
 #include "QtConcurrent/QtConcurrent"
+#include "AppSelectDialog.h"
 
 RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	: QMainWindow(parent)
@@ -10,7 +11,7 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	ui.setupUi(this);
 
 	m_selectAppButton = findChild<QPushButton*>("selectAppButton");
-	connect(m_selectAppButton, &QPushButton::clicked, this, [this](bool clicked) {this->m_watcher.getHWND(); });
+	connect(m_selectAppButton, &QPushButton::clicked, this, &RealTimeTranslator::selectApp);
 	m_captureButton = findChild<QPushButton*>("captureButton");
 	connect(m_captureButton, &QPushButton::clicked, this,
 		[this](bool clicked) { QtConcurrent::run(this, &RealTimeTranslator::captureAndTranslate, clicked); });
@@ -37,6 +38,13 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	connect(this, &RealTimeTranslator::beginTranslate, this, &RealTimeTranslator::translate);
 
 	m_watcher.setApplication(FindWindow(0, L"ƒ‰ƒ“ƒX‚P‚O"));
+}
+
+void RealTimeTranslator::selectApp(bool clicked)
+{
+	auto appList = m_watcher.getAppInfoList();
+	auto appSelectDialog = new AppSelectDialog(appList);
+	appSelectDialog->show();
 }
 
 void RealTimeTranslator::captureAndTranslate(bool clicked)

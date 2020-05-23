@@ -16,6 +16,7 @@ class RealTimeTranslator : public QMainWindow
 public:
 	RealTimeTranslator(QWidget *parent = Q_NULLPTR);
 
+	void selectApp(bool clicked);
 	void captureAndTranslate(bool clicked);
 	void translate(bool clicked);
 	void selectRoi(bool clicked);

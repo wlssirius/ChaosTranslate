@@ -11,12 +11,13 @@
 class ApplicationWatcher
 {
 public:
+	using appInfo = std::pair<std::string, HICON>;
 	ApplicationWatcher(HWND handle = nullptr) { m_appHandle = handle; }
 
 	void setApplication(HWND handle) { m_appHandle = handle; }
 	PIX* capture(RECT roi);
 	RECT getWindowSize();
-	void getHWND();
+	std::vector<appInfo> getAppInfoList();
 
 private:
 	HWND m_appHandle;
