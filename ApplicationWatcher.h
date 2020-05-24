@@ -7,6 +7,7 @@
 #include <wchar.h>
 #include <vector>
 #include <leptonica/allheaders.h>
+#include "QString"
 
 class ApplicationWatcher
 {
@@ -14,7 +15,7 @@ public:
 	using appInfo = std::pair<std::string, HICON>;
 	ApplicationWatcher(HWND handle = nullptr) { m_appHandle = handle; }
 
-	void setApplication(HWND handle) { m_appHandle = handle; }
+	void setApplication(QString windowTitle);
 	PIX* capture(RECT roi);
 	RECT getWindowSize();
 	std::vector<appInfo> getAppInfoList();

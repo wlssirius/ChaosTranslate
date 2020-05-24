@@ -8,6 +8,16 @@ RECT ApplicationWatcher::getWindowSize()
     return window_rect;
 }
 
+void ApplicationWatcher::setApplication(QString windowTitle)
+{
+    int len = windowTitle.length();
+    wchar_t* wcharTitle = new wchar_t[len+1];
+    windowTitle.toWCharArray(wcharTitle);
+    wcharTitle[len] = NULL;
+    m_appHandle = FindWindow(0, wcharTitle);
+    delete[] wcharTitle;
+}
+
 PIX* ApplicationWatcher::capture(RECT roi) {
     RECT client_rect = { 0 };
     GetClientRect(m_appHandle, &client_rect);
@@ -58,14 +68,13 @@ std::vector<appInfo> ApplicationWatcher::getAppInfoList()
     {
         auto apps = (std::vector<appInfo>*)lParam;
         int length = GetWindowTextLengthA(hWnd);
-        std::string title;
-        title.reserve(length+1);
+        std::string title(length + 1, NULL);
         GetWindowTextA(hWnd, const_cast<char*>(title.c_str()), length + 1);
         HICON icon = (HICON)GetClassLong(hWnd, GCLP_HICON);
         if (length > 0 && icon!=NULL) 
         {
             int length = GetWindowTextLengthA(hWnd);
-            apps->emplace_back(title, icon);
+            apps->push_back(std::make_pair(title, icon));
         }
         return TRUE;
     };

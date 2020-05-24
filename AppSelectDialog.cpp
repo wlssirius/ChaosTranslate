@@ -11,6 +11,8 @@ AppSelectDialog::AppSelectDialog(std::vector<std::pair<std::string, HICON>> appL
 	m_ok = findChild<QPushButton*>("okButton");
 	m_cancel = findChild<QPushButton*>("cancelButton");
 
+	connect(m_ok, &QPushButton::clicked, this, &AppSelectDialog::onPressOK);
+
 	for (auto appInfo : appList)
 	{
 		QListWidgetItem* item = new QListWidgetItem;
@@ -20,4 +22,10 @@ AppSelectDialog::AppSelectDialog(std::vector<std::pair<std::string, HICON>> appL
 		item->setText(title);
 		m_listWidget->addItem(item);
 	}
+}
+
+void AppSelectDialog::onPressOK(bool clicked)
+{
+	auto item = m_listWidget->selectedItems();
+	emit selectApp(item[0]->text());
 }

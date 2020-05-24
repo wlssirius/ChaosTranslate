@@ -36,8 +36,6 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	m_roi.bottom = 0;
 
 	connect(this, &RealTimeTranslator::beginTranslate, this, &RealTimeTranslator::translate);
-
-	m_watcher.setApplication(FindWindow(0, L"ƒ‰ƒ“ƒX‚P‚O"));
 }
 
 void RealTimeTranslator::selectApp(bool clicked)
@@ -45,6 +43,7 @@ void RealTimeTranslator::selectApp(bool clicked)
 	auto appList = m_watcher.getAppInfoList();
 	auto appSelectDialog = new AppSelectDialog(appList);
 	appSelectDialog->show();
+	connect(appSelectDialog, &AppSelectDialog::selectApp, this, [this](QString str) {this->m_watcher.setApplication(str); });
 }
 
 void RealTimeTranslator::captureAndTranslate(bool clicked)
@@ -64,6 +63,7 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 	{
 		processed = pixClipRectangle(pix, roi, NULL);
 	}
+	pixWrite("D:/capture.png", processed, IFF_PNG);
 	emit setOriginalText("Recognizing");
 	if (m_fontColorCheckBox->isChecked())
 	{

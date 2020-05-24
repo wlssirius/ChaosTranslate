@@ -7,8 +7,16 @@
 
 class AppSelectDialog : public QDialog
 {
+	Q_OBJECT
+
 public:
 	AppSelectDialog(std::vector<std::pair<std::string, HICON>> appList);
+
+signals:
+	void selectApp(QString title);
+
+public slots:
+	void onPressOK(bool clicked);
 
 private:
 	Ui::SelectApp ui;

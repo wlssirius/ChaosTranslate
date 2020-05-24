@@ -8,6 +8,7 @@
 #include "ApplicationWatcher.h"
 #include "InvisibleCanvas.h"
 #include "GlossaryManager.h"
+#include "QString"
 
 class RealTimeTranslator : public QMainWindow
 {
@@ -47,4 +48,5 @@ private:
 	GlossaryManager m_glossary;
 	RECT m_roi;
 	QColor m_color;
+	QString m_appTitle;
 };
