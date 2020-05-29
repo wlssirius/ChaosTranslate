@@ -20,11 +20,6 @@ void ApplicationWatcher::setApplication(QString windowTitle)
 
 PIX* ApplicationWatcher::capture(RECT roi) 
 {
-    RECT client_rect = { 0 };
-    GetClientRect(m_appHandle, &client_rect);
-    int windowWidth = client_rect.right - client_rect.left;
-    int windowHeight = client_rect.bottom - client_rect.top;
-//
 //    HDC hdcScreen = GetDC(m_appHandle);
 //    HDC hdc = CreateCompatibleDC(hdcScreen);
 //    HBITMAP hbmp = CreateCompatibleBitmap(hdcScreen, windowWidth, windowHeight);
@@ -40,13 +35,62 @@ PIX* ApplicationWatcher::capture(RECT roi)
 //    BYTE* bmp_pixels = new BYTE[(width * 3 + bmp_padding) * height];
 //    GetDIBits(hdc, hbmp, 0, height, bmp_pixels, &bmp_info, DIB_RGB_COLORS);
 
+    //auto enumProc = [](HMONITOR Arg1,
+    //    HDC hScreenDC,
+    //    LPRECT rect,
+    //    LPARAM Arg4)->BOOL
+    //{
+    //    int a = 0;
+    //    HDC hMemoryDC = CreateCompatibleDC(hScreenDC);
+
+    //    int width = rect->right -rect->left;
+    //    int height = rect->bottom - rect->top;
+
+    //    HBITMAP hBitmap = CreateCompatibleBitmap(hScreenDC, width, height);
+    //    HBITMAP hOldBitmap = (HBITMAP)SelectObject(hMemoryDC, hBitmap);
+
+    //    BitBlt(hMemoryDC, rect->left, rect->top, width, height, hScreenDC, 0, 0, SRCCOPY);
+    //    hBitmap = (HBITMAP)SelectObject(hMemoryDC, hOldBitmap);
+
+    //    BITMAPINFO bmp_info = { 0 };
+    //    bmp_info.bmiHeader.biSize = sizeof(bmp_info.bmiHeader);
+    //    bmp_info.bmiHeader.biWidth = width;
+    //    bmp_info.bmiHeader.biHeight = height;
+    //    bmp_info.bmiHeader.biPlanes = 1;
+    //    bmp_info.bmiHeader.biBitCount = 24;
+    //    bmp_info.bmiHeader.biCompression = BI_RGB;
+
+    //    int bmp_padding = (width * 3) % 4;
+    //    if (bmp_padding != 0) bmp_padding = 4 - bmp_padding;
+
+    //    BYTE* bmp_pixels = new BYTE[(width * 3 + bmp_padding) * height];
+    //    GetDIBits(hMemoryDC, hBitmap, 0, height, bmp_pixels, &bmp_info, DIB_RGB_COLORS);
+
+    //    Pix* pixd = pixCreate(width, height, 32);
+    //    for (int y = 0; y < height; y++) {
+    //        for (int x = 0; x < width; x++) {
+    //            pixSetRGBPixel(pixd, x, height - y - 1, bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x + 2], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x + 1], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x]);
+    //        }
+    //    }
+    //    pixWrite("D:/pixd.png", pixd, IFF_PNG);
+
+    //    return true;
+    //};
+
+    //HDC hdc = GetDC(NULL);
+    //EnumDisplayMonitors(hdc, NULL, enumProc, 0);
+    //ReleaseDC(NULL, hdc);
+
+    RECT window_rect = { 0 };
+    GetWindowRect(m_appHandle, &window_rect);
+
     // get the device context of the screen
     HDC hScreenDC = CreateDC(L"DISPLAY", NULL, NULL, NULL);
     // and a device context to put it in
     HDC hMemoryDC = CreateCompatibleDC(hScreenDC);
 
-    int width = GetDeviceCaps(hScreenDC, HORZRES);
-    int height = GetDeviceCaps(hScreenDC, VERTRES);
+    int width = window_rect.right - window_rect.left;
+    int height = window_rect.bottom - window_rect.top;
 
     // maybe worth checking these are positive values
     HBITMAP hBitmap = CreateCompatibleBitmap(hScreenDC, width, height);
@@ -54,7 +98,7 @@ PIX* ApplicationWatcher::capture(RECT roi)
     // get a new bitmap
     HBITMAP hOldBitmap = (HBITMAP)SelectObject(hMemoryDC, hBitmap);
 
-    BitBlt(hMemoryDC, 0, 0, width, height, hScreenDC, 0, 0, SRCCOPY);
+    BitBlt(hMemoryDC, 0, 0, width, height, hScreenDC, window_rect.left, window_rect.top, SRCCOPY);
     hBitmap = (HBITMAP)SelectObject(hMemoryDC, hOldBitmap);
 
     BITMAPINFO bmp_info = { 0 };
