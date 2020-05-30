@@ -2,10 +2,10 @@
 #include <leptonica/allheaders.h>
 #include <iostream>
 
-QString ocr(PIX* pix)
+QString ocr(PIX* pix, QString language)
 {
     tesseract::TessBaseAPI tess;
-    if (tess.Init("D:/GitHub/tessdata_best/tessdata", "jpn"))
+    if (tess.Init("D:/GitHub/tessdata_best/tessdata", language.toStdString().c_str()))
     {
         std::cout << "OCRTesseract: Could not initialize tesseract." << std::endl;
         return 1;

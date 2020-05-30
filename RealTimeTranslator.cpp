@@ -4,6 +4,7 @@
 #include "qdialog.h"
 #include "QtConcurrent/QtConcurrent"
 #include "AppSelectDialog.h"
+#include "LanguageMapping.h"
 
 RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	: QMainWindow(parent)
@@ -29,6 +30,18 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
 	connect(this, &RealTimeTranslator::setTranslateText, m_translateTextEdit, &QTextEdit::setText);
 	m_fontColorCheckBox = findChild<QCheckBox*>("checkBox");
+	m_srcLanguageComboBox = findChild<QComboBox*>("srcLanguageComboBox");
+	m_tgtLanguageComboBox = findChild<QComboBox*>("tgtLanguageComboBox");
+	for (int idx = 0; idx <= QOnlineTranslator::Language::Zulu; idx++)
+	{
+		QString language = QVariant::fromValue(QOnlineTranslator::Language(idx)).toString();
+		m_srcLanguageComboBox->addItem(language);
+		m_tgtLanguageComboBox->addItem(language);
+	}
+	m_srcLanguageComboBox->setCurrentIndex(m_sourceLanguage);
+	m_tgtLanguageComboBox->setCurrentIndex(m_targetLanguage);
+	connect(m_srcLanguageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setSourceLanguage(int)));
+	connect(m_tgtLanguageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setTargetLanguage(int)));
 
 	m_roi.left = 0;
 	m_roi.right = 0;
@@ -71,7 +84,8 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 		thresholdByFontColor(processed);
 		pixWrite("D:/TestFile_Post_Process.png", processed, IFF_PNG);
 	}
-	QString capture = ocr(processed);
+	QString language = languageMapping::qtToTesseract[m_sourceLanguage];
+	QString capture = ocr(processed, language);
 	QStringList list1 = capture.split('\n');
 	QString simplified; 
 	for (auto str : list1)
@@ -98,7 +112,7 @@ void RealTimeTranslator::translate(bool clicked)
 	std::map<QString, QString> dict;
 	auto encoded = m_glossary.encode(original, dict);
 	emit setTranslateText("Translating");
-	m_translator.translate(encoded, QOnlineTranslator::Google, QOnlineTranslator::SimplifiedChinese);
+	m_translator.translate(encoded, QOnlineTranslator::Google, m_targetLanguage);
 	QObject::connect(&m_translator, &QOnlineTranslator::finished, [=] {
 		if (this->m_translator.error() == QOnlineTranslator::NoError)
 		{
@@ -142,6 +156,16 @@ void RealTimeTranslator::selectFontColor(bool clicked)
 	connect(canvas, &InvisibleCanvas::setColor, this, [this](QColor color) {this->m_color = color; });
 	canvas->showCanvas(img, windowRect);
 	canvas->show();
+}
+
+void RealTimeTranslator::setSourceLanguage(int idx)
+{
+	m_sourceLanguage = QOnlineTranslator::Language(idx);
+}
+
+void RealTimeTranslator::setTargetLanguage(int idx)
+{
+	m_targetLanguage = QOnlineTranslator::Language(idx);
 }
 
 

@@ -5,6 +5,7 @@
 #include "qonlinetranslator.h"
 #include "qrubberband.h"
 #include "qcheckbox.h"
+#include "qcombobox.h"
 #include "ApplicationWatcher.h"
 #include "InvisibleCanvas.h"
 #include "GlossaryManager.h"
@@ -24,6 +25,10 @@ public:
 	void selectFontColor(bool clicked);
 	void setRoi(RECT roi) { m_roi = roi; }
 
+public slots:
+	void setSourceLanguage(int idx);
+	void setTargetLanguage(int idx);
+
 signals:
 	void setOriginalText(const QString& text);
 	void setTranslateText(const QString& text);
@@ -42,7 +47,12 @@ private:
 	QTextEdit* m_originalTextEdit;
 	QTextEdit* m_translateTextEdit;
 	QCheckBox* m_fontColorCheckBox;
+	QComboBox* m_srcLanguageComboBox;
+	QComboBox* m_tgtLanguageComboBox;
+
 	QOnlineTranslator m_translator;
+	QOnlineTranslator::Language m_sourceLanguage = QOnlineTranslator::Language::Japanese;
+	QOnlineTranslator::Language m_targetLanguage = QOnlineTranslator::Language::SimplifiedChinese;
 
 	ApplicationWatcher m_watcher;
 	GlossaryManager m_glossary;
