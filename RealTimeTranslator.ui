@@ -219,6 +219,12 @@
      <height>23</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuLanguage">
+    <property name="title">
+     <string>Language</string>
+    </property>
+   </widget>
+   <addaction name="menuLanguage"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

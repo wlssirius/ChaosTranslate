@@ -11,6 +11,8 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 {
 	ui.setupUi(this);
 
+	createLanguageMenu();
+
 	m_selectAppButton = findChild<QPushButton*>("selectAppButton");
 	connect(m_selectAppButton, &QPushButton::clicked, this, &RealTimeTranslator::selectApp);
 	m_captureButton = findChild<QPushButton*>("captureButton");
@@ -202,5 +204,100 @@ void RealTimeTranslator::thresholdByFontColor(PIX* pix)
 				pixSetRGBPixel(pix, i, j, 0, 0, 0);
 			}
 		}
+	}
+}
+
+void RealTimeTranslator::switchTranslator(QTranslator& translator, const QString& filename)
+{
+	// remove the old translator
+	qApp->removeTranslator(&translator);
+
+	// load the new translator
+	QString path = QApplication::applicationDirPath();
+	path.append("/");
+	if (translator.load(path + filename)) //Here Path and Filename has to be entered because the system didn't find the QM Files else
+		qApp->installTranslator(&translator);
+}
+
+void RealTimeTranslator::loadLanguage(const QString& rLanguage)
+{
+	if (m_currUILang != rLanguage) {
+		m_currUILang = rLanguage;
+		QLocale locale = QLocale(m_currUILang);
+		QLocale::setDefault(locale);
+		QString languageName = QLocale::languageToString(locale.language());
+		switchTranslator(m_uiTranslator, QString("realtimetranslator_%1.qm").arg(rLanguage));
+		//ui.statusBar->showMessage(tr("Current Language changed to %1").arg(languageName));
+	}
+}
+
+void RealTimeTranslator::createLanguageMenu(void)
+{
+	QActionGroup* langGroup = new QActionGroup(ui.menuLanguage);
+	langGroup->setExclusive(true);
+
+	connect(langGroup, SIGNAL(triggered(QAction*)), this, SLOT(slotLanguageChanged(QAction*)));
+
+	// format systems language
+	QString defaultLocale = QLocale::system().name(); // e.g. "de_DE"
+	defaultLocale.truncate(defaultLocale.lastIndexOf('_')); // e.g. "de"
+
+	QDir dir("");
+	QStringList fileNames = dir.entryList(QStringList("realtimetranslator_*.qm"));
+
+	for (int i = 0; i < fileNames.size(); ++i) {
+		// get locale extracted by filename
+		QString locale;
+		locale = fileNames[i]; // "TranslationExample_de.qm"
+		locale.truncate(locale.lastIndexOf('.')); // "TranslationExample_de"
+		locale.remove(0, locale.indexOf('_') + 1); // "de"
+
+		QString lang = QLocale::languageToString(QLocale(locale).language());
+		QIcon ico(QString("%1.png").arg(locale));
+
+		QAction* action = new QAction(ico, lang, this);
+		action->setCheckable(true);
+		action->setData(locale);
+
+		ui.menuLanguage->addAction(action);
+		langGroup->addAction(action);
+
+		// set default translators and language checked
+		if (defaultLocale == locale)
+		{
+			action->setChecked(true);
+		}
+	}
+}
+
+
+void RealTimeTranslator::changeEvent(QEvent* event)
+{
+	if (0 != event) {
+		switch (event->type()) {
+			// this event is send if a translator is loaded
+		case QEvent::LanguageChange:
+			ui.retranslateUi(this);
+			break;
+
+			// this event is send, if the system, language changes
+		case QEvent::LocaleChange:
+		{
+			QString locale = QLocale::system().name();
+			locale.truncate(locale.lastIndexOf('_'));
+			loadLanguage(locale);
+		}
+		break;
+		}
+	}
+	QMainWindow::changeEvent(event);
+}
+
+void RealTimeTranslator::slotLanguageChanged(QAction* action)
+{
+	if (0 != action) {
+		// load the language dependant on the action content
+		loadLanguage(action->data().toString());
+		setWindowIcon(action->icon());
 	}
 }

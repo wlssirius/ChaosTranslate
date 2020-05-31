@@ -6,6 +6,7 @@
 #include "qrubberband.h"
 #include "qcheckbox.h"
 #include "qcombobox.h"
+#include "QTranslator"
 #include "ApplicationWatcher.h"
 #include "InvisibleCanvas.h"
 #include "GlossaryManager.h"
@@ -34,8 +35,17 @@ signals:
 	void setTranslateText(const QString& text);
 	void beginTranslate(bool clicked);
 
+protected:
+	void changeEvent(QEvent* event);
+protected slots:
+	void slotLanguageChanged(QAction* action);
+
 private:
 	void thresholdByFontColor(PIX* pix);
+
+	void switchTranslator(QTranslator& translator, const QString& filename);
+	void loadLanguage(const QString& rLanguage);
+	void createLanguageMenu(void);
 
 	Ui::RealTimeTranslatorClass ui;
 	QPushButton* m_selectAppButton;
@@ -53,6 +63,9 @@ private:
 	QOnlineTranslator m_translator;
 	QOnlineTranslator::Language m_sourceLanguage = QOnlineTranslator::Language::Japanese;
 	QOnlineTranslator::Language m_targetLanguage = QOnlineTranslator::Language::SimplifiedChinese;
+
+	QTranslator m_uiTranslator;
+	QString m_currUILang;
 
 	ApplicationWatcher m_watcher;
 	GlossaryManager m_glossary;
