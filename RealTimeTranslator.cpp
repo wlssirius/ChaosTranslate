@@ -50,6 +50,8 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	m_roi.top = 0;
 	m_roi.bottom = 0;
 
+	loadLanguage("zh");
+
 	connect(this, &RealTimeTranslator::beginTranslate, this, &RealTimeTranslator::translate);
 }
 
@@ -211,7 +213,7 @@ void RealTimeTranslator::switchTranslator(QTranslator& translator, const QString
 {
 	// remove the old translator
 	qApp->removeTranslator(&translator);
-
+	 
 	// load the new translator
 	QString path = QApplication::applicationDirPath();
 	path.append("/");
