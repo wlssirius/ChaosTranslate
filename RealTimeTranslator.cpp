@@ -50,8 +50,6 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	m_roi.top = 0;
 	m_roi.bottom = 0;
 
-	loadLanguage("zh");
-
 	connect(this, &RealTimeTranslator::beginTranslate, this, &RealTimeTranslator::translate);
 }
 
@@ -107,7 +105,6 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 	}
 	emit setOriginalText(simplified);
 	emit beginTranslate(true);
-	//translate(true);
 }
 
 void RealTimeTranslator::translate(bool clicked)
@@ -140,11 +137,6 @@ void RealTimeTranslator::selectRoi(bool clicked)
 	emptyRect.top = 0;
 	emptyRect.bottom = 0;
 	PIX* img = m_watcher.capture(emptyRect);
-	////m_canvas.showCanvas(windowRect);
-	//auto canvas = new InvisibleCanvas(InvisibleCanvas::Mode::ROI);
-	//connect(canvas, &InvisibleCanvas::setROI, this, [this](RECT rect) {this->m_roi = rect; });
-	//canvas->showCanvas(img, windowRect);
-	//canvas->show();
 }
 
 void RealTimeTranslator::selectFontColor(bool clicked)
@@ -268,6 +260,7 @@ void RealTimeTranslator::createLanguageMenu(void)
 		if (defaultLocale == locale)
 		{
 			action->setChecked(true);
+			slotLanguageChanged(action);
 		}
 	}
 }
