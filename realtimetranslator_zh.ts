@@ -6,27 +6,27 @@
     <message>
         <location filename="GlossaryDialog.ui" line="14"/>
         <source>Glossary</source>
-        <translation type="unfinished"></translation>
+        <translation>词典</translation>
     </message>
     <message>
         <location filename="GlossaryDialog.ui" line="57"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="GlossaryDialog.ui" line="64"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="GlossaryDialog.ui" line="90"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>新增</translation>
     </message>
     <message>
         <location filename="GlossaryDialog.ui" line="123"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>删除</translation>
     </message>
 </context>
 <context>
@@ -34,27 +34,27 @@
     <message>
         <location filename="NewGlossary.ui" line="14"/>
         <source>New Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>新增</translation>
     </message>
     <message>
         <location filename="NewGlossary.ui" line="44"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="NewGlossary.ui" line="51"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="NewGlossary.ui" line="77"/>
         <source>Original</source>
-        <translation type="unfinished"></translation>
+        <translation>原文</translation>
     </message>
     <message>
         <location filename="NewGlossary.ui" line="100"/>
         <source>Tranlation</source>
-        <translation type="unfinished"></translation>
+        <translation>翻译</translation>
     </message>
 </context>
 <context>
@@ -77,7 +77,7 @@
     <message>
         <location filename="submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="327"/>
         <source>Automatically detect</source>
-        <translation type="unfinished"></translation>
+        <translation>自动检测</translation>
     </message>
     <message>
         <location filename="submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="329"/>
@@ -742,57 +742,57 @@
     <message>
         <location filename="RealTimeTranslator.ui" line="14"/>
         <source>RealTimeTranslator</source>
-        <translation type="unfinished"></translation>
+        <translation>自动翻译</translation>
     </message>
     <message>
         <location filename="RealTimeTranslator.ui" line="39"/>
         <source>Select Application</source>
-        <translation type="unfinished">选择程序</translation>
+        <translation>选择程序</translation>
     </message>
     <message>
         <location filename="RealTimeTranslator.ui" line="52"/>
         <source>Capture</source>
-        <translation type="unfinished"></translation>
+        <translation>抓图</translation>
     </message>
     <message>
         <location filename="RealTimeTranslator.ui" line="65"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation>翻译</translation>
     </message>
     <message>
         <location filename="RealTimeTranslator.ui" line="78"/>
         <source>Show Glossary</source>
-        <translation type="unfinished"></translation>
+        <translation>查看词典</translation>
     </message>
     <message>
         <location filename="RealTimeTranslator.ui" line="101"/>
         <source>Select Region</source>
-        <translation type="unfinished"></translation>
+        <translation>选择抓取区域</translation>
     </message>
     <message>
         <location filename="RealTimeTranslator.ui" line="108"/>
         <source>Use Region</source>
-        <translation type="unfinished"></translation>
+        <translation>仅检测抓取区域</translation>
     </message>
     <message>
         <location filename="RealTimeTranslator.ui" line="121"/>
         <source>Select Font Color</source>
-        <translation type="unfinished"></translation>
+        <translation>选择目标字体颜色</translation>
     </message>
     <message>
         <location filename="RealTimeTranslator.ui" line="128"/>
         <source>Font Color</source>
-        <translation type="unfinished"></translation>
+        <translation>仅检测此颜色文字</translation>
     </message>
     <message>
         <location filename="RealTimeTranslator.ui" line="147"/>
         <source>Detected Text:</source>
-        <translation type="unfinished"></translation>
+        <translation>检测语言：</translation>
     </message>
     <message>
         <location filename="RealTimeTranslator.ui" line="184"/>
         <source>Translation:</source>
-        <translation type="unfinished"></translation>
+        <translation>翻译语言：</translation>
     </message>
 </context>
 <context>
@@ -800,17 +800,17 @@
     <message>
         <location filename="SelectApp.ui" line="14"/>
         <source>Select App</source>
-        <translation type="unfinished"></translation>
+        <translation>选择程序</translation>
     </message>
     <message>
         <location filename="SelectApp.ui" line="53"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="SelectApp.ui" line="60"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
 </context>
 </TS>
