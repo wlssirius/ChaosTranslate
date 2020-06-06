@@ -247,9 +247,8 @@ void RealTimeTranslator::createLanguageMenu(void)
 		locale.remove(0, locale.indexOf('_') + 1); // "de"
 
 		QString lang = QLocale::languageToString(QLocale(locale).language());
-		QIcon ico(QString("%1.png").arg(locale));
 
-		QAction* action = new QAction(ico, lang, this);
+		QAction* action = new QAction(lang, this);
 		action->setCheckable(true);
 		action->setData(locale);
 
@@ -293,6 +292,5 @@ void RealTimeTranslator::slotLanguageChanged(QAction* action)
 	if (0 != action) {
 		// load the language dependant on the action content
 		loadLanguage(action->data().toString());
-		setWindowIcon(action->icon());
 	}
 }

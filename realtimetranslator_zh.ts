@@ -794,6 +794,11 @@
         <source>Translation:</source>
         <translation>翻译语言：</translation>
     </message>
+    <message>
+        <location filename="RealTimeTranslator.ui" line="224"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SelectApp</name>
