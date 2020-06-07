@@ -35,6 +35,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="toolTip">
+         <string>Select application to capture and translate</string>
+        </property>
         <property name="text">
          <string>Select Application</string>
         </property>
@@ -48,8 +51,11 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="toolTip">
+         <string>Capture screenshot of the selected application and translate</string>
+        </property>
         <property name="text">
-         <string>Capture</string>
+         <string>Capture And Translate</string>
         </property>
        </widget>
       </item>
@@ -83,6 +89,22 @@
        <widget class="Line" name="line">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ShowImageButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>Show Image</string>
         </property>
        </widget>
       </item>

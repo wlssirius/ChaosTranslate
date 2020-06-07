@@ -13,11 +13,19 @@ InvisibleCanvas::InvisibleCanvas(Mode mode):
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->addWidget(m_imageLabel);
     layout->setContentsMargins(QMargins(0, 0, 0, 0));
+    if (mode == Mode::Color)
+    {
+        setWindowTitle(tr("Please pick target font color"));
+    }
+    else if (mode == Mode::ROI)
+    {
+        setWindowTitle(tr("Please select target capture region"));
+    }
 }
 
 void InvisibleCanvas::showCanvas(PIX* pix, RECT rect)
 {
-    setGeometry(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+    setGeometry(0, 0, rect.right - rect.left, rect.bottom - rect.top);
     setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
 
     QImage qImage(pix->w, pix->h, QImage::Format_ARGB32);
@@ -34,6 +42,7 @@ void InvisibleCanvas::showCanvas(PIX* pix, RECT rect)
         }
     }
     m_imageLabel->setPixmap(QPixmap::fromImage(qImage));
+    show();
 }
 
 void InvisibleCanvas::mousePressEvent(QMouseEvent* event)

@@ -54,6 +54,7 @@ private:
 	QPushButton* m_fontColorButton;
 	QPushButton* m_translateButton;
 	QPushButton* m_glossaryButton;
+	QPushButton* m_showImageButton;
 	QTextEdit* m_originalTextEdit;
 	QTextEdit* m_translateTextEdit;
 	QCheckBox* m_fontColorCheckBox;
@@ -72,4 +73,5 @@ private:
 	RECT m_roi;
 	QColor m_color;
 	QString m_appTitle;
+	QImage m_capturedImage;
 };
