@@ -73,24 +73,19 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 	roi.y = m_roi.top;
 	roi.w = m_roi.right-m_roi.left;
 	roi.h = m_roi.bottom - m_roi.top;
-	std::shared_ptr<PIX> processed;
-	if (roi.w == 0 || roi.h == 0)
+	if (usingROI())
 	{
-		processed = pix;
+		*pix = *pixClipRectangle(pix.get(), &roi, NULL);
 	}
-	else
-	{
-		processed = std::make_shared<PIX>(pixClipRectangle(pix.get(), &roi, NULL));
-	}
-	m_capturedImage = convertPixToQImage(processed);
-	pixWrite("capture.png", processed.get(), IFF_PNG);
+	m_capturedImage = convertPixToQImage(pix);
+	pixWrite("capture.png", pix.get(), IFF_PNG);
 	emit setOriginalText("Recognizing");
 	if (m_fontColorCheckBox->isChecked())
 	{
-		thresholdByFontColor(processed.get());
+		thresholdByFontColor(pix.get());
 	}
 	QString language = languageMapping::qtToTesseract[m_sourceLanguage];
-	QString capture = ocr(processed.get(), language);
+	QString capture = ocr(pix.get(), language);
 	QStringList list1 = capture.split('\n');
 	QString simplified; 
 	for (auto str : list1)

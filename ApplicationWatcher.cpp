@@ -58,8 +58,8 @@ std::shared_ptr<PIX> ApplicationWatcher::capture(RECT roi)
     // clean up
     DeleteDC(hMemoryDC);
     DeleteDC(hScreenDC);
-
-    std::shared_ptr<PIX> pixd = std::make_shared<PIX>(pixCreate(width, height, 32));
+    PIX* pix = pixCreate(width, height, 32);
+    std::shared_ptr<PIX> pixd(pix);
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             pixSetRGBPixel(pixd.get(), x, height - y - 1, bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+2], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+1], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x]);
