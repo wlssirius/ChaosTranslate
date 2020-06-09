@@ -5,7 +5,7 @@
 #include "qlabel.h"
 #include "qobject.h"
 #include <functional>
-#include <leptonica/allheaders.h>
+#include <memory>
 #include <QColor>
 
 
@@ -19,7 +19,7 @@ public:
         Color
     };
 	InvisibleCanvas(Mode mode);
-    void showCanvas(PIX* img, RECT rect);
+    void showCanvas(std::shared_ptr<QImage> img, RECT rect);
     void mousePressEvent(QMouseEvent* event) override;
     void InvisibleCanvas::mouseMoveEvent(QMouseEvent* event) override;
     void InvisibleCanvas::mouseReleaseEvent(QMouseEvent* event) override;

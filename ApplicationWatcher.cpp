@@ -1,5 +1,6 @@
 #include "ApplicationWatcher.h"
 #include "winuser.h"
+#include "memory.h"
 
 RECT ApplicationWatcher::getWindowSize()
 {
@@ -18,69 +19,8 @@ void ApplicationWatcher::setApplication(QString windowTitle)
     delete[] wcharTitle;
 }
 
-PIX* ApplicationWatcher::capture(RECT roi) 
+std::shared_ptr<PIX> ApplicationWatcher::capture(RECT roi) 
 {
-//    HDC hdcScreen = GetDC(m_appHandle);
-//    HDC hdc = CreateCompatibleDC(hdcScreen);
-//    HBITMAP hbmp = CreateCompatibleBitmap(hdcScreen, windowWidth, windowHeight);
-//    SelectObject(hdc, hbmp);
-//
-//    int width = windowWidth;
-//    int height = windowHeight;
-//
-//    BitBlt(hdc, 0, 0, width, height, hdcScreen, 0, 0, SRCCOPY);
-//
-
-//
-//    BYTE* bmp_pixels = new BYTE[(width * 3 + bmp_padding) * height];
-//    GetDIBits(hdc, hbmp, 0, height, bmp_pixels, &bmp_info, DIB_RGB_COLORS);
-
-    //auto enumProc = [](HMONITOR Arg1,
-    //    HDC hScreenDC,
-    //    LPRECT rect,
-    //    LPARAM Arg4)->BOOL
-    //{
-    //    int a = 0;
-    //    HDC hMemoryDC = CreateCompatibleDC(hScreenDC);
-
-    //    int width = rect->right -rect->left;
-    //    int height = rect->bottom - rect->top;
-
-    //    HBITMAP hBitmap = CreateCompatibleBitmap(hScreenDC, width, height);
-    //    HBITMAP hOldBitmap = (HBITMAP)SelectObject(hMemoryDC, hBitmap);
-
-    //    BitBlt(hMemoryDC, rect->left, rect->top, width, height, hScreenDC, 0, 0, SRCCOPY);
-    //    hBitmap = (HBITMAP)SelectObject(hMemoryDC, hOldBitmap);
-
-    //    BITMAPINFO bmp_info = { 0 };
-    //    bmp_info.bmiHeader.biSize = sizeof(bmp_info.bmiHeader);
-    //    bmp_info.bmiHeader.biWidth = width;
-    //    bmp_info.bmiHeader.biHeight = height;
-    //    bmp_info.bmiHeader.biPlanes = 1;
-    //    bmp_info.bmiHeader.biBitCount = 24;
-    //    bmp_info.bmiHeader.biCompression = BI_RGB;
-
-    //    int bmp_padding = (width * 3) % 4;
-    //    if (bmp_padding != 0) bmp_padding = 4 - bmp_padding;
-
-    //    BYTE* bmp_pixels = new BYTE[(width * 3 + bmp_padding) * height];
-    //    GetDIBits(hMemoryDC, hBitmap, 0, height, bmp_pixels, &bmp_info, DIB_RGB_COLORS);
-
-    //    Pix* pixd = pixCreate(width, height, 32);
-    //    for (int y = 0; y < height; y++) {
-    //        for (int x = 0; x < width; x++) {
-    //            pixSetRGBPixel(pixd, x, height - y - 1, bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x + 2], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x + 1], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x]);
-    //        }
-    //    }
-    //    pixWrite("D:/pixd.png", pixd, IFF_PNG);
-
-    //    return true;
-    //};
-
-    //HDC hdc = GetDC(NULL);
-    //EnumDisplayMonitors(hdc, NULL, enumProc, 0);
-    //ReleaseDC(NULL, hdc);
-
     RECT window_rect = { 0 };
     GetWindowRect(m_appHandle, &window_rect);
 
@@ -119,14 +59,12 @@ PIX* ApplicationWatcher::capture(RECT roi)
     DeleteDC(hMemoryDC);
     DeleteDC(hScreenDC);
 
-    Pix* pixd = pixCreate(width, height, 32);
+    std::shared_ptr<PIX> pixd = std::make_shared<PIX>(pixCreate(width, height, 32));
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            pixSetRGBPixel(pixd, x, height - y - 1, bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+2], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+1], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x]);
+            pixSetRGBPixel(pixd.get(), x, height - y - 1, bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+2], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+1], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x]);
         }
     }
-    pixWrite("D:/pixd.png", pixd, IFF_PNG);
-
     delete[] bmp_pixels;
     return pixd;
 }

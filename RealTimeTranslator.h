@@ -11,6 +11,7 @@
 #include "InvisibleCanvas.h"
 #include "GlossaryManager.h"
 #include "QString"
+#include "memory"
 
 class RealTimeTranslator : public QMainWindow
 {
@@ -25,6 +26,9 @@ public:
 	void selectRoi(bool clicked);
 	void selectFontColor(bool clicked);
 	void setRoi(RECT roi) { m_roi = roi; }
+
+	bool usingROI() const;
+	bool usingFontColor() const;
 
 public slots:
 	void setSourceLanguage(int idx);
@@ -46,20 +50,22 @@ private:
 	void switchTranslator(QTranslator& translator, const QString& filename);
 	void loadLanguage(const QString& rLanguage);
 	void createLanguageMenu(void);
+	std::shared_ptr<QImage> convertPixToQImage(std::shared_ptr<PIX>& pix);
 
 	Ui::RealTimeTranslatorClass ui;
-	QPushButton* m_selectAppButton;
-	QPushButton* m_captureButton;
-	QPushButton* m_roiButton;
-	QPushButton* m_fontColorButton;
-	QPushButton* m_translateButton;
-	QPushButton* m_glossaryButton;
-	QPushButton* m_showImageButton;
-	QTextEdit* m_originalTextEdit;
-	QTextEdit* m_translateTextEdit;
-	QCheckBox* m_fontColorCheckBox;
-	QComboBox* m_srcLanguageComboBox;
-	QComboBox* m_tgtLanguageComboBox;
+	QPushButton* m_selectAppButton = nullptr;
+	QPushButton* m_captureButton = nullptr;
+	QPushButton* m_roiButton = nullptr;
+	QPushButton* m_fontColorButton = nullptr;
+	QPushButton* m_translateButton = nullptr;
+	QPushButton* m_glossaryButton = nullptr;
+	QPushButton* m_showImageButton = nullptr;
+	QTextEdit* m_originalTextEdit = nullptr;
+	QTextEdit* m_translateTextEdit = nullptr;
+	QCheckBox* m_fontColorCheckBox = nullptr;
+	QCheckBox* m_roiCheckBox = nullptr;
+	QComboBox* m_srcLanguageComboBox = nullptr;
+	QComboBox* m_tgtLanguageComboBox = nullptr;
 
 	QOnlineTranslator m_translator;
 	QOnlineTranslator::Language m_sourceLanguage = QOnlineTranslator::Language::Japanese;
@@ -73,5 +79,5 @@ private:
 	RECT m_roi;
 	QColor m_color;
 	QString m_appTitle;
-	QImage m_capturedImage;
+	std::shared_ptr<QImage> m_capturedImage;
 };

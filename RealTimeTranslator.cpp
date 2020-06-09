@@ -31,7 +31,8 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	connect(this, &RealTimeTranslator::setOriginalText, m_originalTextEdit, &QTextEdit::setText);
 	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
 	connect(this, &RealTimeTranslator::setTranslateText, m_translateTextEdit, &QTextEdit::setText);
-	m_fontColorCheckBox = findChild<QCheckBox*>("checkBox");
+	m_fontColorCheckBox = findChild<QCheckBox*>("fontColorCheckBox");
+	m_roiCheckBox = findChild<QCheckBox*>("roiCheckBox");
 	m_srcLanguageComboBox = findChild<QComboBox*>("srcLanguageComboBox");
 	m_tgtLanguageComboBox = findChild<QComboBox*>("tgtLanguageComboBox");
 	for (int idx = 0; idx <= QOnlineTranslator::Language::Zulu; idx++)
@@ -63,31 +64,33 @@ void RealTimeTranslator::selectApp(bool clicked)
 
 void RealTimeTranslator::captureAndTranslate(bool clicked)
 {
-	PIX* pix = m_watcher.capture(m_roi);
-	BOX* roi = new Box();
-	roi->x = m_roi.left;
-	roi->y = m_roi.top;
-	roi->w = m_roi.right-m_roi.left;
-	roi->h = m_roi.bottom - m_roi.top;
-	PIX* processed;
-	if (roi->w == 0 || roi->h == 0)
+	std::shared_ptr<PIX> pix = m_watcher.capture(m_roi);
+
+	pixWrite("capture.png", pix.get(), IFF_PNG);
+
+	BOX roi ;
+	roi.x = m_roi.left;
+	roi.y = m_roi.top;
+	roi.w = m_roi.right-m_roi.left;
+	roi.h = m_roi.bottom - m_roi.top;
+	std::shared_ptr<PIX> processed;
+	if (roi.w == 0 || roi.h == 0)
 	{
 		processed = pix;
 	}
 	else
 	{
-		processed = pixClipRectangle(pix, roi, NULL);
+		processed = std::make_shared<PIX>(pixClipRectangle(pix.get(), &roi, NULL));
 	}
-	pixWrite("D:/capture.png", processed, IFF_PNG);
+	m_capturedImage = convertPixToQImage(processed);
+	pixWrite("capture.png", processed.get(), IFF_PNG);
 	emit setOriginalText("Recognizing");
 	if (m_fontColorCheckBox->isChecked())
 	{
-		pixWrite("D:/TestFile_Pre_Process.png", processed, IFF_PNG);
-		thresholdByFontColor(processed);
-		pixWrite("D:/TestFile_Post_Process.png", processed, IFF_PNG);
+		thresholdByFontColor(processed.get());
 	}
 	QString language = languageMapping::qtToTesseract[m_sourceLanguage];
-	QString capture = ocr(processed, language);
+	QString capture = ocr(processed.get(), language);
 	QStringList list1 = capture.split('\n');
 	QString simplified; 
 	for (auto str : list1)
@@ -136,10 +139,11 @@ void RealTimeTranslator::selectRoi(bool clicked)
 	emptyRect.right = 0;
 	emptyRect.top = 0;
 	emptyRect.bottom = 0;
-	PIX* img = m_watcher.capture(emptyRect);
+	std::shared_ptr<PIX> img = m_watcher.capture(emptyRect);
+	auto qImg = convertPixToQImage(img);
 	auto canvas = new InvisibleCanvas(InvisibleCanvas::Mode::ROI);
 	connect(canvas, &InvisibleCanvas::setROI, this, [this](RECT rect) {this->m_roi = rect; });
-	canvas->showCanvas(img, windowRect);
+	canvas->showCanvas(qImg, windowRect);
 }
 
 void RealTimeTranslator::selectFontColor(bool clicked)
@@ -150,10 +154,29 @@ void RealTimeTranslator::selectFontColor(bool clicked)
 	emptyRect.right = 0;
 	emptyRect.top = 0;
 	emptyRect.bottom = 0;
-	PIX* img = m_watcher.capture(emptyRect);
+	std::shared_ptr<PIX> img = m_watcher.capture(emptyRect);
+	auto qImg = convertPixToQImage(img);
 	auto canvas = new InvisibleCanvas(InvisibleCanvas::Mode::Color);
 	connect(canvas, &InvisibleCanvas::setColor, this, [this](QColor color) {this->m_color = color; });
-	canvas->showCanvas(img, windowRect);
+	canvas->showCanvas(qImg, windowRect);
+}
+
+bool RealTimeTranslator::usingROI() const
+{
+	if (m_roiCheckBox != nullptr)
+	{
+		return m_roiCheckBox->isChecked();
+	}
+	return false;
+}
+
+bool RealTimeTranslator::usingFontColor() const
+{
+	if (m_fontColorCheckBox != nullptr)
+	{
+		return m_fontColorCheckBox->isChecked();
+	}
+	return false;
 }
 
 void RealTimeTranslator::setSourceLanguage(int idx)
@@ -264,6 +287,25 @@ void RealTimeTranslator::createLanguageMenu(void)
 			slotLanguageChanged(action);
 		}
 	}
+}
+
+std::shared_ptr<QImage> RealTimeTranslator::convertPixToQImage(std::shared_ptr<PIX>& pix)
+{
+	std::shared_ptr<QImage> result = std::make_shared<QImage>(pix->w, pix->h, QImage::Format_ARGB32);
+	for (int y = 0; y < pix->h; y++)
+	{
+		QRgb* destrow = (QRgb*)result->scanLine(y);
+		for (int x = 0; x < pix->w; x++)
+		{
+			l_int32 r = 0;
+			l_int32 g = 0;
+			l_int32 b = 0;
+			pixGetRGBPixel(pix.get(), x, y, &r, &g, &b);
+			destrow[x] = qRgba(r, g, b, 255);
+		}
+	}
+
+	return result;
 }
 
 
