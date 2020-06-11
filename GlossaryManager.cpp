@@ -1,15 +1,15 @@
-#include "GlossaryManager.h"
+﻿#include "GlossaryManager.h"
 #include <QStandardItemModel>
 #include <QTableView>
 
 GlossaryManager::GlossaryManager()
 {
 	m_dialog = nullptr;
-	//m_codes.emplace_back("++++");
-	//m_codes.emplace_back("----");
-	//m_codes.emplace_back("====");
-	//m_codes.emplace_back("&&&&");
-	//m_codes.emplace_back("****");
+	m_codes.emplace_back(u8"💫");
+	m_codes.emplace_back(u8"⚓");
+	m_codes.emplace_back(u8"⚔");
+	m_codes.emplace_back(u8"🌟");
+	m_codes.emplace_back(u8"🐉"); 
 }
 
 GlossaryManager::~GlossaryManager()
@@ -25,7 +25,7 @@ void GlossaryManager::showDialog()
 	m_dialog->show();
 }
 
-QString GlossaryManager::encode(QString text, std::map<QString, QString>& dict)
+GlossaryManager::EncodeResult GlossaryManager::encode(QString text, std::pair<QString, QString> language)
 {
 	if (m_dialog == nullptr)
 	{
@@ -66,8 +66,8 @@ QString GlossaryManager::decode(QString text, const std::map<QString, QString>& 
 	{
 		return text;
 	}
-	text.replace("��", "\"");
-	text.replace("��", "\"");
+	text.replace("“", "\"");
+	text.replace("”", "\"");
 	for (auto kvp : dict)
 	{
 		const auto& key = kvp.first;
