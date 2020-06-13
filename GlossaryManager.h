@@ -7,6 +7,8 @@ class GlossaryManager: public QObject
 {
 	Q_OBJECT
 private:
+	using Dict = std::map<QString, QString>;
+	using LanguagePair = std::pair<QOnlineTranslator::Language, QOnlineTranslator::Language>;
 	struct EncodeResult
 	{
 		QString encodedText;
@@ -18,12 +20,10 @@ public:
 	GlossaryManager();
 	~GlossaryManager();
 	void showDialog();
-	EncodeResult encode(QString text, std::pair<QString, QString> language);
-	QString decode(QString text, const std::map<QString, QString>& dict);
+	EncodeResult encode(QString text, LanguagePair language);
+	QString decode(QString text, const Dict& dict);
 private:
-	using dict = std::map<QString, QString>;
-	using languagePair = std::pair<QOnlineTranslator::Language, QOnlineTranslator::Language>;
-	std::map<languagePair, dict> m_dictionaries;
+	std::map<LanguagePair, Dict> m_dictionaries;
 	GlossaryDialog* m_dialog = nullptr;
 	std::vector<QString> m_codes;
 	friend class RealTimeTranslator;

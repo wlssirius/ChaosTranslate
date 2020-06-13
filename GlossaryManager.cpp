@@ -25,14 +25,16 @@ void GlossaryManager::showDialog()
 	m_dialog->show();
 }
 
-GlossaryManager::EncodeResult GlossaryManager::encode(QString text, std::pair<QString, QString> language)
+GlossaryManager::EncodeResult GlossaryManager::encode(
+	QString text, LanguagePair languages)
 {
-	if (m_dialog == nullptr)
+	EncodeResult result(text, std::map<QString, QString>());
+	if (m_dictionaries.find(languages) == m_dictionaries.end())
 	{
-		return text;
+		return result;
 	}
-	const auto& glossary = m_dialog->getGlossary();
-	if (glossary.size() == 0)
+	Dict dict = m_dictionaries.at(languages);
+	if (dict.size() == 0)
 	{
 		return text;
 	}
