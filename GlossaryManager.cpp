@@ -2,7 +2,7 @@
 #include <QStandardItemModel>
 #include <QTableView>
 
-GlossaryManager::GlossaryManager()
+GlossaryManager::GlossaryManager(LanguagePair languages)
 {
 	m_dialog = nullptr;
 	m_codes.emplace_back(u8"💫");
@@ -36,10 +36,10 @@ GlossaryManager::EncodeResult GlossaryManager::encode(
 	Dict dict = m_dictionaries.at(languages);
 	if (dict.size() == 0)
 	{
-		return text;
+		return result;
 	}
 	int count = 0;
-	for (auto entry : glossary)
+	for (auto entry : dict)
 	{
 		const auto& key = entry.first;
 		int id = text.indexOf(key);
@@ -47,14 +47,14 @@ GlossaryManager::EncodeResult GlossaryManager::encode(
 		{
 			text.replace(id, key.size(), m_codes[count]);
 			id = text.indexOf(key);
-			if (dict.find(m_codes[count]) == dict.end())
+			if (result.dictionary.find(m_codes[count]) == result.dictionary.end())
 			{
-				dict[m_codes[count]] = entry.second;
+				result.dictionary[m_codes[count]] = entry.second;
 				count++;
 			}
 		}
 	}
-	return text;
+	return result;
 }
 
 QString GlossaryManager::decode(QString text, const std::map<QString, QString>& dict)

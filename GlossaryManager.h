@@ -17,12 +17,14 @@ private:
 			encodedText(text), dictionary(dict) {}
 	};
 public:
-	GlossaryManager();
+	GlossaryManager(LanguagePair languages);
 	~GlossaryManager();
 	void showDialog();
 	EncodeResult encode(QString text, LanguagePair language);
 	QString decode(QString text, const Dict& dict);
 private:
+	QOnlineTranslator::Language m_sourceLanguage;
+	QOnlineTranslator::Language m_targetLanguage;
 	std::map<LanguagePair, Dict> m_dictionaries;
 	GlossaryDialog* m_dialog = nullptr;
 	std::vector<QString> m_codes;

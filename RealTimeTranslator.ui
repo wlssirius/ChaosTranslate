@@ -166,7 +166,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Detected Text:</string>
+           <string>Detect Language:</string>
           </property>
          </widget>
         </item>
@@ -203,7 +203,7 @@
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Translation:</string>
+           <string>Translation Language:</string>
           </property>
          </widget>
         </item>

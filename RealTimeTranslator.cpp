@@ -108,15 +108,16 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 void RealTimeTranslator::translate(bool clicked)
 {
 	QString original = m_originalTextEdit->toPlainText();
-	std::map<QString, QString> dict;
-	auto encoded = m_glossary.encode(original, dict);
+	using LanguagePair = std::pair<QOnlineTranslator::Language, QOnlineTranslator::Language>;
+	LanguagePair languagePair = LanguagePair(m_sourceLanguage, m_targetLanguage);
+	GlossaryManager::EncodeResult encodeResult = m_glossary.encode(original, languagePair);
 	emit setTranslateText("Translating");
-	m_translator.translate(encoded, QOnlineTranslator::Google, m_targetLanguage);
+	m_translator.translate(encodeResult.encodedText, QOnlineTranslator::Google, m_targetLanguage);
 	QObject::connect(&m_translator, &QOnlineTranslator::finished, [=] {
 		if (this->m_translator.error() == QOnlineTranslator::NoError)
 		{
 			auto translation = this->m_translator.translation();
-			auto decoded = m_glossary.decode(translation, dict);
+			auto decoded = m_glossary.decode(translation, encodeResult.dictionary);
 			emit setTranslateText(decoded);
 		}
 		else
