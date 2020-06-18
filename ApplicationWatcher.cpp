@@ -19,7 +19,7 @@ void ApplicationWatcher::setApplication(QString windowTitle)
     delete[] wcharTitle;
 }
 
-std::shared_ptr<PIX> ApplicationWatcher::capture(RECT roi) 
+PIX* ApplicationWatcher::capture(RECT roi) 
 {
     RECT window_rect = { 0 };
     GetWindowRect(m_appHandle, &window_rect);
@@ -59,14 +59,14 @@ std::shared_ptr<PIX> ApplicationWatcher::capture(RECT roi)
     DeleteDC(hMemoryDC);
     DeleteDC(hScreenDC);
     PIX* pix = pixCreate(width, height, 32);
-    std::shared_ptr<PIX> pixd(pix);
+    //std::shared_ptr<PIX> pixd(pix);
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            pixSetRGBPixel(pixd.get(), x, height - y - 1, bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+2], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+1], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x]);
+            pixSetRGBPixel(pix, x, height - y - 1, bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+2], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x+1], bmp_pixels[(width * 3 + bmp_padding) * y + 3 * x]);
         }
     }
     delete[] bmp_pixels;
-    return pixd;
+    return pix;
 }
 
 

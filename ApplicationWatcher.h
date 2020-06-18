@@ -17,7 +17,7 @@ public:
 	ApplicationWatcher(HWND handle = nullptr) { m_appHandle = handle; }
 
 	void setApplication(QString windowTitle);
-	std::shared_ptr<PIX> capture(RECT roi);
+	PIX* capture(RECT roi);
 	RECT getWindowSize();
 	std::vector<appInfo> getAppInfoList();
 

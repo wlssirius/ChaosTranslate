@@ -17,6 +17,7 @@ private:
 			encodedText(text), dictionary(dict) {}
 	};
 public:
+	GlossaryManager();
 	GlossaryManager(LanguagePair languages);
 	~GlossaryManager();
 	void showDialog();

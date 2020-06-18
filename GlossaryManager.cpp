@@ -2,8 +2,15 @@
 #include <QStandardItemModel>
 #include <QTableView>
 
+GlossaryManager::GlossaryManager():
+	GlossaryManager(LanguagePair(QOnlineTranslator::Japanese, QOnlineTranslator::SimplifiedChinese))
+{
+}
+
 GlossaryManager::GlossaryManager(LanguagePair languages)
 {
+	m_sourceLanguage = languages.first;
+	m_targetLanguage = languages.second;
 	m_dialog = nullptr;
 	m_codes.emplace_back(u8"💫");
 	m_codes.emplace_back(u8"⚓");
@@ -20,7 +27,8 @@ void GlossaryManager::showDialog()
 {
 	if (m_dialog == nullptr)
 	{
-		m_dialog = new GlossaryDialog();
+		using Lan = QOnlineTranslator::Language;
+		m_dialog = new GlossaryDialog(std::pair<Lan, Lan>(m_sourceLanguage, m_targetLanguage));
 	}
 	m_dialog->show();
 }

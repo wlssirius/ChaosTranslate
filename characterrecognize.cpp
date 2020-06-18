@@ -32,7 +32,6 @@ QString ocr(PIX* pix, QString language)
 
     // cleanup
     tess.Clear();
-    pixDestroy(&pix);
     
     return result;
 }

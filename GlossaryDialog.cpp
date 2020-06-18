@@ -1,6 +1,6 @@
 #include "GlossaryDialog.h"
 
-GlossaryDialog::GlossaryDialog():
+GlossaryDialog::GlossaryDialog(std::pair<QOnlineTranslator::Language, QOnlineTranslator::Language> languages):
 	QDialog()
 {
 	ui.setupUi(this);
@@ -13,6 +13,13 @@ GlossaryDialog::GlossaryDialog():
 	m_tableView = findChild<QTableView*>("tableView");
 	m_newButton = findChild<QPushButton*>("pushButton");
 	m_deleteButton = findChild<QPushButton*>("pushButton_2");
+	m_sourceLanLineEdit = findChild<QLineEdit*>("sourceLanguageLineEdit");
+	m_targetLanLineEdit = findChild<QLineEdit*>("targetLanguageLineEdit");
+
+	QString sourceLanguage = QVariant::fromValue(languages.first).toString();
+	QString targetLanguage = QVariant::fromValue(languages.second).toString();
+	m_sourceLanLineEdit->setText(sourceLanguage);
+	m_targetLanLineEdit->setText(targetLanguage);
 
 	connect(m_newButton, &QPushButton::clicked, this, &GlossaryDialog::addRow);
 	connect(m_deleteButton, &QPushButton::clicked, this, &GlossaryDialog::deleteRow);

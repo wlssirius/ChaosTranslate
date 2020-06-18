@@ -4,14 +4,16 @@
 #include "QString"
 #include "QDialog"
 #include "QPushButton"
+#include "QLineEdit"
 #include "QTableView"
 #include "GlossaryModel.h"
 #include "NewGlossaryDialog.h"
+#include "qonlinetranslator.h"
 class GlossaryDialog: public QDialog
 {
 	Q_OBJECT
 public:
-	GlossaryDialog();
+	GlossaryDialog(std::pair<QOnlineTranslator::Language, QOnlineTranslator::Language> languages);
 	~GlossaryDialog();
 	void addRow(bool clicked);
 	void deleteRow(bool clicked);
@@ -23,6 +25,8 @@ private:
 	QTableView* m_tableView;
 	QPushButton* m_newButton;
 	QPushButton* m_deleteButton;
+	QLineEdit* m_sourceLanLineEdit;
+	QLineEdit* m_targetLanLineEdit;
 	GlossaryModel* m_model = nullptr;
 	NewGlossaryDialog* m_newGlossaryDialog = nullptr;
 };

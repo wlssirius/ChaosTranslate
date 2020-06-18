@@ -64,7 +64,7 @@ void RealTimeTranslator::selectApp(bool clicked)
 
 void RealTimeTranslator::captureAndTranslate(bool clicked)
 {
-	std::shared_ptr<PIX> pix = m_watcher.capture(m_roi);
+	std::shared_ptr<PIX> pix(m_watcher.capture(m_roi));
 
 	pixWrite("capture.png", pix.get(), IFF_PNG);
 
@@ -87,22 +87,22 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 	QString language = languageMapping::qtToTesseract[m_sourceLanguage];
 	QString capture = ocr(pix.get(), language);
 	QStringList list1 = capture.split('\n');
-	QString simplified; 
-	for (auto str : list1)
-	{
-		if (str.size() == 0)
-		{
-			continue;
-		}
-		if (str == 32)
-		{
-			continue;
-		}
-		simplified.append(str);
-		simplified.append('\n');
-	}
-	emit setOriginalText(simplified);
-	emit beginTranslate(true);
+	//QString simplified; 
+	//for (auto str : list1)
+	//{
+	//	if (str.size() == 0)
+	//	{
+	//		continue;
+	//	}
+	//	if (str == 32)
+	//	{
+	//		continue;
+	//	}
+	//	simplified.append(str);
+	//	simplified.append('\n');
+	//}
+	//emit setOriginalText(simplified);
+	//emit beginTranslate(true);
 }
 
 void RealTimeTranslator::translate(bool clicked)
@@ -135,7 +135,7 @@ void RealTimeTranslator::selectRoi(bool clicked)
 	emptyRect.right = 0;
 	emptyRect.top = 0;
 	emptyRect.bottom = 0;
-	std::shared_ptr<PIX> img = m_watcher.capture(emptyRect);
+	std::shared_ptr<PIX> img(m_watcher.capture(emptyRect));
 	auto qImg = convertPixToQImage(img);
 	auto canvas = new InvisibleCanvas(InvisibleCanvas::Mode::ROI);
 	connect(canvas, &InvisibleCanvas::setROI, this, [this](RECT rect) {this->m_roi = rect; });
@@ -150,7 +150,7 @@ void RealTimeTranslator::selectFontColor(bool clicked)
 	emptyRect.right = 0;
 	emptyRect.top = 0;
 	emptyRect.bottom = 0;
-	std::shared_ptr<PIX> img = m_watcher.capture(emptyRect);
+	std::shared_ptr<PIX> img(m_watcher.capture(emptyRect));
 	auto qImg = convertPixToQImage(img);
 	auto canvas = new InvisibleCanvas(InvisibleCanvas::Mode::Color);
 	connect(canvas, &InvisibleCanvas::setColor, this, [this](QColor color) {this->m_color = color; });
