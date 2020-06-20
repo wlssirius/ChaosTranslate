@@ -11,8 +11,10 @@ GlossaryDialog::GlossaryDialog(std::pair<QOnlineTranslator::Language, QOnlineTra
 	}
 
 	m_tableView = findChild<QTableView*>("tableView");
-	m_newButton = findChild<QPushButton*>("pushButton");
-	m_deleteButton = findChild<QPushButton*>("pushButton_2");
+	m_newButton = findChild<QPushButton*>("newButton");
+	m_deleteButton = findChild<QPushButton*>("deleteButton");
+	m_saveButton = findChild<QPushButton*>("saveButton");
+	m_loadButton = findChild<QPushButton*>("loadButton");
 	m_sourceLanLineEdit = findChild<QLineEdit*>("sourceLanguageLineEdit");
 	m_targetLanLineEdit = findChild<QLineEdit*>("targetLanguageLineEdit");
 
@@ -23,6 +25,8 @@ GlossaryDialog::GlossaryDialog(std::pair<QOnlineTranslator::Language, QOnlineTra
 
 	connect(m_newButton, &QPushButton::clicked, this, &GlossaryDialog::addRow);
 	connect(m_deleteButton, &QPushButton::clicked, this, &GlossaryDialog::deleteRow);
+	connect(m_saveButton, &QPushButton::clicked, this, [this](bool clicked) {emit onSaveDictionary(); });
+	connect(m_loadButton, &QPushButton::clicked, this, [this](bool clicked) {emit onLoadDictionary(); });
 	m_tableView->setModel(m_model); 
 	m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 }

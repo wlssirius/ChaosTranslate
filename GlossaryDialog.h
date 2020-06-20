@@ -22,11 +22,18 @@ public:
 	std::vector<std::pair<QString, QString>> getGlossary();
 	void setSourceLanguage(QOnlineTranslator::Language lan);
 	void setTargetLanguage(QOnlineTranslator::Language lan);
+
+signals:
+	void onSaveDictionary();
+	void onLoadDictionary();
+
 private:
 	Ui::GlossaryClass ui;
 	QTableView* m_tableView;
 	QPushButton* m_newButton;
 	QPushButton* m_deleteButton;
+	QPushButton* m_saveButton;
+	QPushButton* m_loadButton;
 	QLineEdit* m_sourceLanLineEdit;
 	QLineEdit* m_targetLanLineEdit;
 	GlossaryModel* m_model = nullptr;

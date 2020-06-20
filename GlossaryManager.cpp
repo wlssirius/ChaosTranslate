@@ -1,6 +1,10 @@
 ﻿#include "GlossaryManager.h"
 #include <QStandardItemModel>
 #include <QTableView>
+#include <QFileDialog>
+#include "submodules\RapidXML\rapidxml.hpp"
+#include "submodules\RapidXML\rapidxml_print.hpp"
+#include "fstream"
 
 GlossaryManager::GlossaryManager():
 	GlossaryManager(LanguagePair(QOnlineTranslator::Japanese, QOnlineTranslator::SimplifiedChinese))
@@ -29,6 +33,8 @@ void GlossaryManager::showDialog()
 	{
 		using Lan = QOnlineTranslator::Language;
 		m_dialog = new GlossaryDialog(std::pair<Lan, Lan>(m_sourceLanguage, m_targetLanguage));
+		connect(m_dialog, &GlossaryDialog::onSaveDictionary, this, &GlossaryManager::saveDictionary);
+		connect(m_dialog, &GlossaryDialog::onLoadDictionary, this, &GlossaryManager::loadDictionary);
 	}
 	m_dialog->show();
 }
@@ -75,6 +81,43 @@ void GlossaryManager::setTargetLanguage(QOnlineTranslator::Language lan)
 {
 	m_targetLanguage = lan;
 	m_dialog->setTargetLanguage(lan);
+}
+
+void GlossaryManager::saveDictionary()
+{
+	QString fileName = QFileDialog::getSaveFileName(m_dialog,
+		tr("Save Dictionary"), "", tr("XML Files (*.xml)"));
+	using namespace rapidxml;
+	xml_document<> doc;
+	xml_node<>* decl = doc.allocate_node(node_declaration);
+	decl->append_attribute(doc.allocate_attribute("version", "1.0"));
+	decl->append_attribute(doc.allocate_attribute("encoding", "utf-8"));
+	doc.append_node(decl);
+
+	xml_node<>* root = doc.allocate_node(node_element, "rootnode");
+	root->append_attribute(doc.allocate_attribute("version", "1.0"));
+	root->append_attribute(doc.allocate_attribute("type", "example"));
+	doc.append_node(root);
+
+	xml_node<>* child = doc.allocate_node(node_element, "childnode");
+	root->append_node(child);
+
+	// Convert doc to string if needed
+	std::string xml_as_string;
+	rapidxml::print(std::back_inserter(xml_as_string), doc);
+
+	// Save to file
+	std::ofstream file_stored("file_stored.xml");
+	file_stored << doc;
+	file_stored.close();
+	doc.clear();
+
+}
+
+void GlossaryManager::loadDictionary()
+{
+	QString fileName = QFileDialog::getOpenFileName(m_dialog,
+		tr("Load Dictionary"), "", tr("XML Files (*.xml)"));
 }
 
 QString GlossaryManager::decode(QString text, const std::map<QString, QString>& dict)

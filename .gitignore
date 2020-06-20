@@ -5,3 +5,4 @@ x64/
 *.filters
 *.vcxproj
 capture.png
+*.xml

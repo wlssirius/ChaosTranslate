@@ -25,6 +25,9 @@ public:
 	void setSourceLanguage(QOnlineTranslator::Language lan);
 	void setTargetLanguage(QOnlineTranslator::Language lan);
 private:
+	void saveDictionary();
+	void loadDictionary();
+
 	QOnlineTranslator::Language m_sourceLanguage;
 	QOnlineTranslator::Language m_targetLanguage;
 	std::map<LanguagePair, Dict> m_dictionaries;
