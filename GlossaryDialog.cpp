@@ -81,3 +81,15 @@ std::vector<std::pair<QString, QString>> GlossaryDialog::getGlossary()
 	}
 	return std::vector<std::pair<QString, QString>>();
 }
+
+void GlossaryDialog::setSourceLanguage(QOnlineTranslator::Language lan)
+{
+	QString sourceLanguage = QVariant::fromValue(lan).toString();
+	m_sourceLanLineEdit->setText(sourceLanguage);
+}
+
+void GlossaryDialog::setTargetLanguage(QOnlineTranslator::Language lan)
+{
+	QString targetLanguage = QVariant::fromValue(lan).toString();
+	m_targetLanLineEdit->setText(targetLanguage);
+}

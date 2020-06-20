@@ -20,6 +20,8 @@ public:
 	void editTable(const QModelIndex& index);
 	void checkEmptyWord(const QModelIndex& index);
 	std::vector<std::pair<QString, QString>> getGlossary();
+	void setSourceLanguage(QOnlineTranslator::Language lan);
+	void setTargetLanguage(QOnlineTranslator::Language lan);
 private:
 	Ui::GlossaryClass ui;
 	QTableView* m_tableView;

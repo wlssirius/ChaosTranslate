@@ -65,6 +65,18 @@ GlossaryManager::EncodeResult GlossaryManager::encode(
 	return result;
 }
 
+void GlossaryManager::setSourceLanguage(QOnlineTranslator::Language lan)
+{
+	m_sourceLanguage = lan;
+	m_dialog->setSourceLanguage(lan);
+}
+
+void GlossaryManager::setTargetLanguage(QOnlineTranslator::Language lan)
+{
+	m_targetLanguage = lan;
+	m_dialog->setTargetLanguage(lan);
+}
+
 QString GlossaryManager::decode(QString text, const std::map<QString, QString>& dict)
 {
 	if (m_dialog == nullptr)

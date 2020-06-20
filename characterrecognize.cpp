@@ -39,10 +39,6 @@ QString ocr(PIX* pix, QString language)
 PIX* threshold(PIX* sourceImage, BOX* roi)
 {
     PIX* imgCrop = pixClipRectangle(sourceImage, roi, NULL);
-    //PIX* thresholded = otsu(imgCrop);
-    //pixWrite("D:/1_localTh.png", thresholded, IFF_PNG);
-    //PIX* pixg = pixConvertTo1(sourceImage, 0);
-    //replace(pixg, thresholded, roi);
     return imgCrop;
 }
 

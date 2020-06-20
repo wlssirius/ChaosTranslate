@@ -87,22 +87,22 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 	QString language = languageMapping::qtToTesseract[m_sourceLanguage];
 	QString capture = ocr(pix.get(), language);
 	QStringList list1 = capture.split('\n');
-	//QString simplified; 
-	//for (auto str : list1)
-	//{
-	//	if (str.size() == 0)
-	//	{
-	//		continue;
-	//	}
-	//	if (str == 32)
-	//	{
-	//		continue;
-	//	}
-	//	simplified.append(str);
-	//	simplified.append('\n');
-	//}
-	//emit setOriginalText(simplified);
-	//emit beginTranslate(true);
+	QString simplified; 
+	for (auto str : list1)
+	{
+		if (str.size() == 0)
+		{
+			continue;
+		}
+		if (str == 32)
+		{
+			continue;
+		}
+		simplified.append(str);
+		simplified.append('\n');
+	}
+	emit setOriginalText(simplified);
+	emit beginTranslate(true);
 }
 
 void RealTimeTranslator::translate(bool clicked)
@@ -178,11 +178,13 @@ bool RealTimeTranslator::usingFontColor() const
 void RealTimeTranslator::setSourceLanguage(int idx)
 {
 	m_sourceLanguage = QOnlineTranslator::Language(idx);
+	m_glossary.setSourceLanguage(m_sourceLanguage);
 }
 
 void RealTimeTranslator::setTargetLanguage(int idx)
 {
 	m_targetLanguage = QOnlineTranslator::Language(idx);
+	m_glossary.setTargetLanguage(m_targetLanguage);
 }
 
 
