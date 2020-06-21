@@ -27,6 +27,8 @@ public:
 private:
 	void saveDictionary();
 	void loadDictionary();
+	void addEntry(QString key, QString value);
+	void deleteEntry(QString key, QString value);
 
 	QOnlineTranslator::Language m_sourceLanguage;
 	QOnlineTranslator::Language m_targetLanguage;

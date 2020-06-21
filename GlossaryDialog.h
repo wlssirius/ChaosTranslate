@@ -26,6 +26,8 @@ public:
 signals:
 	void onSaveDictionary();
 	void onLoadDictionary();
+	void onAddEntry(QString key, QString value);
+	void onDeleteEntry(QString key, QString value);
 
 private:
 	Ui::GlossaryClass ui;

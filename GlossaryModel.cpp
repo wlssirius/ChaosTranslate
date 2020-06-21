@@ -60,6 +60,10 @@ bool GlossaryModel::insertRows(int row, int count, const QModelIndex& parent)
 bool GlossaryModel::removeRows(int row, int count, const QModelIndex& parent)
 {
     beginRemoveRows(parent, row, row);
+    for (int i = 0; i < count; i++)
+    {
+        emit deleteEntry(m_glossary[row+i].first, m_glossary[row+i].second);
+    }
     m_glossary.erase(m_glossary.begin() + row);
     endRemoveRows();
     return false;

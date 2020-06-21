@@ -22,6 +22,9 @@ public:
 
     const std::vector<entry>& getGlossary() { return m_glossary; }
 
+signals:
+    void deleteEntry(QString original, QString translate);
+
 private:
     std::vector<entry> m_glossary;
 

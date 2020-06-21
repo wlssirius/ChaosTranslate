@@ -70,7 +70,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="loadButton">
        <property name="text">
         <string>Load Dictionary</string>
        </property>

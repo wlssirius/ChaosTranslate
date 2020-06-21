@@ -2,9 +2,11 @@
 #include <QStandardItemModel>
 #include <QTableView>
 #include <QFileDialog>
+#include <QMessageBox>
 #include "submodules\RapidXML\rapidxml.hpp"
 #include "submodules\RapidXML\rapidxml_print.hpp"
 #include "fstream"
+#include "sstream"
 
 GlossaryManager::GlossaryManager():
 	GlossaryManager(LanguagePair(QOnlineTranslator::Japanese, QOnlineTranslator::SimplifiedChinese))
@@ -35,6 +37,8 @@ void GlossaryManager::showDialog()
 		m_dialog = new GlossaryDialog(std::pair<Lan, Lan>(m_sourceLanguage, m_targetLanguage));
 		connect(m_dialog, &GlossaryDialog::onSaveDictionary, this, &GlossaryManager::saveDictionary);
 		connect(m_dialog, &GlossaryDialog::onLoadDictionary, this, &GlossaryManager::loadDictionary);
+		connect(m_dialog, &GlossaryDialog::onAddEntry, this, &GlossaryManager::addEntry);
+		connect(m_dialog, &GlossaryDialog::onDeleteEntry, this, &GlossaryManager::deleteEntry);
 	}
 	m_dialog->show();
 }
@@ -85,40 +89,100 @@ void GlossaryManager::setTargetLanguage(QOnlineTranslator::Language lan)
 
 void GlossaryManager::saveDictionary()
 {
+	LanguagePair lanPair(m_sourceLanguage, m_targetLanguage);
+	if (m_dictionaries.find(lanPair) == m_dictionaries.end())
+	{
+		QMessageBox msg;
+		msg.setText("Dictionary is empty!");
+		msg.exec();
+		return;
+	}
 	QString fileName = QFileDialog::getSaveFileName(m_dialog,
 		tr("Save Dictionary"), "", tr("XML Files (*.xml)"));
+
 	using namespace rapidxml;
 	xml_document<> doc;
-	xml_node<>* decl = doc.allocate_node(node_declaration);
-	decl->append_attribute(doc.allocate_attribute("version", "1.0"));
-	decl->append_attribute(doc.allocate_attribute("encoding", "utf-8"));
-	doc.append_node(decl);
 
-	xml_node<>* root = doc.allocate_node(node_element, "rootnode");
-	root->append_attribute(doc.allocate_attribute("version", "1.0"));
-	root->append_attribute(doc.allocate_attribute("type", "example"));
+	const auto toConstChar = [](QString str)
+	{
+		QByteArray array = str.toLocal8Bit();
+		const char* buffer = array.data();
+		return buffer;
+	};
+
+	xml_node<>* root = doc.allocate_node(node_element, "Dictionary");
+	QByteArray sourceLanguage = QVariant::fromValue(m_sourceLanguage).toString().toLocal8Bit();
+	QByteArray targetLanguage = QVariant::fromValue(m_targetLanguage).toString().toLocal8Bit();
+	root->append_attribute(doc.allocate_attribute("sourceLanguage", sourceLanguage.data()));
+	root->append_attribute(doc.allocate_attribute("targetLanguage", targetLanguage.data()));
 	doc.append_node(root);
-
-	xml_node<>* child = doc.allocate_node(node_element, "childnode");
-	root->append_node(child);
-
+	QString original;
+	QByteArray key;
+	QByteArray value;
+	Dict dict = m_dictionaries.at(lanPair);
+	std::vector<QByteArray> keys;
+	std::vector<QByteArray> values;
+	for (auto& entry : dict)
+	{
+		xml_node<>* child = doc.allocate_node(node_element, "Entry");
+		original = entry.first;
+		keys.emplace_back(original.toLocal8Bit());
+		values.emplace_back(entry.second.toLocal8Bit());
+		child->append_attribute(doc.allocate_attribute("key", keys[keys.size()-1].data()));
+		child->append_attribute(doc.allocate_attribute("value", values[keys.size() - 1].data()));
+		root->append_node(child);
+	}
+	
 	// Convert doc to string if needed
 	std::string xml_as_string;
 	rapidxml::print(std::back_inserter(xml_as_string), doc);
 
 	// Save to file
-	std::ofstream file_stored("file_stored.xml");
+	QByteArray fileNameArray = fileName.toLocal8Bit();
+	std::ofstream file_stored(fileNameArray.data());
 	file_stored << doc;
 	file_stored.close();
 	doc.clear();
-
 }
 
 void GlossaryManager::loadDictionary()
 {
 	QString fileName = QFileDialog::getOpenFileName(m_dialog,
 		tr("Load Dictionary"), "", tr("XML Files (*.xml)"));
+
+	using namespace rapidxml;
+
+	xml_document<> doc;
+	xml_node<>* root_node;
+	QByteArray fileNameArray = fileName.toLocal8Bit();
+	std::ifstream fileSteam(fileNameArray.data());
+	std::vector<char> buffer((std::istreambuf_iterator<char>(fileSteam)), std::istreambuf_iterator<char>());
+	buffer.push_back('\0');
+	doc.parse<0>(&buffer[0]);
+	root_node = doc.first_node("Dictionary");
+	for (xml_node<>* entryNode = root_node->first_node("Entry"); entryNode; entryNode = entryNode->next_sibling())
+	{
+		auto name = entryNode->first_attribute("key")->value();
+		auto location = entryNode->first_attribute("value")->value();
+		m_dialog->onAddEntry();
+	}
 }
+
+void GlossaryManager::addEntry(QString key, QString value)
+{
+	LanguagePair lanPair(m_sourceLanguage, m_targetLanguage);
+	m_dictionaries[lanPair][key] = value;
+}
+
+void GlossaryManager::deleteEntry(QString key, QString value)
+{
+	LanguagePair lanPair(m_sourceLanguage, m_targetLanguage);
+	if (m_dictionaries.find(lanPair) != m_dictionaries.end())
+	{
+		m_dictionaries[lanPair].erase(key);
+	}
+}
+
 
 QString GlossaryManager::decode(QString text, const std::map<QString, QString>& dict)
 {

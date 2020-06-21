@@ -8,6 +8,7 @@ GlossaryDialog::GlossaryDialog(std::pair<QOnlineTranslator::Language, QOnlineTra
 	if (m_model == nullptr)
 	{
 		m_model = new GlossaryModel();
+		connect(m_newGlossaryDialog, &NewGlossaryDialog::addGlossary, this, &GlossaryDialog::onAddEntry);
 	}
 
 	m_tableView = findChild<QTableView*>("tableView");
@@ -56,6 +57,7 @@ void GlossaryDialog::addRow(bool clicked)
 	m_newGlossaryDialog = new NewGlossaryDialog();
 	m_newGlossaryDialog->show();
 	connect(m_newGlossaryDialog, &NewGlossaryDialog::addGlossary, m_model, &GlossaryModel::addEntry);
+	connect(m_newGlossaryDialog, &NewGlossaryDialog::addGlossary, this, &GlossaryDialog::onAddEntry);
 }
 
 void GlossaryDialog::deleteRow(bool clicked)
