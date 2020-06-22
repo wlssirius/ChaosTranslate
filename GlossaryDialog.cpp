@@ -24,8 +24,8 @@ GlossaryDialog::GlossaryDialog(std::pair<QOnlineTranslator::Language, QOnlineTra
 	m_sourceLanLineEdit->setText(sourceLanguage);
 	m_targetLanLineEdit->setText(targetLanguage);
 
-	connect(m_newButton, &QPushButton::clicked, this, &GlossaryDialog::addRow);
-	connect(m_deleteButton, &QPushButton::clicked, this, &GlossaryDialog::deleteRow);
+	connect(m_newButton, &QPushButton::clicked, this, &GlossaryDialog::onAddNewRow);
+	connect(m_deleteButton, &QPushButton::clicked, this, &GlossaryDialog::onDeleteRow);
 	connect(m_saveButton, &QPushButton::clicked, this, [this](bool clicked) {emit onSaveDictionary(); });
 	connect(m_loadButton, &QPushButton::clicked, this, [this](bool clicked) {emit onLoadDictionary(); });
 	m_tableView->setModel(m_model); 
@@ -44,7 +44,7 @@ GlossaryDialog::~GlossaryDialog()
 	}
 }
 
-void GlossaryDialog::addRow(bool clicked)
+void GlossaryDialog::onAddNewRow(bool clicked)
 {
 	//int rowCount = m_model->getGlossaryCount();
 	//m_model->insertRow(rowCount);
@@ -60,7 +60,7 @@ void GlossaryDialog::addRow(bool clicked)
 	connect(m_newGlossaryDialog, &NewGlossaryDialog::addGlossary, this, &GlossaryDialog::onAddEntry);
 }
 
-void GlossaryDialog::deleteRow(bool clicked)
+void GlossaryDialog::onDeleteRow(bool clicked)
 {
 	QItemSelectionModel* select = m_tableView->selectionModel();
 	auto selectedRows = select->selectedRows();
@@ -68,6 +68,11 @@ void GlossaryDialog::deleteRow(bool clicked)
 	{
 		m_model->removeRow(row.row());
 	}
+}
+
+void GlossaryDialog::onLoadNewRow(QString key, QString value)
+{
+	m_model->addEntry(key, value);
 }
 
 void GlossaryDialog::editTable(const QModelIndex& index)

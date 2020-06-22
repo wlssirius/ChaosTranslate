@@ -35,4 +35,10 @@ private:
 	std::map<LanguagePair, Dict> m_dictionaries;
 	GlossaryDialog* m_dialog = nullptr;
 	std::vector<QString> m_codes;
+	const char* m_dictionaryString = "Dictionary";
+	const char* m_entryString = "Entry";
+	const char* m_sourceLanString = "SourceLanguage";
+	const char* m_targetLanString = "TargetLanguage";
+	const char* m_keyString = "EntryKey";
+	const char* m_valueString = "EntryValue";
 };

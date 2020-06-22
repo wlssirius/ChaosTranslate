@@ -110,11 +110,11 @@ void GlossaryManager::saveDictionary()
 		return buffer;
 	};
 
-	xml_node<>* root = doc.allocate_node(node_element, "Dictionary");
+	xml_node<>* root = doc.allocate_node(node_element, m_dictionaryString);
 	QByteArray sourceLanguage = QVariant::fromValue(m_sourceLanguage).toString().toLocal8Bit();
 	QByteArray targetLanguage = QVariant::fromValue(m_targetLanguage).toString().toLocal8Bit();
-	root->append_attribute(doc.allocate_attribute("sourceLanguage", sourceLanguage.data()));
-	root->append_attribute(doc.allocate_attribute("targetLanguage", targetLanguage.data()));
+	root->append_attribute(doc.allocate_attribute(m_sourceLanString, sourceLanguage.data()));
+	root->append_attribute(doc.allocate_attribute(m_targetLanString, targetLanguage.data()));
 	doc.append_node(root);
 	QString original;
 	QByteArray key;
@@ -124,12 +124,12 @@ void GlossaryManager::saveDictionary()
 	std::vector<QByteArray> values;
 	for (auto& entry : dict)
 	{
-		xml_node<>* child = doc.allocate_node(node_element, "Entry");
+		xml_node<>* child = doc.allocate_node(node_element, m_entryString);
 		original = entry.first;
 		keys.emplace_back(original.toLocal8Bit());
 		values.emplace_back(entry.second.toLocal8Bit());
-		child->append_attribute(doc.allocate_attribute("key", keys[keys.size()-1].data()));
-		child->append_attribute(doc.allocate_attribute("value", values[keys.size() - 1].data()));
+		child->append_attribute(doc.allocate_attribute(m_keyString, keys[keys.size()-1].data()));
+		child->append_attribute(doc.allocate_attribute(m_valueString, values[keys.size() - 1].data()));
 		root->append_node(child);
 	}
 	
@@ -153,18 +153,22 @@ void GlossaryManager::loadDictionary()
 	using namespace rapidxml;
 
 	xml_document<> doc;
-	xml_node<>* root_node;
+	xml_node<>* rootNode;
 	QByteArray fileNameArray = fileName.toLocal8Bit();
 	std::ifstream fileSteam(fileNameArray.data());
 	std::vector<char> buffer((std::istreambuf_iterator<char>(fileSteam)), std::istreambuf_iterator<char>());
 	buffer.push_back('\0');
 	doc.parse<0>(&buffer[0]);
-	root_node = doc.first_node("Dictionary");
-	for (xml_node<>* entryNode = root_node->first_node("Entry"); entryNode; entryNode = entryNode->next_sibling())
+	rootNode = doc.first_node(m_dictionaryString);
+	char* sourceLan = rootNode->first_attribute(m_sourceLanString)->value();
+	char* targetLan = rootNode->first_attribute(m_targetLanString)->value();
+	for (xml_node<>* entryNode = rootNode->first_node(m_entryString); entryNode; entryNode = entryNode->next_sibling())
 	{
-		auto name = entryNode->first_attribute("key")->value();
-		auto location = entryNode->first_attribute("value")->value();
-		m_dialog->onAddEntry();
+		char* key = entryNode->first_attribute(m_keyString)->value();
+		char* value = entryNode->first_attribute(m_valueString)->value();
+		QString keyStr(key);
+		QString valueStr(value);
+		m_dialog->onLoadNewRow(keyStr, valueStr);
 	}
 }
 

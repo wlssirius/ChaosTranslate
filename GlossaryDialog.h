@@ -15,8 +15,9 @@ class GlossaryDialog: public QDialog
 public:
 	GlossaryDialog(std::pair<QOnlineTranslator::Language, QOnlineTranslator::Language> languages);
 	~GlossaryDialog();
-	void addRow(bool clicked);
-	void deleteRow(bool clicked);
+	void onAddNewRow(bool clicked);
+	void onDeleteRow(bool clicked);
+	void onLoadNewRow(QString key, QString value);
 	void editTable(const QModelIndex& index);
 	void checkEmptyWord(const QModelIndex& index);
 	std::vector<std::pair<QString, QString>> getGlossary();
