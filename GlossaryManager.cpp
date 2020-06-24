@@ -158,18 +158,47 @@ void GlossaryManager::loadDictionary()
 	std::ifstream fileSteam(fileNameArray.data());
 	std::vector<char> buffer((std::istreambuf_iterator<char>(fileSteam)), std::istreambuf_iterator<char>());
 	buffer.push_back('\0');
-	doc.parse<0>(&buffer[0]);
-	rootNode = doc.first_node(m_dictionaryString);
-	char* sourceLan = rootNode->first_attribute(m_sourceLanString)->value();
-	char* targetLan = rootNode->first_attribute(m_targetLanString)->value();
-	for (xml_node<>* entryNode = rootNode->first_node(m_entryString); entryNode; entryNode = entryNode->next_sibling())
+	try
 	{
-		char* key = entryNode->first_attribute(m_keyString)->value();
-		char* value = entryNode->first_attribute(m_valueString)->value();
-		QString keyStr(key);
-		QString valueStr(value);
-		m_dialog->onLoadNewRow(keyStr, valueStr);
+		doc.parse<0>(&buffer[0]);
+		rootNode = doc.first_node(m_dictionaryString);
+		if (rootNode == nullptr)
+		{
+			throw std::exception("root node not found");
+		}
+		if (!rootNode->first_attribute(m_sourceLanString) || !rootNode->first_attribute(m_targetLanString))
+		{
+			throw std::exception("language setting not found");
+		}
+		char* sourceLan = rootNode->first_attribute(m_sourceLanString)->value();
+		char* targetLan = rootNode->first_attribute(m_targetLanString)->value();
+		QString sourceLanguageStr = QVariant::fromValue(m_sourceLanguage).toString().toLocal8Bit();
+		QString targetLanguageStr = QVariant::fromValue(m_targetLanguage).toString().toLocal8Bit();
+		if (QString(sourceLan) != sourceLanguageStr || QString(targetLan) != targetLanguageStr)
+		{
+			throw std::exception("languages don't match");
+		}
+		for (xml_node<>* entryNode = rootNode->first_node(m_entryString); entryNode; entryNode = entryNode->next_sibling())
+		{
+			if (!entryNode->first_attribute(m_keyString) || !entryNode->first_attribute(m_valueString))
+			{
+				throw std::exception("entry not found");
+			}
+			char* key = entryNode->first_attribute(m_keyString)->value();
+			char* value = entryNode->first_attribute(m_valueString)->value();
+			QString keyStr(key);
+			QString valueStr(value);
+			m_dialog->onLoadNewRow(keyStr, valueStr);
+		}
 	}
+	catch (std::exception e)
+	{
+		QMessageBox msg;
+		msg.setText(QString("Invalid dictionary file! ") + QString(e.what()));
+		msg.exec();
+		return;
+	}
+
 }
 
 void GlossaryManager::addEntry(QString key, QString value)
