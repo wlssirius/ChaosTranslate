@@ -1,1 +1,1 @@
-A real-time translator using tesseract OCR and QtOnlineTranslator
+A real-time translator using tesseract OCR and QtOnlineTranslator on Windows
