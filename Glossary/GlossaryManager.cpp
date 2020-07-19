@@ -3,8 +3,8 @@
 #include <QTableView>
 #include <QFileDialog>
 #include <QMessageBox>
-#include "submodules\RapidXML\rapidxml.hpp"
-#include "submodules\RapidXML\rapidxml_print.hpp"
+#include "rapidxml.hpp"
+#include "rapidxml_print.hpp"
 #include "fstream"
 #include "sstream"
 
