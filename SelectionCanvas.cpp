@@ -1,11 +1,11 @@
 #define NOMINMAX
-#include "InvisibleCanvas.h"
+#include "SelectionCanvas.h"
 #include "QGraphicsOpacityEffect"
 #include "QLayout"
 #include "QImageReader"
 
 
-InvisibleCanvas::InvisibleCanvas(Mode mode):
+SelectionCanvas::SelectionCanvas(Mode mode):
 	QDialog(nullptr, 0),
     m_mode(mode)
 {
@@ -23,7 +23,7 @@ InvisibleCanvas::InvisibleCanvas(Mode mode):
     }
 }
 
-void InvisibleCanvas::showCanvas(std::shared_ptr<QImage> qImage, RECT rect)
+void SelectionCanvas::showCanvas(std::shared_ptr<QImage> qImage, RECT rect)
 {
     setGeometry(0, 0, rect.right - rect.left, rect.bottom - rect.top);
     setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
@@ -32,7 +32,7 @@ void InvisibleCanvas::showCanvas(std::shared_ptr<QImage> qImage, RECT rect)
     show();
 }
 
-void InvisibleCanvas::mousePressEvent(QMouseEvent* event)
+void SelectionCanvas::mousePressEvent(QMouseEvent* event)
 {
     if (m_mode == Mode::ROI)
     {
@@ -44,7 +44,7 @@ void InvisibleCanvas::mousePressEvent(QMouseEvent* event)
     }
 }
 
-void InvisibleCanvas::mouseMoveEvent(QMouseEvent* event)
+void SelectionCanvas::mouseMoveEvent(QMouseEvent* event)
 {
     if (m_mode == Mode::ROI)
     {
@@ -52,7 +52,7 @@ void InvisibleCanvas::mouseMoveEvent(QMouseEvent* event)
     }
 }
 
-void InvisibleCanvas::mouseReleaseEvent(QMouseEvent* event)
+void SelectionCanvas::mouseReleaseEvent(QMouseEvent* event)
 {
     if (m_mode == Mode::ROI)
     {

@@ -1,5 +1,5 @@
-#ifndef MYMODEL_H
-#define MYMODEL_H
+#ifndef GLOSSARY_MODEL_HEADER
+#define GLOSSARY_MODEL_HEADER
 #include <QAbstractTableModel>
 #include <utility>
 #include <vector>
@@ -30,4 +30,4 @@ private:
 
 
 };
-#endif // MYMODEL_H
+#endif // GLOSSARY_MODEL_HEADER

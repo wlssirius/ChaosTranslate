@@ -216,7 +216,6 @@ void GlossaryManager::deleteEntry(QString key, QString value)
 	}
 }
 
-
 QString GlossaryManager::decode(QString text, const std::map<QString, QString>& dict)
 {
 	if (m_dialog == nullptr)

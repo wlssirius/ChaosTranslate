@@ -1,3 +1,7 @@
+
+#ifndef APP_SELECT_DIALOG_HEADER
+#define APP_SELECT_DIALOG_HEADER
+
 #include "QDialog"
 #include "ui_SelectApp.h"
 #include "QListWidget"
@@ -24,3 +28,5 @@ private:
 	QPushButton* m_ok;
 	QPushButton* m_cancel;
 };
+
+#endif

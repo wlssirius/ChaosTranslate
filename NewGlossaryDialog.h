@@ -1,3 +1,7 @@
+
+#ifndef NEW_GLOSSARY_DIALOG_HEADER
+#define NEW_GLOSSARY_DIALOG_HEADER
+
 #include "QDialog"
 #include "QPushbutton"
 #include "QLineEdit"
@@ -18,3 +22,5 @@ private:
 	QLineEdit* m_original;
 	QLineEdit* m_translate;
 };
+
+#endif

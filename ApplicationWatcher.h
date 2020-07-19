@@ -1,3 +1,7 @@
+
+#ifndef APPLICATION_WATCHER_HEADER
+#define APPLICATION_WATCHER_HEADER
+
 #include <cstdio>
 #include <windows.h>
 #include <tlhelp32.h>
@@ -25,5 +29,4 @@ private:
 	HWND m_appHandle;
 };
 
-
-
+#endif

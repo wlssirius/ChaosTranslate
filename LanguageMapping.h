@@ -1,3 +1,6 @@
+#ifndef LANGUAGE_MAPPING_HEADER
+#define LANGUAGE_MAPPING_HEADER
+
 #include "QString"
 
 namespace languageMapping {
@@ -128,3 +131,5 @@ namespace languageMapping {
             ""      //Zulu
     };
 }
+
+#endif

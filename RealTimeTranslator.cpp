@@ -137,8 +137,8 @@ void RealTimeTranslator::selectRoi(bool clicked)
 	emptyRect.bottom = 0;
 	std::shared_ptr<PIX> img(m_watcher.capture(emptyRect));
 	auto qImg = convertPixToQImage(img);
-	auto canvas = new InvisibleCanvas(InvisibleCanvas::Mode::ROI);
-	connect(canvas, &InvisibleCanvas::setROI, this, [this](RECT rect) {this->m_roi = rect; });
+	auto canvas = new SelectionCanvas(SelectionCanvas::Mode::ROI);
+	connect(canvas, &SelectionCanvas::setROI, this, [this](RECT rect) {this->m_roi = rect; });
 	canvas->showCanvas(qImg, windowRect);
 }
 
@@ -152,8 +152,8 @@ void RealTimeTranslator::selectFontColor(bool clicked)
 	emptyRect.bottom = 0;
 	std::shared_ptr<PIX> img(m_watcher.capture(emptyRect));
 	auto qImg = convertPixToQImage(img);
-	auto canvas = new InvisibleCanvas(InvisibleCanvas::Mode::Color);
-	connect(canvas, &InvisibleCanvas::setColor, this, [this](QColor color) {this->m_color = color; });
+	auto canvas = new SelectionCanvas(SelectionCanvas::Mode::Color);
+	connect(canvas, &SelectionCanvas::setColor, this, [this](QColor color) {this->m_color = color; });
 	canvas->showCanvas(qImg, windowRect);
 }
 

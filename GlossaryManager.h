@@ -1,3 +1,7 @@
+
+#ifndef GLOSSARY_MANAGER_HEADER
+#define GLOSSARY_MANAGER_HEADER
+
 #include "GlossaryDialog.h"
 #include "qonlinetranslator.h"
 #include <map>
@@ -42,3 +46,5 @@ private:
 	static constexpr char* m_keyString = "EntryKey";
 	static constexpr char* m_valueString = "EntryValue";
 };
+
+#endif

@@ -14,8 +14,8 @@
    <string>RealTimeTranslator</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>Resources/Chaos.png</normaloff>Resources/Chaos.png</iconset>
+   <iconset resource="RealTimeTranslator.qrc">
+    <normaloff>:/RealTimeTranslator/Resources/Icon/Chaos.png</normaloff>:/RealTimeTranslator/Resources/Icon/Chaos.png</iconset>
   </property>
   <property name="iconSize">
    <size>

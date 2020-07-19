@@ -8,7 +8,7 @@
 #include "qcombobox.h"
 #include "QTranslator"
 #include "ApplicationWatcher.h"
-#include "InvisibleCanvas.h"
+#include "SelectionCanvas.h"
 #include "GlossaryManager.h"
 #include "QString"
 #include "memory"

@@ -1,3 +1,7 @@
+
+#ifndef GLOSSARY_DIALOG_HEADER
+#define GLOSSARY_DIALOG_HEADER
+
 #include <map>
 #include "ui_GlossaryDialog.h"
 #include "QDialog"
@@ -42,3 +46,5 @@ private:
 	GlossaryModel* m_model = nullptr;
 	NewGlossaryDialog* m_newGlossaryDialog = nullptr;
 };
+
+#endif

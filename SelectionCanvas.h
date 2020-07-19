@@ -1,3 +1,7 @@
+
+#ifndef SELECTION_CANVAS_HEADER
+#define SELECTION_CANVAS_HEADER
+
 #include "qdialog.h"
 #include "qrubberband.h"
 #include "qevent.h"
@@ -9,7 +13,7 @@
 #include <QColor>
 
 
-class InvisibleCanvas: public QDialog
+class SelectionCanvas: public QDialog
 {
     Q_OBJECT
 public:
@@ -18,11 +22,11 @@ public:
         ROI,
         Color
     };
-	InvisibleCanvas(Mode mode);
+	SelectionCanvas(Mode mode);
     void showCanvas(std::shared_ptr<QImage> img, RECT rect);
     void mousePressEvent(QMouseEvent* event) override;
-    void InvisibleCanvas::mouseMoveEvent(QMouseEvent* event) override;
-    void InvisibleCanvas::mouseReleaseEvent(QMouseEvent* event) override;
+    void SelectionCanvas::mouseMoveEvent(QMouseEvent* event) override;
+    void SelectionCanvas::mouseReleaseEvent(QMouseEvent* event) override;
 
 signals:
     void setROI(RECT rect);
@@ -36,3 +40,5 @@ private:
     QLabel* m_imageLabel;
     RECT m_roiRect;
 };
+
+#endif
