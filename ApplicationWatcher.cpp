@@ -1,6 +1,11 @@
+
 #include "ApplicationWatcher.h"
 #include "winuser.h"
 #include "memory.h"
+
+#ifndef UNICODE
+#define UNICODE
+#endif
 
 RECT ApplicationWatcher::getWindowSize()
 {

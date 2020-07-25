@@ -11,22 +11,29 @@ if(CMAKE_VERSION VERSION_LESS "3.7.0")
 endif()
 
 find_package(Qt5 COMPONENTS Widgets Core GUI Multimedia Network websockets winextras REQUIRED)
+find_package(tesseract)
+find_package(leptonica)
 
 file(GLOB RealTimeTranslator_SRC
     "*.h"
     "*.cpp"
 )
-qt5_wrap_ui(RealTimeTranslator_SRC RealTimeTranslator.ui)
-qt5_wrap_ui(RealTimeTranslator_SRC SelectApp.ui)
 
 file(GLOB Glossary_SRC
     "Glossary/*.h"
     "Glossary/*.cpp"
 )
-qt5_wrap_ui(Glossary_SRC GlossaryDialog.ui)
-qt5_wrap_ui(Glossary_SRC NewGlossary.ui)
 
-add_executable(ChaosTranslate ${RealTimeTranslator_SRC} ${Glossary_SRC})
+file(GLOB OnlineTranslator_SRC 
+    "submodules/QOnlineTranslator/src/*.h"
+    "submodules/QOnlineTranslator/src/*.cpp"
+)
+
+add_executable(ChaosTranslate 
+    ${RealTimeTranslator_SRC} 
+    ${Glossary_SRC}
+    ${OnlineTranslator_SRC}
+)
 
 target_link_libraries(ChaosTranslate Qt5::Widgets)
 target_link_libraries(ChaosTranslate Qt5::Core)
@@ -39,6 +46,9 @@ target_link_libraries(ChaosTranslate Qt5::WinExtras)
 # Include directories
 include_directories(${Tesseract_INCLUDE_DIRS})
 include_directories(${Leptonica_INCLUDE_DIRS})
+include_directories("submodules/QOnlineTranslator/src")
+include_directories("submodules/RapidXML")
+include_directories("Glossary")
 
 # Link with libraries
 target_link_libraries(ChaosTranslate ${Leptonica_LIBRARIES})
