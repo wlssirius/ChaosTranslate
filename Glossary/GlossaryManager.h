@@ -6,7 +6,7 @@
 #include "qonlinetranslator.h"
 #include <map>
 
-class RealTimeTranslator;
+class ChaosTranslate;
 class GlossaryManager: public QObject
 {
 	Q_OBJECT

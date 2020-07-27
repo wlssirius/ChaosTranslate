@@ -26,6 +26,11 @@ void ApplicationWatcher::setApplication(QString windowTitle)
 
 PIX* ApplicationWatcher::capture(RECT roi) 
 {
+    if (!appSelected())
+    {
+        return nullptr;
+    }
+
     RECT window_rect = { 0 };
     GetWindowRect(m_appHandle, &window_rect);
 

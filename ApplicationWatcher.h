@@ -24,6 +24,7 @@ public:
 	PIX* capture(RECT roi);
 	RECT getWindowSize();
 	std::vector<appInfo> getAppInfoList();
+	bool appSelected() { return m_appHandle != nullptr; }
 
 private:
 	HWND m_appHandle;

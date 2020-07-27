@@ -1,5 +1,5 @@
 #include <QtWidgets/QMainWindow>
-#include "ui_RealTimeTranslator.h"
+#include "ui_ChaosTranslate.h"
 #include "qpushbutton.h"
 #include "qtextedit.h"
 #include "qonlinetranslator.h"
@@ -13,12 +13,12 @@
 #include "QString"
 #include "memory"
 
-class RealTimeTranslator : public QMainWindow
+class ChaosTranslate : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	RealTimeTranslator(QWidget *parent = Q_NULLPTR);
+	ChaosTranslate(QWidget *parent = Q_NULLPTR);
 
 	void selectApp(bool clicked);
 	void captureAndTranslate(bool clicked);
@@ -52,7 +52,7 @@ private:
 	void createLanguageMenu(void);
 	std::shared_ptr<QImage> convertPixToQImage(std::shared_ptr<PIX>& pix);
 
-	Ui::RealTimeTranslatorClass ui;
+	Ui::ChaosTranslateClass ui;
 	QPushButton* m_selectAppButton = nullptr;
 	QPushButton* m_captureButton = nullptr;
 	QPushButton* m_roiButton = nullptr;

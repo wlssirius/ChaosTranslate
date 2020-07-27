@@ -1,4 +1,4 @@
-#include "RealTimeTranslator.h"
+#include "ChaosTranslate.h"
 #include <qpushbutton.h>
 #include "characterrecognize.h"
 #include "qdialog.h"
@@ -6,7 +6,7 @@
 #include "AppSelectDialog.h"
 #include "LanguageMapping.h"
 
-RealTimeTranslator::RealTimeTranslator(QWidget* parent)
+ChaosTranslate::ChaosTranslate(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
@@ -14,23 +14,23 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	createLanguageMenu();
 
 	m_selectAppButton = findChild<QPushButton*>("selectAppButton");
-	connect(m_selectAppButton, &QPushButton::clicked, this, &RealTimeTranslator::selectApp);
+	connect(m_selectAppButton, &QPushButton::clicked, this, &ChaosTranslate::selectApp);
 	m_captureButton = findChild<QPushButton*>("captureButton");
 	connect(m_captureButton, &QPushButton::clicked, this,
-		[this](bool clicked) { QtConcurrent::run(this, &RealTimeTranslator::captureAndTranslate, clicked); });
+		[this](bool clicked) { QtConcurrent::run(this, &ChaosTranslate::captureAndTranslate, clicked); });
 	m_roiButton = findChild<QPushButton*>("ROIButton");
-	connect(m_roiButton, &QPushButton::clicked, this, &RealTimeTranslator::selectRoi);
+	connect(m_roiButton, &QPushButton::clicked, this, &ChaosTranslate::selectRoi);
 	m_translateButton = findChild<QPushButton*>("translateButton");
-	connect(m_translateButton, &QPushButton::clicked, this, &RealTimeTranslator::translate);
+	connect(m_translateButton, &QPushButton::clicked, this, &ChaosTranslate::translate);
 	m_glossaryButton = findChild<QPushButton*>("glossaryButton");
 	//m_glossaryButton->setHidden(true);
 	connect(m_glossaryButton, &QPushButton::clicked, &m_glossary, &GlossaryManager::showDialog);
 	m_fontColorButton = findChild<QPushButton*>("fontColorButton");
-	connect(m_fontColorButton, &QPushButton::clicked, this, &RealTimeTranslator::selectFontColor);
+	connect(m_fontColorButton, &QPushButton::clicked, this, &ChaosTranslate::selectFontColor);
 	m_originalTextEdit = findChild<QTextEdit*>("textEdit");
-	connect(this, &RealTimeTranslator::setOriginalText, m_originalTextEdit, &QTextEdit::setText);
+	connect(this, &ChaosTranslate::setOriginalText, m_originalTextEdit, &QTextEdit::setText);
 	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
-	connect(this, &RealTimeTranslator::setTranslateText, m_translateTextEdit, &QTextEdit::setText);
+	connect(this, &ChaosTranslate::setTranslateText, m_translateTextEdit, &QTextEdit::setText);
 	m_fontColorCheckBox = findChild<QCheckBox*>("fontColorCheckBox");
 	m_roiCheckBox = findChild<QCheckBox*>("roiCheckBox");
 	m_srcLanguageComboBox = findChild<QComboBox*>("srcLanguageComboBox");
@@ -51,10 +51,10 @@ RealTimeTranslator::RealTimeTranslator(QWidget* parent)
 	m_roi.top = 0;
 	m_roi.bottom = 0;
 
-	connect(this, &RealTimeTranslator::beginTranslate, this, &RealTimeTranslator::translate);
+	connect(this, &ChaosTranslate::beginTranslate, this, &ChaosTranslate::translate);
 }
 
-void RealTimeTranslator::selectApp(bool clicked)
+void ChaosTranslate::selectApp(bool clicked)
 {
 	auto appList = m_watcher.getAppInfoList();
 	auto appSelectDialog = new AppSelectDialog(appList);
@@ -62,8 +62,13 @@ void RealTimeTranslator::selectApp(bool clicked)
 	connect(appSelectDialog, &AppSelectDialog::selectApp, this, [this](QString str) {this->m_watcher.setApplication(str); });
 }
 
-void RealTimeTranslator::captureAndTranslate(bool clicked)
+void ChaosTranslate::captureAndTranslate(bool clicked)
 {
+	if (!m_watcher.appSelected())
+	{
+		return;
+	}
+
 	std::shared_ptr<PIX> pix(m_watcher.capture(m_roi));
 
 	pixWrite("capture.png", pix.get(), IFF_PNG);
@@ -105,7 +110,7 @@ void RealTimeTranslator::captureAndTranslate(bool clicked)
 	emit beginTranslate(true);
 }
 
-void RealTimeTranslator::translate(bool clicked)
+void ChaosTranslate::translate(bool clicked)
 {
 	QString original = m_originalTextEdit->toPlainText();
 	using LanguagePair = std::pair<QOnlineTranslator::Language, QOnlineTranslator::Language>;
@@ -127,7 +132,7 @@ void RealTimeTranslator::translate(bool clicked)
 		});
 }
 
-void RealTimeTranslator::selectRoi(bool clicked)
+void ChaosTranslate::selectRoi(bool clicked)
 {
 	auto windowRect = m_watcher.getWindowSize();
 	RECT emptyRect;
@@ -142,7 +147,7 @@ void RealTimeTranslator::selectRoi(bool clicked)
 	canvas->showCanvas(qImg, windowRect);
 }
 
-void RealTimeTranslator::selectFontColor(bool clicked)
+void ChaosTranslate::selectFontColor(bool clicked)
 {
 	auto windowRect = m_watcher.getWindowSize();
 	RECT emptyRect;
@@ -157,7 +162,7 @@ void RealTimeTranslator::selectFontColor(bool clicked)
 	canvas->showCanvas(qImg, windowRect);
 }
 
-bool RealTimeTranslator::usingROI() const
+bool ChaosTranslate::usingROI() const
 {
 	if (m_roiCheckBox != nullptr)
 	{
@@ -166,7 +171,7 @@ bool RealTimeTranslator::usingROI() const
 	return false;
 }
 
-bool RealTimeTranslator::usingFontColor() const
+bool ChaosTranslate::usingFontColor() const
 {
 	if (m_fontColorCheckBox != nullptr)
 	{
@@ -175,20 +180,20 @@ bool RealTimeTranslator::usingFontColor() const
 	return false;
 }
 
-void RealTimeTranslator::setSourceLanguage(int idx)
+void ChaosTranslate::setSourceLanguage(int idx)
 {
 	m_sourceLanguage = QOnlineTranslator::Language(idx);
 	m_glossary.setSourceLanguage(m_sourceLanguage);
 }
 
-void RealTimeTranslator::setTargetLanguage(int idx)
+void ChaosTranslate::setTargetLanguage(int idx)
 {
 	m_targetLanguage = QOnlineTranslator::Language(idx);
 	m_glossary.setTargetLanguage(m_targetLanguage);
 }
 
 
-void RealTimeTranslator::thresholdByFontColor(PIX* pix)
+void ChaosTranslate::thresholdByFontColor(PIX* pix)
 {
 	unsigned char r1 = m_color.redF() * 255;
 	unsigned char g1 = m_color.greenF() * 255;
@@ -224,7 +229,7 @@ void RealTimeTranslator::thresholdByFontColor(PIX* pix)
 	}
 }
 
-void RealTimeTranslator::switchTranslator(QTranslator& translator, const QString& filename)
+void ChaosTranslate::switchTranslator(QTranslator& translator, const QString& filename)
 {
 	// remove the old translator
 	qApp->removeTranslator(&translator);
@@ -236,7 +241,7 @@ void RealTimeTranslator::switchTranslator(QTranslator& translator, const QString
 		qApp->installTranslator(&translator);
 }
 
-void RealTimeTranslator::loadLanguage(const QString& rLanguage)
+void ChaosTranslate::loadLanguage(const QString& rLanguage)
 {
 	if (m_currUILang != rLanguage) {
 		m_currUILang = rLanguage;
@@ -248,7 +253,7 @@ void RealTimeTranslator::loadLanguage(const QString& rLanguage)
 	}
 }
 
-void RealTimeTranslator::createLanguageMenu(void)
+void ChaosTranslate::createLanguageMenu(void)
 {
 	QActionGroup* langGroup = new QActionGroup(ui.menuLanguage);
 	langGroup->setExclusive(true);
@@ -287,7 +292,7 @@ void RealTimeTranslator::createLanguageMenu(void)
 	}
 }
 
-std::shared_ptr<QImage> RealTimeTranslator::convertPixToQImage(std::shared_ptr<PIX>& pix)
+std::shared_ptr<QImage> ChaosTranslate::convertPixToQImage(std::shared_ptr<PIX>& pix)
 {
 	std::shared_ptr<QImage> result = std::make_shared<QImage>(pix->w, pix->h, QImage::Format_ARGB32);
 	for (int y = 0; y < pix->h; y++)
@@ -307,7 +312,7 @@ std::shared_ptr<QImage> RealTimeTranslator::convertPixToQImage(std::shared_ptr<P
 }
 
 
-void RealTimeTranslator::changeEvent(QEvent* event)
+void ChaosTranslate::changeEvent(QEvent* event)
 {
 	if (0 != event) {
 		switch (event->type()) {
@@ -329,7 +334,7 @@ void RealTimeTranslator::changeEvent(QEvent* event)
 	QMainWindow::changeEvent(event);
 }
 
-void RealTimeTranslator::slotLanguageChanged(QAction* action)
+void ChaosTranslate::slotLanguageChanged(QAction* action)
 {
 	if (0 != action) {
 		// load the language dependant on the action content

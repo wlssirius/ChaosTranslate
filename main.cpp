@@ -1,4 +1,4 @@
-#include "RealTimeTranslator.h"
+#include "ChaosTranslate.h"
 #include <QtWidgets/QApplication>
 #include <leptonica/allheaders.h>
 #include <tesseract/baseapi.h> // tesseract main header
@@ -9,7 +9,7 @@
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	RealTimeTranslator w;
+	ChaosTranslate w;
 	w.show();
 	return a.exec();
 }
