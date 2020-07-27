@@ -1,11 +1,11 @@
 
-#include "ApplicationWatcher.h"
-#include "winuser.h"
-#include "memory.h"
-
 #ifndef UNICODE
 #define UNICODE
 #endif
+
+#include "ApplicationWatcher.h"
+#include "winuser.h"
+#include "memory.h"
 
 RECT ApplicationWatcher::getWindowSize()
 {

@@ -78,13 +78,19 @@ GlossaryManager::EncodeResult GlossaryManager::encode(
 void GlossaryManager::setSourceLanguage(QOnlineTranslator::Language lan)
 {
 	m_sourceLanguage = lan;
-	m_dialog->setSourceLanguage(lan);
+	if (m_dialog)
+	{
+		m_dialog->setSourceLanguage(lan);
+	}
 }
 
 void GlossaryManager::setTargetLanguage(QOnlineTranslator::Language lan)
 {
 	m_targetLanguage = lan;
-	m_dialog->setTargetLanguage(lan);
+	if (m_dialog)
+	{
+		m_dialog->setTargetLanguage(lan);
+	}
 }
 
 void GlossaryManager::saveDictionary()
