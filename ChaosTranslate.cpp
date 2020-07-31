@@ -134,6 +134,10 @@ void ChaosTranslate::translate(bool clicked)
 
 void ChaosTranslate::selectRoi(bool clicked)
 {
+	if (!m_watcher.appSelected())
+	{
+		return;
+	}
 	auto windowRect = m_watcher.getWindowSize();
 	RECT emptyRect;
 	emptyRect.left = 0;
@@ -149,6 +153,10 @@ void ChaosTranslate::selectRoi(bool clicked)
 
 void ChaosTranslate::selectFontColor(bool clicked)
 {
+	if (!m_watcher.appSelected())
+	{
+		return;
+	}
 	auto windowRect = m_watcher.getWindowSize();
 	RECT emptyRect;
 	emptyRect.left = 0;
