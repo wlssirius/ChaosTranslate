@@ -3,7 +3,7 @@
 
 QColorPicker::QColorPicker(QWidget* parent)
 {
-    connect(this, SIGNAL(clicked()), this, SLOT(changeColor()));
+    //connect(this, SIGNAL(clicked()), this, SLOT(changeColor()));
 }
 
 void QColorPicker::updateColor()

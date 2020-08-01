@@ -5,6 +5,7 @@
 #include "QtConcurrent/QtConcurrent"
 #include "AppSelectDialog.h"
 #include "LanguageMapping.h"
+#include "QPixmap"
 
 ChaosTranslate::ChaosTranslate(QWidget* parent)
 	: QMainWindow(parent)
@@ -22,17 +23,25 @@ ChaosTranslate::ChaosTranslate(QWidget* parent)
 	connect(m_roiButton, &QPushButton::clicked, this, &ChaosTranslate::selectRoi);
 	m_translateButton = findChild<QPushButton*>("translateButton");
 	connect(m_translateButton, &QPushButton::clicked, this, &ChaosTranslate::translate);
+	m_translateButton->setHidden(true);
 	m_glossaryButton = findChild<QPushButton*>("glossaryButton");
 	//m_glossaryButton->setHidden(true);
 	connect(m_glossaryButton, &QPushButton::clicked, &m_glossary, &GlossaryManager::showDialog);
-	m_fontColorButton = findChild<QPushButton*>("fontColorButton");
+	m_fontColorButton = findChild<QColorPicker*>("fontColorButton");
 	connect(m_fontColorButton, &QPushButton::clicked, this, &ChaosTranslate::selectFontColor);
 	m_originalTextEdit = findChild<QTextEdit*>("textEdit");
 	connect(this, &ChaosTranslate::setOriginalText, m_originalTextEdit, &QTextEdit::setText);
 	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
 	connect(this, &ChaosTranslate::setTranslateText, m_translateTextEdit, &QTextEdit::setText);
-	m_fontColorCheckBox = findChild<QCheckBox*>("fontColorCheckBox");
-	m_roiCheckBox = findChild<QCheckBox*>("roiCheckBox");
+	m_entireAppRadioButton = findChild<QRadioButton*>("wholeCaptureRButton");
+	connect(m_entireAppRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setEntireAppCapture);
+	m_regionRadioButton = findChild<QRadioButton*>("regionCaptureRButton");
+	connect(m_regionRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setRegionCapture);
+	m_autoColorRadioButton = findChild<QRadioButton*>("autoColorRButton");
+	connect(m_autoColorRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setAutoDetectFontColor);
+	m_setColorRadioButton = findChild<QRadioButton*>("manualColorRButton");
+	connect(m_setColorRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setManualChooseFontColor);
+	m_imageLabel = findChild<QLabel*>("imageLabel");
 	m_srcLanguageComboBox = findChild<QComboBox*>("srcLanguageComboBox");
 	m_tgtLanguageComboBox = findChild<QComboBox*>("tgtLanguageComboBox");
 	for (int idx = 0; idx <= QOnlineTranslator::Language::Zulu; idx++)
@@ -78,14 +87,15 @@ void ChaosTranslate::captureAndTranslate(bool clicked)
 	roi.y = m_roi.top;
 	roi.w = m_roi.right-m_roi.left;
 	roi.h = m_roi.bottom - m_roi.top;
-	if (usingROI())
+	if (m_regionalCapture)
 	{
 		*pix = *pixClipRectangle(pix.get(), &roi, NULL);
 	}
 	m_capturedImage = convertPixToQImage(pix);
+	m_imageLabel->setPixmap(QPixmap::fromImage(*m_capturedImage));
 	pixWrite("capture.png", pix.get(), IFF_PNG);
 	emit setOriginalText("Recognizing");
-	if (m_fontColorCheckBox->isChecked())
+	if (m_regionalCapture)
 	{
 		thresholdByFontColor(pix.get());
 	}
@@ -166,26 +176,10 @@ void ChaosTranslate::selectFontColor(bool clicked)
 	std::shared_ptr<PIX> img(m_watcher.capture(emptyRect));
 	auto qImg = convertPixToQImage(img);
 	auto canvas = new SelectionCanvas(SelectionCanvas::Mode::Color);
-	connect(canvas, &SelectionCanvas::setColor, this, [this](QColor color) {this->m_color = color; });
+	connect(canvas, &SelectionCanvas::setColor, this, [this](QColor color) {
+		this->m_color = color;
+		m_fontColorButton->setColor(color); });
 	canvas->showCanvas(qImg, windowRect);
-}
-
-bool ChaosTranslate::usingROI() const
-{
-	if (m_roiCheckBox != nullptr)
-	{
-		return m_roiCheckBox->isChecked();
-	}
-	return false;
-}
-
-bool ChaosTranslate::usingFontColor() const
-{
-	if (m_fontColorCheckBox != nullptr)
-	{
-		return m_fontColorCheckBox->isChecked();
-	}
-	return false;
 }
 
 void ChaosTranslate::setSourceLanguage(int idx)
@@ -198,6 +192,42 @@ void ChaosTranslate::setTargetLanguage(int idx)
 {
 	m_targetLanguage = QOnlineTranslator::Language(idx);
 	m_glossary.setTargetLanguage(m_targetLanguage);
+}
+
+void ChaosTranslate::setEntireAppCapture(bool clicked)
+{
+	if (clicked)
+	{
+		m_roiButton->setEnabled(false);
+		m_regionalCapture = false;
+	}
+}
+
+void ChaosTranslate::setRegionCapture(bool clicked)
+{
+	if (clicked)
+	{
+		m_roiButton->setEnabled(true);
+		m_regionalCapture = true;
+	}
+}
+
+void ChaosTranslate::setAutoDetectFontColor(bool clicked)
+{
+	if (clicked)
+	{
+		m_fontColorButton->setEnabled(false);
+		m_manualSetFontColor = false;
+	}
+}
+
+void ChaosTranslate::setManualChooseFontColor(bool clicked)
+{
+	if (clicked)
+	{
+		m_fontColorButton->setEnabled(true);
+		m_manualSetFontColor = true;
+	}
 }
 
 

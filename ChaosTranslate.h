@@ -6,11 +6,13 @@
 #include "qrubberband.h"
 #include "qcheckbox.h"
 #include "qcombobox.h"
+#include "QRadioButton"
 #include "QTranslator"
 #include "ApplicationWatcher.h"
 #include "SelectionCanvas.h"
 #include "GlossaryManager.h"
 #include "QString"
+#include "QColorPicker.h"
 #include "memory"
 
 class ChaosTranslate : public QMainWindow
@@ -27,12 +29,13 @@ public:
 	void selectFontColor(bool clicked);
 	void setRoi(RECT roi) { m_roi = roi; }
 
-	bool usingROI() const;
-	bool usingFontColor() const;
-
 public slots:
 	void setSourceLanguage(int idx);
 	void setTargetLanguage(int idx);
+	void setEntireAppCapture(bool clicked);
+	void setRegionCapture(bool clicked);
+	void setAutoDetectFontColor(bool clicked);
+	void setManualChooseFontColor(bool clicked);
 
 signals:
 	void setOriginalText(const QString& text);
@@ -56,14 +59,16 @@ private:
 	QPushButton* m_selectAppButton = nullptr;
 	QPushButton* m_captureButton = nullptr;
 	QPushButton* m_roiButton = nullptr;
-	QPushButton* m_fontColorButton = nullptr;
+	QColorPicker* m_fontColorButton = nullptr;
 	QPushButton* m_translateButton = nullptr;
 	QPushButton* m_glossaryButton = nullptr;
-	QPushButton* m_showImageButton = nullptr;
+	QLabel* m_imageLabel = nullptr;
 	QTextEdit* m_originalTextEdit = nullptr;
 	QTextEdit* m_translateTextEdit = nullptr;
-	QCheckBox* m_fontColorCheckBox = nullptr;
-	QCheckBox* m_roiCheckBox = nullptr;
+	QRadioButton* m_entireAppRadioButton = nullptr;
+	QRadioButton* m_regionRadioButton = nullptr;
+	QRadioButton* m_autoColorRadioButton = nullptr;
+	QRadioButton* m_setColorRadioButton = nullptr;
 	QComboBox* m_srcLanguageComboBox = nullptr;
 	QComboBox* m_tgtLanguageComboBox = nullptr;
 
@@ -80,4 +85,7 @@ private:
 	QColor m_color;
 	QString m_appTitle;
 	std::shared_ptr<QImage> m_capturedImage;
+
+	bool m_regionalCapture = false;
+	bool m_manualSetFontColor = false;
 };

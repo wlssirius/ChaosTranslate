@@ -75,5 +75,6 @@ void SelectionCanvas::mouseReleaseEvent(QMouseEvent* event)
         QColor color = m_imageLabel->pixmap()->toImage().pixelColor(x, y);
         emit setColor(color);
     }
-    this->destroy();
+    this->close();
+    //this->destroy();
 }
