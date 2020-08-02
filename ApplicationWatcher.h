@@ -17,14 +17,18 @@
 class ApplicationWatcher
 {
 public:
-	using appInfo = std::pair<std::string, HICON>;
+	struct appInfo {
+		std::string name;
+		HICON icon;
+		HWND ptr;
+	};
 	ApplicationWatcher(HWND handle = nullptr) { m_appHandle = handle; }
 
-	void setApplication(QString windowTitle);
-	PIX* capture(RECT roi);
+	void setApplication(HWND windowPtr);
+	PIX* capture();
 	RECT getWindowSize();
 	std::vector<appInfo> getAppInfoList();
-	bool appSelected() { return m_appHandle != nullptr; }
+	bool appSelected();
 
 private:
 	HWND m_appHandle;

@@ -1,8 +1,4 @@
 
-#ifndef UNICODE
-#define UNICODE
-#endif
-
 #include "ApplicationWatcher.h"
 #include "winuser.h"
 #include "memory.h"
@@ -14,19 +10,20 @@ RECT ApplicationWatcher::getWindowSize()
     return window_rect;
 }
 
-void ApplicationWatcher::setApplication(QString windowTitle)
+void ApplicationWatcher::setApplication(HWND windowPtr)
 {
-    int len = windowTitle.length();
-    wchar_t* wcharTitle = new wchar_t[len+1];
-    windowTitle.toWCharArray(wcharTitle);
-    wcharTitle[len] = NULL;
-    m_appHandle = FindWindow(0, wcharTitle);
-    delete[] wcharTitle;
+    m_appHandle = windowPtr;
 }
 
-PIX* ApplicationWatcher::capture(RECT roi) 
+PIX* ApplicationWatcher::capture() 
 {
-    if (!appSelected())
+    if (!appSelected() || !IsWindow(m_appHandle))
+    {
+        m_appHandle = nullptr;
+        return nullptr;
+    }
+
+    if (IsIconic(m_appHandle))
     {
         return nullptr;
     }
@@ -80,8 +77,7 @@ PIX* ApplicationWatcher::capture(RECT roi)
 }
 
 
-using appInfo = std::pair<std::string, HICON>;
-std::vector<appInfo> ApplicationWatcher::getAppInfoList()
+std::vector<ApplicationWatcher::appInfo> ApplicationWatcher::getAppInfoList()
 {
     auto EnumWindowsProc = [](HWND hWnd, LPARAM lParam)
     {
@@ -93,7 +89,11 @@ std::vector<appInfo> ApplicationWatcher::getAppInfoList()
         if (length > 0 && icon!=NULL) 
         {
             int length = GetWindowTextLengthA(hWnd);
-            apps->push_back(std::make_pair(title, icon));
+            appInfo info;
+            info.icon = icon;
+            info.name = title;
+            info.ptr = hWnd;
+            apps->push_back(info);
         }
         return TRUE;
     };
@@ -101,4 +101,14 @@ std::vector<appInfo> ApplicationWatcher::getAppInfoList()
     std::vector<appInfo> apps;
     EnumWindows(EnumWindowsProc, (LPARAM)&apps);
     return apps;
+}
+
+bool ApplicationWatcher::appSelected()
+{ 
+    if (!m_appHandle || !IsWindow(m_appHandle))
+    {
+        m_appHandle = nullptr;
+        return false;
+    }
+    return true;
 }

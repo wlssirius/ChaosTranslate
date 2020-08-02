@@ -6,6 +6,7 @@
 #include "AppSelectDialog.h"
 #include "LanguageMapping.h"
 #include "QPixmap"
+#include "QMessageBox"
 
 ChaosTranslate::ChaosTranslate(QWidget* parent)
 	: QMainWindow(parent)
@@ -61,6 +62,9 @@ ChaosTranslate::ChaosTranslate(QWidget* parent)
 	m_roi.bottom = 0;
 
 	connect(this, &ChaosTranslate::beginTranslate, this, &ChaosTranslate::translate);
+	connect(this, &ChaosTranslate::invalidAppSelected, this, &ChaosTranslate::onInvalidApp);
+	connect(this, &ChaosTranslate::showMsgBox, this, &ChaosTranslate::onMsgBox);
+	onInvalidApp();
 }
 
 void ChaosTranslate::selectApp(bool clicked)
@@ -68,57 +72,26 @@ void ChaosTranslate::selectApp(bool clicked)
 	auto appList = m_watcher.getAppInfoList();
 	auto appSelectDialog = new AppSelectDialog(appList);
 	appSelectDialog->show();
-	connect(appSelectDialog, &AppSelectDialog::selectApp, this, [this](QString str) {this->m_watcher.setApplication(str); });
+	connect(appSelectDialog, &AppSelectDialog::selectApp, this, [this](HWND hWnd) {
+		this->m_watcher.setApplication(hWnd);
+		onAppSelected(); });
 }
 
 void ChaosTranslate::captureAndTranslate(bool clicked)
 {
 	if (!m_watcher.appSelected())
 	{
+		emit showMsgBox("Invalid Application. Please select again.");
+		emit invalidAppSelected();
 		return;
 	}
 
-	std::shared_ptr<PIX> pix(m_watcher.capture(m_roi));
+	std::shared_ptr<PIX> pix = captureApp();
 
-	pixWrite("capture.png", pix.get(), IFF_PNG);
-
-	BOX roi ;
-	roi.x = m_roi.left;
-	roi.y = m_roi.top;
-	roi.w = m_roi.right-m_roi.left;
-	roi.h = m_roi.bottom - m_roi.top;
-	if (m_regionalCapture)
-	{
-		*pix = *pixClipRectangle(pix.get(), &roi, NULL);
-	}
-	m_capturedImage = convertPixToQImage(pix);
-	m_imageLabel->setPixmap(QPixmap::fromImage(*m_capturedImage));
-	pixWrite("capture.png", pix.get(), IFF_PNG);
 	emit setOriginalText("Recognizing");
-	if (m_regionalCapture)
-	{
-		thresholdByFontColor(pix.get());
-	}
-	QString language = languageMapping::qtToTesseract[m_sourceLanguage];
-	QString capture = ocr(pix.get(), language);
-	QStringList list1 = capture.split('\n');
-	QString simplified; 
-	for (auto str : list1)
-	{
-		if (str.size() == 0)
-		{
-			continue;
-		}
-		if (str == 32)
-		{
-			continue;
-		}
-		simplified.append(str);
-		simplified.append('\n');
-	}
-	emit setOriginalText(simplified);
-	emit beginTranslate(true);
-}
+	processImg(pix);
+	ocrTranslate(pix);
+};
 
 void ChaosTranslate::translate(bool clicked)
 {
@@ -149,15 +122,13 @@ void ChaosTranslate::selectRoi(bool clicked)
 		return;
 	}
 	auto windowRect = m_watcher.getWindowSize();
-	RECT emptyRect;
-	emptyRect.left = 0;
-	emptyRect.right = 0;
-	emptyRect.top = 0;
-	emptyRect.bottom = 0;
-	std::shared_ptr<PIX> img(m_watcher.capture(emptyRect));
+	std::shared_ptr<PIX> img = captureApp();
 	auto qImg = convertPixToQImage(img);
 	auto canvas = new SelectionCanvas(SelectionCanvas::Mode::ROI);
-	connect(canvas, &SelectionCanvas::setROI, this, [this](RECT rect) {this->m_roi = rect; });
+	connect(canvas, &SelectionCanvas::setROI, this, [this, img](RECT rect) {
+		this->m_roi = rect;
+		processImg(img);
+		ocrTranslate(img); });
 	canvas->showCanvas(qImg, windowRect);
 }
 
@@ -168,12 +139,7 @@ void ChaosTranslate::selectFontColor(bool clicked)
 		return;
 	}
 	auto windowRect = m_watcher.getWindowSize();
-	RECT emptyRect;
-	emptyRect.left = 0;
-	emptyRect.right = 0;
-	emptyRect.top = 0;
-	emptyRect.bottom = 0;
-	std::shared_ptr<PIX> img(m_watcher.capture(emptyRect));
+	std::shared_ptr<PIX> img = captureApp();
 	auto qImg = convertPixToQImage(img);
 	auto canvas = new SelectionCanvas(SelectionCanvas::Mode::Color);
 	connect(canvas, &SelectionCanvas::setColor, this, [this](QColor color) {
@@ -230,6 +196,95 @@ void ChaosTranslate::setManualChooseFontColor(bool clicked)
 	}
 }
 
+void ChaosTranslate::onAppSelected()
+{
+	m_captureButton->setEnabled(true);
+	m_entireAppRadioButton->setEnabled(true);
+	m_regionRadioButton->setEnabled(true);
+	m_autoColorRadioButton->setEnabled(true);
+	m_setColorRadioButton->setEnabled(true);
+	if (m_regionRadioButton->isChecked())
+	{
+		m_roiButton->setEnabled(true);
+	}
+	if (m_setColorRadioButton->isChecked())
+	{
+		m_fontColorButton->setEnabled(true);
+	}
+}
+
+void ChaosTranslate::onInvalidApp()
+{
+	m_captureButton->setEnabled(false);
+	m_entireAppRadioButton->setEnabled(false);
+	m_regionRadioButton->setEnabled(false);
+	m_autoColorRadioButton->setEnabled(false);
+	m_setColorRadioButton->setEnabled(false);
+	if (m_entireAppRadioButton->isChecked())
+	{
+		m_roiButton->setEnabled(false);
+	}
+	if (m_autoColorRadioButton->isChecked())
+	{
+		m_fontColorButton->setEnabled(false);
+	}
+}
+
+void ChaosTranslate::onMsgBox(QString str)
+{
+	QMessageBox msg;
+	msg.setText(str);
+	msg.exec();
+}
+
+
+std::shared_ptr<PIX> ChaosTranslate::captureApp()
+{
+	return std::shared_ptr<PIX>(m_watcher.capture());
+}
+
+void ChaosTranslate::processImg(std::shared_ptr<PIX> pix)
+{
+	BOX roi;
+	roi.x = m_roi.left;
+	roi.y = m_roi.top;
+	roi.w = m_roi.right - m_roi.left;
+	roi.h = m_roi.bottom - m_roi.top;
+	if (m_regionalCapture)
+	{
+		*pix = *pixClipRectangle(pix.get(), &roi, NULL);
+	}
+	m_capturedImage = convertPixToQImage(pix);
+	m_imageLabel->setPixmap(QPixmap::fromImage(*m_capturedImage));
+	if (m_regionalCapture)
+	{
+		thresholdByFontColor(pix.get());
+	}
+}
+
+void ChaosTranslate::ocrTranslate(std::shared_ptr<PIX> pix)
+{
+
+	QString language = languageMapping::qtToTesseract[m_sourceLanguage];
+	QString capture = ocr(pix.get(), language);
+	QStringList list1 = capture.split('\n');
+	QString simplified;
+	for (auto str : list1)
+	{
+		if (str.size() == 0)
+		{
+			continue;
+		}
+		if (str == 32)
+		{
+			continue;
+		}
+		simplified.append(str);
+		simplified.append('\n');
+	}
+	emit setOriginalText(simplified);
+	emit beginTranslate(true);
+}
 
 void ChaosTranslate::thresholdByFontColor(PIX* pix)
 {

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-AppSelectDialog::AppSelectDialog(std::vector<std::pair<std::string, HICON>> appList)
+AppSelectDialog::AppSelectDialog(std::vector<ApplicationWatcher::appInfo> appList)
 {
 	ui.setupUi(this);
 	m_listWidget = findChild<QListWidget*>("appList");
@@ -15,10 +15,10 @@ AppSelectDialog::AppSelectDialog(std::vector<std::pair<std::string, HICON>> appL
 
 	for (auto appInfo : appList)
 	{
-		QListWidgetItem* item = new QListWidgetItem;
-		auto pixmap = QtWin::fromHICON(appInfo.second);
+		AppItem* item = new AppItem(appInfo.ptr);
+		auto pixmap = QtWin::fromHICON(appInfo.icon);
 		item->setIcon(pixmap);
-		QString title = QString::fromLocal8Bit(appInfo.first.c_str());
+		QString title = QString::fromLocal8Bit(appInfo.name.c_str());
 		item->setText(title);
 		m_listWidget->addItem(item);
 	}
@@ -26,6 +26,10 @@ AppSelectDialog::AppSelectDialog(std::vector<std::pair<std::string, HICON>> appL
 
 void AppSelectDialog::onPressOK(bool clicked)
 {
-	auto item = m_listWidget->selectedItems();
-	emit selectApp(item[0]->text());
+	auto items = m_listWidget->selectedItems();
+	if (items.size() > 0)
+	{
+		AppItem* item = dynamic_cast<AppItem*>(items[0]);
+		emit selectApp(item->getHWnd());
+	}
 }

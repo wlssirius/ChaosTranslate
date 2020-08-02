@@ -37,10 +37,17 @@ public slots:
 	void setAutoDetectFontColor(bool clicked);
 	void setManualChooseFontColor(bool clicked);
 
+	void onAppSelected();
+	void onInvalidApp();
+
+	void onMsgBox(QString str);
+
 signals:
 	void setOriginalText(const QString& text);
 	void setTranslateText(const QString& text);
 	void beginTranslate(bool clicked);
+	void showMsgBox(QString str);
+	void invalidAppSelected();
 
 protected:
 	void changeEvent(QEvent* event);
@@ -48,6 +55,11 @@ protected slots:
 	void slotLanguageChanged(QAction* action);
 
 private:
+
+	std::shared_ptr<PIX> captureApp();
+	void processImg(std::shared_ptr<PIX> pix);
+	void ocrTranslate(std::shared_ptr<PIX> pix);
+
 	void thresholdByFontColor(PIX* pix);
 
 	void switchTranslator(QTranslator& translator, const QString& filename);
