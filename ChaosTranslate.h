@@ -55,6 +55,7 @@ protected slots:
 	void slotLanguageChanged(QAction* action);
 
 private:
+	const QString m_translatePath = ("Resources/Translation");
 
 	std::shared_ptr<PIX> captureApp();
 	void processImg(std::shared_ptr<PIX> pix);
@@ -64,7 +65,9 @@ private:
 
 	void switchTranslator(QTranslator& translator, const QString& filename);
 	void loadLanguage(const QString& rLanguage);
-	void createLanguageMenu(void);
+	void createLanguageMenu();
+	void createToolbar();
+	void createTextEdit();
 	std::shared_ptr<QImage> convertPixToQImage(std::shared_ptr<PIX>& pix);
 
 	Ui::ChaosTranslateClass ui;

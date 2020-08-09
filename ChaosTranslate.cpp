@@ -14,47 +14,8 @@ ChaosTranslate::ChaosTranslate(QWidget* parent)
 	ui.setupUi(this);
 
 	createLanguageMenu();
-
-	m_selectAppButton = findChild<QPushButton*>("selectAppButton");
-	connect(m_selectAppButton, &QPushButton::clicked, this, &ChaosTranslate::selectApp);
-	m_captureButton = findChild<QPushButton*>("captureButton");
-	connect(m_captureButton, &QPushButton::clicked, this,
-		[this](bool clicked) { QtConcurrent::run(this, &ChaosTranslate::captureAndTranslate, clicked); });
-	m_roiButton = findChild<QPushButton*>("ROIButton");
-	connect(m_roiButton, &QPushButton::clicked, this, &ChaosTranslate::selectRoi);
-	m_translateButton = findChild<QPushButton*>("translateButton");
-	connect(m_translateButton, &QPushButton::clicked, this, &ChaosTranslate::translate);
-	m_translateButton->setHidden(true);
-	m_glossaryButton = findChild<QPushButton*>("glossaryButton");
-	//m_glossaryButton->setHidden(true);
-	connect(m_glossaryButton, &QPushButton::clicked, &m_glossary, &GlossaryManager::showDialog);
-	m_fontColorButton = findChild<QColorPicker*>("fontColorButton");
-	connect(m_fontColorButton, &QPushButton::clicked, this, &ChaosTranslate::selectFontColor);
-	m_originalTextEdit = findChild<QTextEdit*>("textEdit");
-	connect(this, &ChaosTranslate::setOriginalText, m_originalTextEdit, &QTextEdit::setText);
-	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
-	connect(this, &ChaosTranslate::setTranslateText, m_translateTextEdit, &QTextEdit::setText);
-	m_entireAppRadioButton = findChild<QRadioButton*>("wholeCaptureRButton");
-	connect(m_entireAppRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setEntireAppCapture);
-	m_regionRadioButton = findChild<QRadioButton*>("regionCaptureRButton");
-	connect(m_regionRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setRegionCapture);
-	m_autoColorRadioButton = findChild<QRadioButton*>("autoColorRButton");
-	connect(m_autoColorRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setAutoDetectFontColor);
-	m_setColorRadioButton = findChild<QRadioButton*>("manualColorRButton");
-	connect(m_setColorRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setManualChooseFontColor);
-	m_imageLabel = findChild<QLabel*>("imageLabel");
-	m_srcLanguageComboBox = findChild<QComboBox*>("srcLanguageComboBox");
-	m_tgtLanguageComboBox = findChild<QComboBox*>("tgtLanguageComboBox");
-	for (int idx = 0; idx <= QOnlineTranslator::Language::Zulu; idx++)
-	{
-		QString language = QVariant::fromValue(QOnlineTranslator::Language(idx)).toString();
-		m_srcLanguageComboBox->addItem(language);
-		m_tgtLanguageComboBox->addItem(language);
-	}
-	m_srcLanguageComboBox->setCurrentIndex(m_sourceLanguage);
-	m_tgtLanguageComboBox->setCurrentIndex(m_targetLanguage);
-	connect(m_srcLanguageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setSourceLanguage(int)));
-	connect(m_tgtLanguageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setTargetLanguage(int)));
+	createToolbar();
+	createTextEdit();	
 
 	m_roi.left = 0;
 	m_roi.right = 0;
@@ -328,7 +289,7 @@ void ChaosTranslate::switchTranslator(QTranslator& translator, const QString& fi
 	qApp->removeTranslator(&translator);
 	 
 	// load the new translator
-	QString path = QApplication::applicationDirPath();
+	QString path = QApplication::applicationDirPath() + "/" + m_translatePath;
 	path.append("/");
 	if (translator.load(path + filename)) //Here Path and Filename has to be entered because the system didn't find the QM Files else
 		qApp->installTranslator(&translator);
@@ -341,7 +302,7 @@ void ChaosTranslate::loadLanguage(const QString& rLanguage)
 		QLocale locale = QLocale(m_currUILang);
 		QLocale::setDefault(locale);
 		QString languageName = QLocale::languageToString(locale.language());
-		switchTranslator(m_uiTranslator, QString("realtimetranslator_%1.qm").arg(rLanguage));
+		switchTranslator(m_uiTranslator, QString("chaostranslate_%1.qm").arg(rLanguage));
 		//ui.statusBar->showMessage(tr("Current Language changed to %1").arg(languageName));
 	}
 }
@@ -357,8 +318,8 @@ void ChaosTranslate::createLanguageMenu(void)
 	QString defaultLocale = QLocale::system().name(); // e.g. "de_DE"
 	defaultLocale.truncate(defaultLocale.lastIndexOf('_')); // e.g. "de"
 
-	QDir dir("");
-	QStringList fileNames = dir.entryList(QStringList("realtimetranslator_*.qm"));
+	QDir dir(m_translatePath);
+	QStringList fileNames = dir.entryList(QStringList("chaostranslate_*.qm"));
 
 	for (int i = 0; i < fileNames.size(); ++i) {
 		// get locale extracted by filename
@@ -383,6 +344,54 @@ void ChaosTranslate::createLanguageMenu(void)
 			slotLanguageChanged(action);
 		}
 	}
+}
+
+void ChaosTranslate::createToolbar()
+{
+	m_selectAppButton = findChild<QPushButton*>("selectAppButton");
+	connect(m_selectAppButton, &QPushButton::clicked, this, &ChaosTranslate::selectApp);
+	m_captureButton = findChild<QPushButton*>("captureButton");
+	connect(m_captureButton, &QPushButton::clicked, this,
+		[this](bool clicked) { QtConcurrent::run(this, &ChaosTranslate::captureAndTranslate, clicked); });
+	m_roiButton = findChild<QPushButton*>("ROIButton");
+	connect(m_roiButton, &QPushButton::clicked, this, &ChaosTranslate::selectRoi);
+	m_translateButton = findChild<QPushButton*>("translateButton");
+	connect(m_translateButton, &QPushButton::clicked, this, &ChaosTranslate::translate);
+	m_translateButton->setHidden(true);
+	m_glossaryButton = findChild<QPushButton*>("glossaryButton");
+	//m_glossaryButton->setHidden(true);
+	connect(m_glossaryButton, &QPushButton::clicked, &m_glossary, &GlossaryManager::showDialog);
+	m_fontColorButton = findChild<QColorPicker*>("fontColorButton");
+	connect(m_fontColorButton, &QPushButton::clicked, this, &ChaosTranslate::selectFontColor);
+
+	m_entireAppRadioButton = findChild<QRadioButton*>("wholeCaptureRButton");
+	connect(m_entireAppRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setEntireAppCapture);
+	m_regionRadioButton = findChild<QRadioButton*>("regionCaptureRButton");
+	connect(m_regionRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setRegionCapture);
+	m_autoColorRadioButton = findChild<QRadioButton*>("autoColorRButton");
+	connect(m_autoColorRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setAutoDetectFontColor);
+	m_setColorRadioButton = findChild<QRadioButton*>("manualColorRButton");
+	connect(m_setColorRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setManualChooseFontColor);
+	m_imageLabel = findChild<QLabel*>("imageLabel");
+}
+
+void ChaosTranslate::createTextEdit()
+{
+	m_originalTextEdit = findChild<QTextEdit*>("textEdit");
+	connect(this, &ChaosTranslate::setOriginalText, m_originalTextEdit, &QTextEdit::setText);
+	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
+	connect(this, &ChaosTranslate::setTranslateText, m_translateTextEdit, &QTextEdit::setText); m_srcLanguageComboBox = findChild<QComboBox*>("srcLanguageComboBox");
+	m_tgtLanguageComboBox = findChild<QComboBox*>("tgtLanguageComboBox");
+	for (int idx = 0; idx <= QOnlineTranslator::Language::Zulu; idx++)
+	{
+		QString language = QVariant::fromValue(QOnlineTranslator::Language(idx)).toString();
+		m_srcLanguageComboBox->addItem(language);
+		m_tgtLanguageComboBox->addItem(language);
+	}
+	m_srcLanguageComboBox->setCurrentIndex(m_sourceLanguage);
+	m_tgtLanguageComboBox->setCurrentIndex(m_targetLanguage);
+	connect(m_srcLanguageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setSourceLanguage(int)));
+	connect(m_tgtLanguageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setTargetLanguage(int)));
 }
 
 std::shared_ptr<QImage> ChaosTranslate::convertPixToQImage(std::shared_ptr<PIX>& pix)
