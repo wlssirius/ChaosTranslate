@@ -53,6 +53,7 @@ protected:
 	void changeEvent(QEvent* event);
 protected slots:
 	void slotLanguageChanged(QAction* action);
+	void translateAPIChanged(QAction* action);
 
 private:
 	const QString m_translatePath = ("Resources/Translation");
@@ -66,6 +67,7 @@ private:
 	void switchTranslator(QTranslator& translator, const QString& filename);
 	void loadLanguage(const QString& rLanguage);
 	void createLanguageMenu();
+	void createEngineMenu();
 	void createToolbar();
 	void createTextEdit();
 	std::shared_ptr<QImage> convertPixToQImage(std::shared_ptr<PIX>& pix);
@@ -87,9 +89,15 @@ private:
 	QComboBox* m_srcLanguageComboBox = nullptr;
 	QComboBox* m_tgtLanguageComboBox = nullptr;
 
+	QActionGroup* m_apiActionGroup;
+	QAction* m_googleAction;
+	QAction* m_bingAction;
+	QAction* m_yandexAction;
+
 	QOnlineTranslator m_translator;
 	QOnlineTranslator::Language m_sourceLanguage = QOnlineTranslator::Language::Japanese;
 	QOnlineTranslator::Language m_targetLanguage = QOnlineTranslator::Language::SimplifiedChinese;
+	QOnlineTranslator::Engine m_translateEngine = QOnlineTranslator::Engine::Google;
 
 	QTranslator m_uiTranslator;
 	QString m_currUILang;

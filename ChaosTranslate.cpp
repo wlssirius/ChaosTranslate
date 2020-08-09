@@ -14,6 +14,7 @@ ChaosTranslate::ChaosTranslate(QWidget* parent)
 	ui.setupUi(this);
 
 	createLanguageMenu();
+	createEngineMenu();
 	createToolbar();
 	createTextEdit();	
 
@@ -61,7 +62,7 @@ void ChaosTranslate::translate(bool clicked)
 	LanguagePair languagePair = LanguagePair(m_sourceLanguage, m_targetLanguage);
 	GlossaryManager::EncodeResult encodeResult = m_glossary.encode(original, languagePair);
 	emit setTranslateText("Translating");
-	m_translator.translate(encodeResult.encodedText, QOnlineTranslator::Google, m_targetLanguage);
+	m_translator.translate(encodeResult.encodedText, m_translateEngine, m_targetLanguage, m_sourceLanguage);
 	QObject::connect(&m_translator, &QOnlineTranslator::finished, [=] {
 		if (this->m_translator.error() == QOnlineTranslator::NoError)
 		{
@@ -346,6 +347,20 @@ void ChaosTranslate::createLanguageMenu(void)
 	}
 }
 
+void ChaosTranslate::createEngineMenu()
+{
+	m_apiActionGroup = new QActionGroup(ui.menuTranslate_API);
+	m_googleAction = findChild<QAction*>("actionGoogle");
+	m_bingAction = findChild<QAction*>("actionBing");
+	m_yandexAction = findChild<QAction*>("actionYandex");
+	m_apiActionGroup->addAction(m_googleAction);
+	m_apiActionGroup->addAction(m_bingAction);
+	m_apiActionGroup->addAction(m_yandexAction);
+	connect(m_apiActionGroup, SIGNAL(triggered(QAction*)), this, 
+		SLOT(translateAPIChanged(QAction*)));
+	m_apiActionGroup->setExclusive(true);
+}
+
 void ChaosTranslate::createToolbar()
 {
 	m_selectAppButton = findChild<QPushButton*>("selectAppButton");
@@ -357,7 +372,7 @@ void ChaosTranslate::createToolbar()
 	connect(m_roiButton, &QPushButton::clicked, this, &ChaosTranslate::selectRoi);
 	m_translateButton = findChild<QPushButton*>("translateButton");
 	connect(m_translateButton, &QPushButton::clicked, this, &ChaosTranslate::translate);
-	m_translateButton->setHidden(true);
+	//m_translateButton->setHidden(true);
 	m_glossaryButton = findChild<QPushButton*>("glossaryButton");
 	//m_glossaryButton->setHidden(true);
 	connect(m_glossaryButton, &QPushButton::clicked, &m_glossary, &GlossaryManager::showDialog);
@@ -434,6 +449,22 @@ void ChaosTranslate::changeEvent(QEvent* event)
 		}
 	}
 	QMainWindow::changeEvent(event);
+}
+
+void ChaosTranslate::translateAPIChanged(QAction* action)
+{
+	if (action == m_googleAction)
+	{
+		m_translateEngine = QOnlineTranslator::Engine::Google;
+	}
+	else if (action == m_bingAction)
+	{
+		m_translateEngine = QOnlineTranslator::Engine::Bing;
+	}
+	else if (action == m_yandexAction)
+	{
+		m_translateEngine = QOnlineTranslator::Engine::Yandex;
+	}
 }
 
 void ChaosTranslate::slotLanguageChanged(QAction* action)

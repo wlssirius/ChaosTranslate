@@ -27,7 +27,7 @@
    </size>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -355,7 +355,8 @@
      <string>Translate API</string>
     </property>
     <addaction name="actionGoogle"/>
-    <addaction name="actionYoudao"/>
+    <addaction name="actionBing"/>
+    <addaction name="actionYandex"/>
    </widget>
    <widget class="QMenu" name="menuDictionary">
     <property name="title">
@@ -376,13 +377,27 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionGoogle">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Google</string>
    </property>
   </action>
-  <action name="actionYoudao">
+  <action name="actionBing">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Bing</string>
+   </property>
+  </action>
+  <action name="actionYandex">
+   <property name="text">
+    <string>Yandex</string>
    </property>
   </action>
  </widget>
@@ -399,7 +414,7 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
