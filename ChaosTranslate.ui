@@ -358,14 +358,8 @@
     <addaction name="actionBing"/>
     <addaction name="actionYandex"/>
    </widget>
-   <widget class="QMenu" name="menuDictionary">
-    <property name="title">
-     <string>Dictionary</string>
-    </property>
-   </widget>
    <addaction name="menuLanguage"/>
    <addaction name="menuTranslate_API"/>
-   <addaction name="menuDictionary"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -414,7 +408,7 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
