@@ -1,5 +1,5 @@
 # Introduction
-ChaosTranslate is a lightweight tool to automatically detect and translate charactors on Windows platform. It uses [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) to detect characters inside the screenshot of user-selected application and [QtOnlineTranslator](https://github.com/crow-translate/QOnlineTranslator) to translate into target language.
+ChaosTranslate is a lightweight tool to automatically detect and translate characters on Windows platform. It uses [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) to detect characters inside the screenshot of user-selected application and [QtOnlineTranslator](https://github.com/crow-translate/QOnlineTranslator) to translate into target language.
 
 ![Image of UI](chaostranslate.png)   
 
