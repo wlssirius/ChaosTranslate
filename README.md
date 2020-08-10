@@ -4,7 +4,7 @@ ChaosTranslate is a lightweight tool to automatically detect and translate chara
 ![Image of UI](chaostranslate.png)   
 
 # Requirements   
-1. [CMake](https://cmake.org/install/) (prefered > 3.18.0)      
+1. [CMake](https://cmake.org/install/) (preferably > 3.18.0)      
 2. [Qt5](https://github.com/qt/qt5)   
 3. [TesseractOCR](https://tesseract-ocr.github.io/tessdoc/Compiling.html#windows)   
 
