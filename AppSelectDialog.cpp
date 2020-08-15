@@ -32,4 +32,5 @@ void AppSelectDialog::onPressOK(bool clicked)
 		AppItem* item = dynamic_cast<AppItem*>(items[0]);
 		emit selectApp(item->getHWnd());
 	}
+	destroy(true);
 }

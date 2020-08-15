@@ -85,8 +85,12 @@ std::vector<ApplicationWatcher::appInfo> ApplicationWatcher::getAppInfoList()
         int length = GetWindowTextLengthA(hWnd);
         std::string title(length + 1, NULL);
         GetWindowTextA(hWnd, const_cast<char*>(title.c_str()), length + 1);
-        HICON icon = (HICON)GetClassLong(hWnd, GCLP_HICON);
-        if (length > 0 && icon!=NULL) 
+        HICON icon = reinterpret_cast<HICON>(::SendMessageW(hWnd, WM_GETICON, ICON_SMALL, 0));
+        if (icon == nullptr)
+        {
+            icon = (HICON)GetClassLong(hWnd, GCLP_HICON);
+        }
+        if (length > 0 && icon!=NULL)  
         {
             int length = GetWindowTextLengthA(hWnd);
             appInfo info;

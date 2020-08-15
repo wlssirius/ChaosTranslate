@@ -5,7 +5,7 @@
 
 namespace languageMapping {
 
-    const QString qtToTesseract[122] =
+    const QString qtToTesseract[126] =
     {
             "",     //Auto,
             "afr",  //Afrikaans,
@@ -60,6 +60,7 @@ namespace languageMapping {
             "kan",     //Kannada,
             "kaz",     //Kazakh,
             "knm",     //Khmer,
+            "",     //Kinyarwanda,
             "",     //Klingon,
             "",     //KlingonPlqaD,
             "kor",     //Korean,
@@ -83,6 +84,7 @@ namespace languageMapping {
             "mya",     //Myanmar,
             "nep",     //Nepali,
             "nor",     //Norwegian,
+            "",     //Oriya
             "",     //Papiamento,
             "pus",     //Pashto,
             "fas",     //Persian,
@@ -118,7 +120,9 @@ namespace languageMapping {
             "ton",     //Tongan,
             "chi_tra",     //TraditionalChinese,
             "tur",     //Turkish,
+            "",     //Turkmen,
             "",     //Udmurt,
+            "",     //Uighur,
             "ukr",     //Ukrainian,
             "urd",     //Urdu,
             "uzb",     //Uzbek,
