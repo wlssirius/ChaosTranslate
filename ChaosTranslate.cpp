@@ -51,9 +51,7 @@ void ChaosTranslate::captureAndTranslate(bool clicked)
 	std::shared_ptr<PIX> pix = captureApp();
 
 	emit setOriginalText("Recognizing");
-	pixWrite("test1.png", pix.get(), IFF_PNG);
 	processImg(pix);
-	pixWrite("test.png", pix.get(), IFF_PNG);
 	ocrTranslate(pix);
 };
 
