@@ -29,6 +29,10 @@ ChaosTranslate::ChaosTranslate(QWidget* parent)
 	onInvalidApp();
 }
 
+ChaosTranslate::~ChaosTranslate()
+{
+}
+
 void ChaosTranslate::selectApp(bool clicked)
 {
 	auto appList = m_watcher.getAppInfoList();
@@ -449,6 +453,11 @@ void ChaosTranslate::changeEvent(QEvent* event)
 		}
 	}
 	QMainWindow::changeEvent(event);
+}
+
+void ChaosTranslate::closeEvent(QCloseEvent* event)
+{
+	m_glossary.closeDialog();
 }
 
 void ChaosTranslate::translateAPIChanged(QAction* action)

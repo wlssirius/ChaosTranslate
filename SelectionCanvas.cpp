@@ -13,6 +13,7 @@ SelectionCanvas::SelectionCanvas(Mode mode):
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->addWidget(m_imageLabel);
     layout->setContentsMargins(QMargins(0, 0, 0, 0));
+    setModal(true);
     if (mode == Mode::Color)
     {
         setWindowTitle(tr("Please pick target font color"));

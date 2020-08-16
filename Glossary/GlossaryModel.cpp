@@ -1,6 +1,7 @@
 
 #include "GlossaryModel.h"
 #include "QMessageBox"
+#include "algorithm"
 GlossaryModel::GlossaryModel(QObject* parent)
     : QAbstractTableModel(parent)
 {
@@ -37,10 +38,8 @@ QVariant GlossaryModel::headerData(int section, Qt::Orientation orientation, int
         switch (section)
         {
         case 0:
-            return QString("Index");
-        case 1:
             return QString("Text");
-        case 2:
+        case 1:
             return QString("Translate");
         default:
             return QVariant();
@@ -103,10 +102,55 @@ Qt::ItemFlags GlossaryModel::flags(const QModelIndex& index) const
     return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
 }
 
+void GlossaryModel::clearAll()
+{
+    int rows = rowCount();
+    removeRows(0, rows);
+    m_glossary.clear();
+}
+
 void GlossaryModel::addEntry(QString original, QString translate)
 {
-    insertRow(getGlossaryCount());
-    m_glossary.emplace_back(original, translate);
+    int idx = -1;
+    for (int i = 0; i < m_glossary.size(); i++)
+    {
+        if (m_glossary[i].first == original)
+        {
+            idx = i;
+            break;
+        }
+    }
+    if (idx==-1)
+    {
+        insertRow(getGlossaryCount());
+        m_glossary.emplace_back(original, translate);
+    }
+    else
+    {
+        m_glossary[idx].second = translate;
+        setData(createIndex(idx, 1), translate);
+    }
 }
+
+void GlossaryModel::setGlossary(const std::vector<entry>& glossary)
+{
+    clearAll();
+    m_glossary = glossary;
+    for (int i = 0; i < m_glossary.size(); i++)
+    {
+        insertRow(i);
+    }
+}
+
+void GlossaryModel::setGlossary(std::vector<entry>&& glossary)
+{
+    clearAll();
+    m_glossary = glossary;
+    for (int i = 0; i < m_glossary.size(); i++)
+    {
+        insertRow(i);
+    }
+}
+
 
 

@@ -10,6 +10,7 @@ AppSelectDialog::AppSelectDialog(std::vector<ApplicationWatcher::appInfo> appLis
 	m_listWidget = findChild<QListWidget*>("appList");
 	m_ok = findChild<QPushButton*>("okButton");
 	m_cancel = findChild<QPushButton*>("cancelButton");
+	setModal(true);
 
 	connect(m_ok, &QPushButton::clicked, this, &AppSelectDialog::onPressOK);
 

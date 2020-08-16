@@ -17,6 +17,7 @@ GlossaryManager::GlossaryManager(LanguagePair languages)
 {
 	m_sourceLanguage = languages.first;
 	m_targetLanguage = languages.second;
+	m_model = new GlossaryModel();
 	m_dialog = nullptr;
 	m_codes.emplace_back(u8"💫");
 	m_codes.emplace_back(u8"⚓");
@@ -34,7 +35,7 @@ void GlossaryManager::showDialog()
 	if (m_dialog == nullptr)
 	{
 		using Lan = QOnlineTranslator::Language;
-		m_dialog = new GlossaryDialog(std::pair<Lan, Lan>(m_sourceLanguage, m_targetLanguage));
+		m_dialog = new GlossaryDialog(std::pair<Lan, Lan>(m_sourceLanguage, m_targetLanguage), m_model);
 		connect(m_dialog, &GlossaryDialog::onSaveDictionary, this, &GlossaryManager::saveDictionary);
 		connect(m_dialog, &GlossaryDialog::onLoadDictionary, this, &GlossaryManager::loadDictionary);
 		connect(m_dialog, &GlossaryDialog::onAddEntry, this, &GlossaryManager::addEntry);
@@ -43,15 +44,21 @@ void GlossaryManager::showDialog()
 	m_dialog->show();
 }
 
+void GlossaryManager::closeDialog()
+{
+	m_dialog->close();
+}
+
 GlossaryManager::EncodeResult GlossaryManager::encode(
 	QString text, LanguagePair languages)
 {
 	EncodeResult result(text, std::map<QString, QString>());
-	if (m_dictionaries.find(languages) == m_dictionaries.end())
-	{
-		return result;
-	}
-	Dict dict = m_dictionaries.at(languages);
+	//if (m_dictionaries.find(languages) == m_dictionaries.end())
+	//{
+	//	return result;
+	//}
+	const auto& dict = m_model->getGlossary();
+	
 	if (dict.size() == 0)
 	{
 		return result;
@@ -60,11 +67,11 @@ GlossaryManager::EncodeResult GlossaryManager::encode(
 	for (auto entry : dict)
 	{
 		const auto& key = entry.first;
-		int id = text.indexOf(key);
+		int id = result.encodedText.indexOf(key);
 		while (id != -1)
 		{
-			text.replace(id, key.size(), m_codes[count]);
-			id = text.indexOf(key);
+			result.encodedText.replace(id, key.size(), m_codes[count]);
+			id = result.encodedText.indexOf(key);
 			if (result.dictionary.find(m_codes[count]) == result.dictionary.end())
 			{
 				result.dictionary[m_codes[count]] = entry.second;
@@ -77,7 +84,9 @@ GlossaryManager::EncodeResult GlossaryManager::encode(
 
 void GlossaryManager::setSourceLanguage(QOnlineTranslator::Language lan)
 {
+	m_dictionaries[LanguagePair(m_sourceLanguage, m_targetLanguage)] = getCurrentDict();
 	m_sourceLanguage = lan;
+	resumeDict(m_dictionaries[LanguagePair(m_sourceLanguage, m_targetLanguage)]);
 	if (m_dialog)
 	{
 		m_dialog->setSourceLanguage(lan);
@@ -86,7 +95,9 @@ void GlossaryManager::setSourceLanguage(QOnlineTranslator::Language lan)
 
 void GlossaryManager::setTargetLanguage(QOnlineTranslator::Language lan)
 {
+	m_dictionaries[LanguagePair(m_sourceLanguage, m_targetLanguage)] = getCurrentDict();
 	m_targetLanguage = lan;
+	resumeDict(m_dictionaries[LanguagePair(m_sourceLanguage, m_targetLanguage)]);
 	if (m_dialog)
 	{
 		m_dialog->setTargetLanguage(lan);
@@ -95,8 +106,8 @@ void GlossaryManager::setTargetLanguage(QOnlineTranslator::Language lan)
 
 void GlossaryManager::saveDictionary()
 {
-	LanguagePair lanPair(m_sourceLanguage, m_targetLanguage);
-	if (m_dictionaries.find(lanPair) == m_dictionaries.end())
+	Dict dict = getCurrentDict();
+	if (dict.empty())
 	{
 		QMessageBox msg;
 		msg.setText("Dictionary is empty!");
@@ -125,7 +136,6 @@ void GlossaryManager::saveDictionary()
 	QString original;
 	QByteArray key;
 	QByteArray value;
-	Dict dict = m_dictionaries.at(lanPair);
 	std::vector<QByteArray> keys;
 	std::vector<QByteArray> values;
 	for (auto& entry : dict)
@@ -194,7 +204,7 @@ void GlossaryManager::loadDictionary()
 			char* value = entryNode->first_attribute(m_valueString)->value();
 			QString keyStr(key);
 			QString valueStr(value);
-			m_dialog->onLoadNewRow(keyStr, valueStr);
+			m_model->addEntry(key, value);
 		}
 	}
 	catch (std::exception e)
@@ -210,25 +220,44 @@ void GlossaryManager::loadDictionary()
 void GlossaryManager::addEntry(QString key, QString value)
 {
 	LanguagePair lanPair(m_sourceLanguage, m_targetLanguage);
-	m_dictionaries[lanPair][key] = value;
+	m_model->addEntry(key, value);
+	//m_dictionaries[lanPair][key] = value;
 }
 
-void GlossaryManager::deleteEntry(QString key, QString value)
+void GlossaryManager::deleteEntry(QModelIndex idx)
 {
 	LanguagePair lanPair(m_sourceLanguage, m_targetLanguage);
-	if (m_dictionaries.find(lanPair) != m_dictionaries.end())
+	m_model->removeRow(idx.row());
+}
+
+GlossaryManager::Dict GlossaryManager::getCurrentDict()
+{
+	Dict dict;
+	const auto& glossary = m_model->getGlossary();
+	for (const auto& entry : glossary)
 	{
-		m_dictionaries[lanPair].erase(key);
+		dict.emplace(entry);
 	}
+	return dict;
+}
+
+void GlossaryManager::resumeDict(const Dict& dict)
+{
+	std::vector<GlossaryModel::entry> glossary;
+	for (const auto& kvp : dict)
+	{
+		glossary.emplace_back(kvp);
+	}
+	m_model->setGlossary(std::move(glossary));
 }
 
 QString GlossaryManager::decode(QString text, const std::map<QString, QString>& dict)
 {
-	if (m_dialog == nullptr)
+	if (m_model == nullptr)
 	{
 		return text;
 	}
-	const auto& glossary = m_dialog->getGlossary();
+	const auto& glossary = m_model->getGlossary();
 	if (glossary.size() == 0)
 	{
 		return text;

@@ -2,6 +2,7 @@
 #ifndef GLOSSARY_MANAGER_HEADER
 #define GLOSSARY_MANAGER_HEADER
 
+#include "GlossaryModel.h"
 #include "GlossaryDialog.h"
 #include "qonlinetranslator.h"
 #include <map>
@@ -24,6 +25,7 @@ public:
 	GlossaryManager(LanguagePair languages);
 	~GlossaryManager();
 	void showDialog();
+	void closeDialog();
 	EncodeResult encode(QString text, LanguagePair language);
 	QString decode(QString text, const Dict& dict);
 	void setSourceLanguage(QOnlineTranslator::Language lan);
@@ -32,12 +34,15 @@ private:
 	void saveDictionary();
 	void loadDictionary();
 	void addEntry(QString key, QString value);
-	void deleteEntry(QString key, QString value);
+	void deleteEntry(QModelIndex idx);
+	Dict getCurrentDict();
+	void resumeDict(const Dict& dict);
 
 	QOnlineTranslator::Language m_sourceLanguage;
 	QOnlineTranslator::Language m_targetLanguage;
 	std::map<LanguagePair, Dict> m_dictionaries;
 	GlossaryDialog* m_dialog = nullptr;
+	GlossaryModel* m_model = nullptr;
 	std::vector<QString> m_codes;
 	static constexpr char* m_dictionaryString = "Dictionary";
 	static constexpr char* m_entryString = "Entry";

@@ -17,14 +17,14 @@ class GlossaryDialog: public QDialog
 {
 	Q_OBJECT
 public:
-	GlossaryDialog(std::pair<QOnlineTranslator::Language, QOnlineTranslator::Language> languages);
+	GlossaryDialog(std::pair<QOnlineTranslator::Language, QOnlineTranslator::Language> languages,
+		GlossaryModel* model);
 	~GlossaryDialog();
 	void onAddNewRow(bool clicked);
 	void onDeleteRow(bool clicked);
 	void onLoadNewRow(QString key, QString value);
 	void editTable(const QModelIndex& index);
 	void checkEmptyWord(const QModelIndex& index);
-	std::vector<std::pair<QString, QString>> getGlossary();
 	void setSourceLanguage(QOnlineTranslator::Language lan);
 	void setTargetLanguage(QOnlineTranslator::Language lan);
 
@@ -32,7 +32,7 @@ signals:
 	void onSaveDictionary();
 	void onLoadDictionary();
 	void onAddEntry(QString key, QString value);
-	void onDeleteEntry(QString key, QString value);
+	void onDeleteEntry(QModelIndex idx);
 
 private:
 	Ui::GlossaryClass ui;
@@ -43,7 +43,6 @@ private:
 	QPushButton* m_loadButton;
 	QLineEdit* m_sourceLanLineEdit;
 	QLineEdit* m_targetLanLineEdit;
-	GlossaryModel* m_model = nullptr;
 	NewGlossaryDialog* m_newGlossaryDialog = nullptr;
 };
 

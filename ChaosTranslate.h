@@ -21,6 +21,7 @@ class ChaosTranslate : public QMainWindow
 
 public:
 	ChaosTranslate(QWidget *parent = Q_NULLPTR);
+	~ChaosTranslate();
 
 	void selectApp(bool clicked);
 	void captureAndTranslate(bool clicked);
@@ -51,6 +52,8 @@ signals:
 
 protected:
 	void changeEvent(QEvent* event);
+	void closeEvent(QCloseEvent* event) override;
+
 protected slots:
 	void slotLanguageChanged(QAction* action);
 	void translateAPIChanged(QAction* action);
