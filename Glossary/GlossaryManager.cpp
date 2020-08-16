@@ -110,7 +110,7 @@ void GlossaryManager::saveDictionary()
 	if (dict.empty())
 	{
 		QMessageBox msg;
-		msg.setText("Dictionary is empty!");
+		msg.setText(ERROR_MESSAGE[ERROR_CODE::EMPTY_DICTIONARY]);
 		msg.exec();
 		return;
 	}
@@ -210,7 +210,7 @@ void GlossaryManager::loadDictionary()
 	catch (std::exception e)
 	{
 		QMessageBox msg;
-		msg.setText(QString("Invalid dictionary file! ") + QString(e.what()));
+		msg.setText(QString(ERROR_MESSAGE[ERROR_CODE::INVALID_DICTIONARY]) + QString(tr(e.what())));
 		msg.exec();
 		return;
 	}

@@ -11,6 +11,19 @@ class ChaosTranslate;
 class GlossaryManager: public QObject
 {
 	Q_OBJECT
+
+	enum ERROR_CODE
+	{
+		EMPTY_DICTIONARY = 0,
+		INVALID_DICTIONARY,
+		ERROR_COUNT
+	};
+
+	QString ERROR_MESSAGE[ERROR_CODE::ERROR_COUNT] = {
+		tr("Dictionary is empty!"), //EMPTY_DICTIONARY
+		tr("Invalid dictionary file!") //INVALID_DICTIONARY
+	};
+
 public:
 	using Dict = std::map<QString, QString>;
 	using LanguagePair = std::pair<QOnlineTranslator::Language, QOnlineTranslator::Language>;

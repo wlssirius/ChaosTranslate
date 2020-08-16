@@ -42,19 +42,32 @@ void ChaosTranslate::selectApp(bool clicked)
 		this->m_watcher.setApplication(hWnd);
 		onAppSelected(); });
 }
-
+	
 void ChaosTranslate::captureAndTranslate(bool clicked)
 {
 	if (!m_watcher.appSelected())
 	{
-		emit showMsgBox("Invalid Application. Please select again.");
+		emit showMsgBox(ERROR_MESSAGE[ERROR_CODE::INVALID_APP]);
 		emit invalidAppSelected();
 		return;
 	}
 
 	std::shared_ptr<PIX> pix = captureApp();
+	if (!pix)
+	{
+		switch (m_watcher.getErrorCode())
+		{
+		case ApplicationWatcher::ErrorCode::APP_MINIMIZED:
+			emit showMsgBox(ERROR_MESSAGE[ERROR_CODE::MINIMIZED_APP]);
+			break;
+		default:
+			emit showMsgBox(ERROR_MESSAGE[ERROR_CODE::INVALID_APP]);
+			emit invalidAppSelected();
+		}
+		return;
+	}
 
-	emit setOriginalText("Recognizing");
+	emit setOriginalText(tr("Recognizing"));
 	processImg(pix);
 	ocrTranslate(pix);
 };
@@ -65,7 +78,7 @@ void ChaosTranslate::translate(bool clicked)
 	using LanguagePair = std::pair<QOnlineTranslator::Language, QOnlineTranslator::Language>;
 	LanguagePair languagePair = LanguagePair(m_sourceLanguage, m_targetLanguage);
 	GlossaryManager::EncodeResult encodeResult = m_glossary.encode(original, languagePair);
-	emit setTranslateText("Translating");
+	emit setTranslateText(tr("Translating"));
 	m_translator.translate(encodeResult.encodedText, m_translateEngine, m_targetLanguage, m_sourceLanguage);
 	QObject::connect(&m_translator, &QOnlineTranslator::finished, [=] {
 		if (this->m_translator.error() == QOnlineTranslator::NoError)
@@ -89,6 +102,19 @@ void ChaosTranslate::selectRoi(bool clicked)
 	}
 	auto windowRect = m_watcher.getWindowSize();
 	std::shared_ptr<PIX> img = captureApp();
+	if (!img)
+	{
+		switch (m_watcher.getErrorCode())
+		{
+		case ApplicationWatcher::ErrorCode::APP_MINIMIZED:
+			emit showMsgBox(ERROR_MESSAGE[ERROR_CODE::MINIMIZED_APP]);
+			break;
+		default:
+			emit showMsgBox(ERROR_MESSAGE[ERROR_CODE::INVALID_APP]);
+			emit invalidAppSelected();
+		}
+		return;
+	}
 	auto qImg = convertPixToQImage(img);
 	auto canvas = new SelectionCanvas(SelectionCanvas::Mode::ROI);
 	connect(canvas, &SelectionCanvas::setROI, this, [this, img](RECT rect) {
@@ -106,6 +132,19 @@ void ChaosTranslate::selectFontColor(bool clicked)
 	}
 	auto windowRect = m_watcher.getWindowSize();
 	std::shared_ptr<PIX> img = captureApp();
+	if (!img)
+	{
+		switch (m_watcher.getErrorCode())
+		{
+		case ApplicationWatcher::ErrorCode::APP_MINIMIZED:
+			emit showMsgBox(ERROR_MESSAGE[ERROR_CODE::MINIMIZED_APP]);
+			break;
+		default:
+			emit showMsgBox(ERROR_MESSAGE[ERROR_CODE::INVALID_APP]);
+			emit invalidAppSelected();
+		}
+		return;
+	}
 	auto qImg = convertPixToQImage(img);
 	auto canvas = new SelectionCanvas(SelectionCanvas::Mode::Color);
 	connect(canvas, &SelectionCanvas::setColor, this, [this](QColor color) {
@@ -216,7 +255,7 @@ void ChaosTranslate::processImg(std::shared_ptr<PIX> pix)
 	roi.y = m_roi.top;
 	roi.w = m_roi.right - m_roi.left;
 	roi.h = m_roi.bottom - m_roi.top;
-	if (m_regionalCapture)
+	if (m_regionalCapture && validROI())
 	{
 		*pix = *pixClipRectangle(pix.get(), &roi, NULL);
 	}
@@ -250,6 +289,16 @@ void ChaosTranslate::ocrTranslate(std::shared_ptr<PIX> pix)
 	}
 	emit setOriginalText(simplified);
 	emit beginTranslate(true);
+}
+
+bool ChaosTranslate::validROI()
+{
+	if (m_roi.right - m_roi.left > 0
+		&& m_roi.bottom - m_roi.top > 0)
+	{
+		return true;
+	}
+	return false;
 }
 
 void ChaosTranslate::thresholdByFontColor(PIX* pix)

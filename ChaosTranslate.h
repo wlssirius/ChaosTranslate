@@ -19,6 +19,19 @@ class ChaosTranslate : public QMainWindow
 {
 	Q_OBJECT
 
+	enum ERROR_CODE
+	{
+		INVALID_APP = 0,
+		MINIMIZED_APP,
+		ERROR_COUNT
+	};
+
+	QString ERROR_MESSAGE[ERROR_CODE::ERROR_COUNT] = {
+		tr("Invalid Application. Please select again."), //INVALID_APP
+		tr("Failed to capture. Application is minimized."), //MINIMIZED_APP
+	};
+
+
 public:
 	ChaosTranslate(QWidget *parent = Q_NULLPTR);
 	~ChaosTranslate();
@@ -64,6 +77,7 @@ private:
 	std::shared_ptr<PIX> captureApp();
 	void processImg(std::shared_ptr<PIX> pix);
 	void ocrTranslate(std::shared_ptr<PIX> pix);
+	bool validROI();
 
 	void thresholdByFontColor(PIX* pix);
 

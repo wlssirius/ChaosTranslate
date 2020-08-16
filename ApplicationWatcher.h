@@ -22,6 +22,12 @@ public:
 		HICON icon;
 		HWND ptr;
 	};
+
+	enum class ErrorCode
+	{
+		APP_CLOSED,
+		APP_MINIMIZED
+	};
 	ApplicationWatcher(HWND handle = nullptr) { m_appHandle = handle; }
 
 	void setApplication(HWND windowPtr);
@@ -29,9 +35,11 @@ public:
 	RECT getWindowSize();
 	std::vector<appInfo> getAppInfoList();
 	bool appSelected();
+	ErrorCode getErrorCode() { return m_errorCode; }
 
 private:
 	HWND m_appHandle;
+	ErrorCode m_errorCode;
 };
 
 #endif

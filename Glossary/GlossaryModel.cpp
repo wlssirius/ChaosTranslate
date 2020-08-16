@@ -58,6 +58,10 @@ bool GlossaryModel::insertRows(int row, int count, const QModelIndex& parent)
 
 bool GlossaryModel::removeRows(int row, int count, const QModelIndex& parent)
 {
+    if (count == 0)
+    {
+        return false;
+    }
     beginRemoveRows(parent, row, row);
     for (int i = 0; i < count; i++)
     {

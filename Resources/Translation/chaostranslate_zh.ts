@@ -2,101 +2,118 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>ChaosTranslate</name>
+    <message>
+        <location filename="../../ChaosTranslate.cpp" line="71"/>
+        <source>Recognizing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ChaosTranslate.cpp" line="82"/>
+        <source>Translating</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChaosTranslateClass</name>
     <message>
         <location filename="../../ChaosTranslate.ui" line="14"/>
         <source>Chaos Translate</source>
-        <translation type="unfinished"></translation>
+        <translation>Chaos翻译</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="51"/>
         <source>Select application to capture and translate</source>
-        <translation type="unfinished"></translation>
+        <translation>选择需要翻译的程序</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="54"/>
         <source>Select Application</source>
-        <translation type="unfinished">选择程序</translation>
+        <translation>选择程序</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="70"/>
         <source>Capture screenshot of the selected application and translate</source>
-        <translation type="unfinished"></translation>
+        <translation>识别所选程序中的文字并翻译</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="73"/>
         <source>Capture</source>
-        <translation type="unfinished">抓图</translation>
+        <translation>识别文字</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="89"/>
         <source>Translate</source>
-        <translation type="unfinished">翻译</translation>
+        <translation>翻译</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="143"/>
         <source>Show Glossary</source>
-        <translation type="unfinished">查看词典</translation>
+        <translation>查看词典</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="160"/>
         <source>Capture Entire App</source>
-        <translation type="unfinished"></translation>
+        <translation>识别完整程序</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="176"/>
         <source>Capture Region</source>
-        <translation type="unfinished"></translation>
+        <translation>识别指定区域</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="198"/>
         <source>Select Region</source>
-        <translation type="unfinished">选择抓取区域</translation>
+        <translation>选择识别区域</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="215"/>
         <source>Auto Detect Font Color</source>
-        <translation type="unfinished"></translation>
+        <translation>自动识别字体颜色</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="231"/>
         <source>Choose Font Color</source>
-        <translation type="unfinished"></translation>
+        <translation>指定字体颜色</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="272"/>
         <source>Detect:</source>
-        <translation type="unfinished"></translation>
+        <translation>识别语言：</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="309"/>
         <source>Translate into:</source>
-        <translation type="unfinished"></translation>
+        <translation>翻译语言：</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="350"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>界面语言</translation>
     </message>
     <message>
         <location filename="../../ChaosTranslate.ui" line="355"/>
         <source>Translate API</source>
+        <translation>翻译引擎</translation>
+    </message>
+    <message>
+        <location filename="../../ChaosTranslate.ui" line="394"/>
+        <source>Yandex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.ui" line="362"/>
         <source>Dictionary</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">词典</translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.ui" line="380"/>
+        <location filename="../../ChaosTranslate.ui" line="381"/>
         <source>Google</source>
-        <translation type="unfinished"></translation>
+        <translation>谷歌</translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.ui" line="385"/>
+        <location filename="../../ChaosTranslate.ui" line="389"/>
         <source>Bing</source>
-        <translation type="unfinished"></translation>
+        <translation>必应</translation>
     </message>
 </context>
 <context>
@@ -109,32 +126,30 @@
     <message>
         <location filename="../../Glossary/GlossaryDialog.ui" line="22"/>
         <source>Translate from:</source>
-        <translation type="unfinished"></translation>
+        <translation>识别语言：</translation>
     </message>
     <message>
         <location filename="../../Glossary/GlossaryDialog.ui" line="36"/>
         <source>Translate into:</source>
-        <translation type="unfinished"></translation>
+        <translation>翻译语言：</translation>
     </message>
     <message>
         <location filename="../../Glossary/GlossaryDialog.ui" line="68"/>
         <source>Save Dictionary</source>
-        <translation type="unfinished"></translation>
+        <translation>导出词典</translation>
     </message>
     <message>
         <location filename="../../Glossary/GlossaryDialog.ui" line="75"/>
         <source>Load Dictionary</source>
-        <translation type="unfinished"></translation>
+        <translation>导入词典</translation>
     </message>
     <message>
-        <location filename="../../Glossary/GlossaryDialog.ui" line="117"/>
         <source>OK</source>
-        <translation>确定</translation>
+        <translation type="vanished">确定</translation>
     </message>
     <message>
-        <location filename="../../Glossary/GlossaryDialog.ui" line="124"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="vanished">取消</translation>
     </message>
     <message>
         <location filename="../../Glossary/GlossaryDialog.ui" line="54"/>
@@ -150,28 +165,32 @@
 <context>
     <name>GlossaryManager</name>
     <message>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="107"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="119"/>
         <source>Save Dictionary</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">导出词典</translation>
     </message>
     <message>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="107"/>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="157"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="119"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="168"/>
         <source>XML Files (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="157"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="168"/>
         <source>Load Dictionary</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">导入词典</translation>
     </message>
 </context>
 <context>
     <name>NewGlossaryClass</name>
     <message>
-        <location filename="../../Glossary/NewGlossary.ui" line="14"/>
         <source>New Dialog</source>
-        <translation>新增</translation>
+        <translation type="vanished">新增</translation>
+    </message>
+    <message>
+        <location filename="../../Glossary/NewGlossary.ui" line="14"/>
+        <source>New Entry</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../Glossary/NewGlossary.ui" line="44"/>
@@ -184,659 +203,683 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../../Glossary/NewGlossary.ui" line="77"/>
+        <location filename="../../Glossary/NewGlossary.ui" line="90"/>
         <source>Original</source>
         <translation>原文</translation>
     </message>
     <message>
-        <location filename="../../Glossary/NewGlossary.ui" line="100"/>
+        <location filename="../../Glossary/NewGlossary.ui" line="141"/>
+        <source>Translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Tranlation</source>
-        <translation>翻译</translation>
+        <translation type="vanished">翻译</translation>
     </message>
 </context>
 <context>
     <name>QOnlineTranslator</name>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="189"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="195"/>
         <source>Selected source language %1 is not supported for %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="195"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="201"/>
         <source>Selected translation language %1 is not supported for %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="201"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="207"/>
         <source>Selected ui language %1 is not supported for %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="327"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="383"/>
         <source>Automatically detect</source>
         <translation>自动检测</translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="329"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="385"/>
         <source>Afrikaans</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="331"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="387"/>
         <source>Albanian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="333"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="389"/>
         <source>Amharic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="335"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="391"/>
         <source>Arabic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="337"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="393"/>
         <source>Armenian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="339"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="395"/>
         <source>Azeerbaijani</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="341"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="397"/>
         <source>Basque</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="343"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="399"/>
         <source>Bashkir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="345"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="401"/>
         <source>Belarusian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="347"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="403"/>
         <source>Bengali</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="349"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="405"/>
         <source>Bosnian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="351"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="407"/>
         <source>Bulgarian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="353"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="409"/>
         <source>Catalan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="355"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="411"/>
         <source>Cantonese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="357"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="413"/>
         <source>Cebuano</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="359"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="415"/>
         <source>Chinese (Simplified)</source>
-        <translation type="unfinished"></translation>
+        <translation>简体中文</translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="361"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="417"/>
         <source>Chinese (Traditional)</source>
-        <translation type="unfinished"></translation>
+        <translation>繁體中文</translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="363"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="419"/>
         <source>Corsican</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="365"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="421"/>
         <source>Croatian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="367"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="423"/>
         <source>Czech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="369"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="425"/>
         <source>Danish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="371"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="427"/>
         <source>Dutch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="373"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="429"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="375"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="431"/>
         <source>Esperanto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="377"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="433"/>
         <source>Estonian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="379"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="435"/>
         <source>Fijian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="381"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="437"/>
         <source>Filipino</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="383"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="439"/>
         <source>Finnish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="385"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="441"/>
         <source>French</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="387"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="443"/>
         <source>Frisian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="389"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="445"/>
         <source>Galician</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="391"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="447"/>
         <source>Georgian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="393"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="449"/>
         <source>German</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="395"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="451"/>
         <source>Greek</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="397"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="453"/>
         <source>Gujarati</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="399"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="455"/>
         <source>Haitian Creole</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="401"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="457"/>
         <source>Hausa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="403"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="459"/>
         <source>Hawaiian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="405"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="461"/>
         <source>Hebrew</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="407"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="463"/>
         <source>Hill Mari</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="409"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="465"/>
         <source>Hindi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="411"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="467"/>
         <source>Hmong</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="413"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="469"/>
         <source>Hungarian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="415"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="471"/>
         <source>Icelandic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="417"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="473"/>
         <source>Igbo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="419"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="475"/>
         <source>Indonesian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="421"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="477"/>
         <source>Irish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="423"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="479"/>
         <source>Italian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="425"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="481"/>
         <source>Japanese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="427"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="483"/>
         <source>Javanese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="429"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="485"/>
         <source>Kannada</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="431"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="487"/>
         <source>Kazakh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="433"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="489"/>
         <source>Khmer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="435"/>
-        <source>Klingon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="437"/>
-        <source>Klingon (PlqaD)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="439"/>
-        <source>Korean</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="441"/>
-        <source>Kurdish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="443"/>
-        <source>Kyrgyz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="445"/>
-        <source>Lao</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="447"/>
-        <source>Latin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="449"/>
-        <source>Latvian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="451"/>
-        <source>Levantine Arabic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="453"/>
-        <source>Lithuanian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="455"/>
-        <source>Luxembourgish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="457"/>
-        <source>Macedonian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="459"/>
-        <source>Malagasy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="461"/>
-        <source>Malay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="463"/>
-        <source>Malayalam</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="465"/>
-        <source>Maltese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="467"/>
-        <source>Maori</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="469"/>
-        <source>Marathi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="471"/>
-        <source>Mari</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="473"/>
-        <source>Mongolian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="475"/>
-        <source>Myanmar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="477"/>
-        <source>Nepali</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="479"/>
-        <source>Norwegian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="481"/>
-        <source>Chichewa</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="483"/>
-        <source>Papiamento</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="485"/>
-        <source>Pashto</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="487"/>
-        <source>Persian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="489"/>
-        <source>Polish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="491"/>
-        <source>Portuguese</source>
+        <source>Kinyarwanda</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="493"/>
-        <source>Punjabi</source>
+        <source>Klingon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="495"/>
-        <source>Queretaro Otomi</source>
+        <source>Klingon (PlqaD)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="497"/>
-        <source>Romanian</source>
+        <source>Korean</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="499"/>
-        <source>Russian</source>
+        <source>Kurdish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="501"/>
-        <source>Samoan</source>
+        <source>Kyrgyz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="503"/>
-        <source>Scots Gaelic</source>
+        <source>Lao</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="505"/>
-        <source>Serbian (Cyrillic)</source>
+        <source>Latin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="507"/>
-        <source>Serbian (Latin)</source>
+        <source>Latvian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="509"/>
-        <source>Sesotho</source>
+        <source>Levantine Arabic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="511"/>
-        <source>Shona</source>
+        <source>Lithuanian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="513"/>
-        <source>Sindhi</source>
+        <source>Luxembourgish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="515"/>
-        <source>Sinhala</source>
+        <source>Macedonian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="517"/>
-        <source>Slovak</source>
+        <source>Malagasy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="519"/>
-        <source>Slovenian</source>
+        <source>Malay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="521"/>
-        <source>Somali</source>
+        <source>Malayalam</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="523"/>
-        <source>Spanish</source>
+        <source>Maltese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="525"/>
-        <source>Sundanese</source>
+        <source>Maori</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="527"/>
-        <source>Swahili</source>
+        <source>Marathi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="529"/>
-        <source>Swedish</source>
+        <source>Mari</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="531"/>
-        <source>Tagalog</source>
+        <source>Mongolian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="533"/>
-        <source>Tahitian</source>
+        <source>Myanmar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="535"/>
-        <source>Tajik</source>
+        <source>Nepali</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="537"/>
-        <source>Tamil</source>
+        <source>Norwegian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="539"/>
-        <source>Tatar</source>
+        <source>Oriya</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="541"/>
-        <source>Telugu</source>
+        <source>Chichewa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="543"/>
-        <source>Thai</source>
+        <source>Papiamento</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="545"/>
-        <source>Tongan</source>
+        <source>Pashto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="547"/>
-        <source>Turkish</source>
+        <source>Persian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="549"/>
-        <source>Udmurt</source>
+        <source>Polish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="551"/>
-        <source>Ukrainian</source>
+        <source>Portuguese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="553"/>
-        <source>Urdu</source>
+        <source>Punjabi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="555"/>
-        <source>Uzbek</source>
+        <source>Queretaro Otomi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="557"/>
-        <source>Vietnamese</source>
+        <source>Romanian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="559"/>
-        <source>Welsh</source>
+        <source>Russian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="561"/>
-        <source>Xhosa</source>
+        <source>Samoan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="563"/>
-        <source>Yiddish</source>
+        <source>Scots Gaelic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="565"/>
-        <source>Yoruba</source>
+        <source>Serbian (Cyrillic)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="567"/>
-        <source>Yucatec Maya</source>
+        <source>Serbian (Latin)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="569"/>
+        <source>Sesotho</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="571"/>
+        <source>Shona</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="573"/>
+        <source>Sindhi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="575"/>
+        <source>Sinhala</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="577"/>
+        <source>Slovak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="579"/>
+        <source>Slovenian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="581"/>
+        <source>Somali</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="583"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="585"/>
+        <source>Sundanese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="587"/>
+        <source>Swahili</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="589"/>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="591"/>
+        <source>Tagalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="593"/>
+        <source>Tahitian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="595"/>
+        <source>Tajik</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="597"/>
+        <source>Tamil</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="599"/>
+        <source>Tatar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="601"/>
+        <source>Telugu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="603"/>
+        <source>Thai</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="605"/>
+        <source>Tongan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="607"/>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="609"/>
+        <source>Turkmen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="611"/>
+        <source>Udmurt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="613"/>
+        <source>Uighur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="615"/>
+        <source>Ukrainian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="617"/>
+        <source>Urdu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="619"/>
+        <source>Uzbek</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="621"/>
+        <source>Vietnamese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="623"/>
+        <source>Welsh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="625"/>
+        <source>Xhosa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="627"/>
+        <source>Yiddish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="629"/>
+        <source>Yoruba</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="631"/>
+        <source>Yucatec Maya</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="633"/>
         <source>Zulu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="953"/>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="962"/>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="1045"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="1034"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="1043"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="1126"/>
         <source>Error: Engine systems have detected suspicious traffic from your computer network. Please try your request again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="974"/>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="1111"/>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="1244"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="1055"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="1184"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="1318"/>
         <source>Error: Unable to parse autodetected language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="1059"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetranslator.cpp" line="1132"/>
         <source>Error: Unable to parse Yandex SID.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -844,32 +887,32 @@
 <context>
     <name>QOnlineTts</name>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetts.cpp" line="54"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetts.cpp" line="53"/>
         <source>Selected engine %1 does not support voice settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetts.cpp" line="59"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetts.cpp" line="58"/>
         <source>Selected engine %1 does not support emotion settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetts.cpp" line="121"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetts.cpp" line="119"/>
         <source>%1 engine does not support TTS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetts.cpp" line="190"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetts.cpp" line="188"/>
         <source>Selected language %1 is not supported for %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetts.cpp" line="203"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetts.cpp" line="201"/>
         <source>Selected voice %1 is not supported for %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../submodules/QOnlineTranslator/src/qonlinetts.cpp" line="216"/>
+        <location filename="../../submodules/QOnlineTranslator/src/qonlinetts.cpp" line="214"/>
         <source>Selected emotion %1 is not supported for %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -942,12 +985,12 @@
 <context>
     <name>SelectionCanvas</name>
     <message>
-        <location filename="../../SelectionCanvas.cpp" line="18"/>
+        <location filename="../../SelectionCanvas.cpp" line="19"/>
         <source>Please pick target font color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../SelectionCanvas.cpp" line="22"/>
+        <location filename="../../SelectionCanvas.cpp" line="23"/>
         <source>Please select target capture region</source>
         <translation type="unfinished"></translation>
     </message>

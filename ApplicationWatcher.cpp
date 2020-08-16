@@ -19,12 +19,14 @@ PIX* ApplicationWatcher::capture()
 {
     if (!appSelected() || !IsWindow(m_appHandle))
     {
+        m_errorCode = ErrorCode::APP_CLOSED;
         m_appHandle = nullptr;
         return nullptr;
     }
 
     if (IsIconic(m_appHandle))
     {
+        m_errorCode = ErrorCode::APP_MINIMIZED;
         return nullptr;
     }
 
