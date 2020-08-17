@@ -26,7 +26,7 @@ SelectionCanvas::SelectionCanvas(Mode mode):
 
 void SelectionCanvas::showCanvas(std::shared_ptr<QImage> qImage, RECT rect)
 {
-    setGeometry(0, 0, rect.right - rect.left, rect.bottom - rect.top);
+    //setGeometry(0, 0, rect.right - rect.left, rect.bottom - rect.top);
     setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
 
     m_imageLabel->setPixmap(QPixmap::fromImage(*qImage));

@@ -4,14 +4,24 @@
 <context>
     <name>ChaosTranslate</name>
     <message>
-        <location filename="../../ChaosTranslate.cpp" line="71"/>
+        <location filename="../../ChaosTranslate.cpp" line="70"/>
         <source>Recognizing</source>
-        <translation type="unfinished"></translation>
+        <translation>正在识别</translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.cpp" line="82"/>
+        <location filename="../../ChaosTranslate.cpp" line="81"/>
         <source>Translating</source>
-        <translation type="unfinished"></translation>
+        <translation>正在翻译</translation>
+    </message>
+    <message>
+        <location filename="../../ChaosTranslate.h" line="30"/>
+        <source>Invalid Application. Please select again.</source>
+        <translation>无法检测到程序，请重新进行选择。</translation>
+    </message>
+    <message>
+        <location filename="../../ChaosTranslate.h" line="31"/>
+        <source>Failed to capture. Application is minimized.</source>
+        <translation>无法获取程序截图，程序已最小化。</translation>
     </message>
 </context>
 <context>
@@ -99,7 +109,7 @@
     <message>
         <location filename="../../ChaosTranslate.ui" line="394"/>
         <source>Yandex</source>
-        <translation type="unfinished"></translation>
+        <translation>Yandex</translation>
     </message>
     <message>
         <source>Dictionary</source>
@@ -165,20 +175,30 @@
 <context>
     <name>GlossaryManager</name>
     <message>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="119"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="118"/>
         <source>Save Dictionary</source>
-        <translation type="unfinished">导出词典</translation>
+        <translation>导出词典</translation>
     </message>
     <message>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="119"/>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="168"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="118"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="167"/>
         <source>XML Files (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="168"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="167"/>
         <source>Load Dictionary</source>
-        <translation type="unfinished">导入词典</translation>
+        <translation>导入词典</translation>
+    </message>
+    <message>
+        <location filename="../../Glossary/GlossaryManager.h" line="23"/>
+        <source>Dictionary is empty!</source>
+        <translation>未找到有效词条！</translation>
+    </message>
+    <message>
+        <location filename="../../Glossary/GlossaryManager.h" line="24"/>
+        <source>Invalid dictionary file!</source>
+        <translation>无效词典文件！</translation>
     </message>
 </context>
 <context>
@@ -190,7 +210,7 @@
     <message>
         <location filename="../../Glossary/NewGlossary.ui" line="14"/>
         <source>New Entry</source>
-        <translation type="unfinished"></translation>
+        <translation>新增词条</translation>
     </message>
     <message>
         <location filename="../../Glossary/NewGlossary.ui" line="44"/>
@@ -210,7 +230,7 @@
     <message>
         <location filename="../../Glossary/NewGlossary.ui" line="141"/>
         <source>Translation</source>
-        <translation type="unfinished"></translation>
+        <translation>翻译</translation>
     </message>
     <message>
         <source>Tranlation</source>
@@ -987,12 +1007,12 @@
     <message>
         <location filename="../../SelectionCanvas.cpp" line="19"/>
         <source>Please pick target font color</source>
-        <translation type="unfinished"></translation>
+        <translation>请点击选取目标字体颜色</translation>
     </message>
     <message>
         <location filename="../../SelectionCanvas.cpp" line="23"/>
         <source>Please select target capture region</source>
-        <translation type="unfinished"></translation>
+        <translation>请框选目标检测区域</translation>
     </message>
 </context>
 </TS>

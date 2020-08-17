@@ -414,6 +414,7 @@ void ChaosTranslate::createEngineMenu()
 	m_apiActionGroup->setExclusive(true);
 }
 
+
 void ChaosTranslate::createToolbar()
 {
 	m_selectAppButton = findChild<QPushButton*>("selectAppButton");
@@ -430,6 +431,7 @@ void ChaosTranslate::createToolbar()
 	//m_glossaryButton->setHidden(true);
 	connect(m_glossaryButton, &QPushButton::clicked, &m_glossary, &GlossaryManager::showDialog);
 	m_fontColorButton = findChild<QColorPicker*>("fontColorButton");
+	m_fontColorButton->setHidden(true);
 	connect(m_fontColorButton, &QPushButton::clicked, this, &ChaosTranslate::selectFontColor);
 
 	m_entireAppRadioButton = findChild<QRadioButton*>("wholeCaptureRButton");
@@ -437,8 +439,10 @@ void ChaosTranslate::createToolbar()
 	m_regionRadioButton = findChild<QRadioButton*>("regionCaptureRButton");
 	connect(m_regionRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setRegionCapture);
 	m_autoColorRadioButton = findChild<QRadioButton*>("autoColorRButton");
+	m_autoColorRadioButton->setHidden(true);
 	connect(m_autoColorRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setAutoDetectFontColor);
 	m_setColorRadioButton = findChild<QRadioButton*>("manualColorRButton");
+	m_setColorRadioButton->setHidden(true);
 	connect(m_setColorRadioButton, &QRadioButton::clicked, this, &ChaosTranslate::setManualChooseFontColor);
 	m_imageLabel = findChild<QLabel*>("imageLabel");
 }
@@ -452,7 +456,7 @@ void ChaosTranslate::createTextEdit()
 	m_tgtLanguageComboBox = findChild<QComboBox*>("tgtLanguageComboBox");
 	for (int idx = 0; idx <= QOnlineTranslator::Language::Zulu; idx++)
 	{
-		QString language = QVariant::fromValue(QOnlineTranslator::Language(idx)).toString();
+		QString language = QOnlineTranslator::languageName(QOnlineTranslator::Language(idx));
 		m_srcLanguageComboBox->addItem(language);
 		m_tgtLanguageComboBox->addItem(language);
 	}

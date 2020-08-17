@@ -46,7 +46,10 @@ void GlossaryManager::showDialog()
 
 void GlossaryManager::closeDialog()
 {
-	m_dialog->close();
+	if (m_dialog)
+	{
+		m_dialog->close();
+	}
 }
 
 GlossaryManager::EncodeResult GlossaryManager::encode(
