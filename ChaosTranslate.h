@@ -13,6 +13,7 @@
 #include "GlossaryManager.h"
 #include "QString"
 #include "QColorPicker.h"
+#include "SettingManager.h"
 #include "memory"
 
 class ChaosTranslate : public QMainWindow
@@ -125,6 +126,7 @@ private:
 	QColor m_color;
 	QString m_appTitle;
 	std::shared_ptr<QImage> m_capturedImage;
+	SettingManager m_settingManager;
 
 	bool m_regionalCapture = false;
 	bool m_manualSetFontColor = false;

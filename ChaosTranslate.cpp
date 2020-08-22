@@ -23,14 +23,41 @@ ChaosTranslate::ChaosTranslate(QWidget* parent)
 	m_roi.top = 0;
 	m_roi.bottom = 0;
 
+	if (m_settingManager.loadSetting())
+	{
+		QString uiLan = m_settingManager.get(SettingManager::SETTING::UI_LAN);
+		for (auto action : ui.menuLanguage->actions())
+		{
+			if (action->data().toString() == uiLan)
+			{
+				action->setChecked(true);
+			}
+		}
+		this->loadLanguage(uiLan);
+		QString srcLan = m_settingManager.get(SettingManager::SETTING::SOURCE_LAN);
+		//this->setSourceLanguage(QOnlineTranslator::language(srcLan));
+		m_srcLanguageComboBox->setCurrentIndex(QOnlineTranslator::language(srcLan));
+		QString tgtLan = m_settingManager.get(SettingManager::SETTING::TARGET_LAN);
+		//this->setSourceLanguage(QOnlineTranslator::language(tgtLan));
+		m_tgtLanguageComboBox->setCurrentIndex(QOnlineTranslator::language(tgtLan));
+	}
+
 	connect(this, &ChaosTranslate::beginTranslate, this, &ChaosTranslate::translate);
 	connect(this, &ChaosTranslate::invalidAppSelected, this, &ChaosTranslate::onInvalidApp);
 	connect(this, &ChaosTranslate::showMsgBox, this, &ChaosTranslate::onMsgBox);
 	onInvalidApp();
+
 }
 
 ChaosTranslate::~ChaosTranslate()
 {
+	m_settingManager.set(SettingManager::SETTING::SOURCE_LAN, 
+		QOnlineTranslator::languageCode(m_sourceLanguage));
+	m_settingManager.set(SettingManager::SETTING::TARGET_LAN,
+		QOnlineTranslator::languageCode(m_targetLanguage));
+	m_settingManager.set(SettingManager::SETTING::UI_LAN,
+		m_currUILang);
+	m_settingManager.saveSetting();
 }
 
 void ChaosTranslate::selectApp(bool clicked)

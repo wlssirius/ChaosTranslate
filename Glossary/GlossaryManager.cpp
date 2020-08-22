@@ -210,7 +210,7 @@ void GlossaryManager::loadDictionary()
 			m_model->addEntry(key, value);
 		}
 	}
-	catch (std::exception e)
+	catch (std::exception& e)
 	{
 		QMessageBox msg;
 		msg.setText(QString(ERROR_MESSAGE[ERROR_CODE::INVALID_DICTIONARY]) + QString(tr(e.what())));
