@@ -36,12 +36,14 @@ public:
 		SOURCE_LAN = 0,
 		TARGET_LAN,
 		UI_LAN,
+		TRANSLATE_ENGINE,
 		SETTING_COUNT
 	};
 	const std::map<SETTING, QString> m_enumName = {
 		{SETTING::SOURCE_LAN, "source_language"},
 		{SETTING::TARGET_LAN, "target_language"},
-		{SETTING::UI_LAN, "UI_language"}
+		{SETTING::UI_LAN, "UI_language"},
+		{SETTING::TRANSLATE_ENGINE, "Translate_engine"}
 	};
 
 	void set(SETTING setting, QString value);

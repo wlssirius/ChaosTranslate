@@ -59,6 +59,22 @@ ChaosTranslate::ChaosTranslate(QWidget* parent)
 		QString tgtLan = m_settingManager.get(SettingManager::SETTING::TARGET_LAN);
 		//this->setSourceLanguage(QOnlineTranslator::language(tgtLan));
 		m_tgtLanguageComboBox->setCurrentIndex(QOnlineTranslator::language(tgtLan));
+		QString engine = m_settingManager.get(SettingManager::SETTING::TRANSLATE_ENGINE);
+		if(engine == "Google")
+		{
+			m_googleAction->setChecked(true);
+			m_translateEngine = QOnlineTranslator::Engine::Google;
+		}
+		else if (engine == "Bing")
+		{
+			m_bingAction->setChecked(true);
+			m_translateEngine = QOnlineTranslator::Engine::Bing;
+		}
+		else if (engine == "Yandex")
+		{
+			m_yandexAction->setChecked(true);
+			m_translateEngine = QOnlineTranslator::Engine::Yandex;
+		}
 	}
 
 	connect(this, &ChaosTranslate::beginTranslate, this, &ChaosTranslate::translate);
@@ -76,6 +92,22 @@ ChaosTranslate::~ChaosTranslate()
 		QOnlineTranslator::languageCode(m_targetLanguage));
 	m_settingManager.set(SettingManager::SETTING::UI_LAN,
 		m_currUILang);
+	QString engine;
+	switch (m_translateEngine)
+	{
+	case QOnlineTranslator::Engine::Google:
+		engine = "Google";
+		break;
+	case QOnlineTranslator::Engine::Bing:
+		engine = "Bing";
+		break;
+	case QOnlineTranslator::Engine::Yandex:
+		engine = "Yandex";
+		break;
+	default:
+		break;
+	}
+	m_settingManager.set(SettingManager::SETTING::TRANSLATE_ENGINE, engine);
 	m_settingManager.saveSetting();
 }
 
