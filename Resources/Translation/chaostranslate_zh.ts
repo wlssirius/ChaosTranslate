@@ -2,24 +2,72 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>AboutDialog</name>
+    <message>
+        <location filename="../../AboutDialog.ui" line="14"/>
+        <source>About Chaos Translate</source>
+        <translation>关于Chaos翻译</translation>
+    </message>
+    <message>
+        <location filename="../../AboutDialog.ui" line="37"/>
+        <source>Chaos Translate</source>
+        <translation>Chaos翻译</translation>
+    </message>
+    <message>
+        <location filename="../../AboutDialog.ui" line="53"/>
+        <location filename="../../AboutDialog.cpp" line="28"/>
+        <source>Version: </source>
+        <translation>版本：</translation>
+    </message>
+    <message>
+        <location filename="../../AboutDialog.ui" line="63"/>
+        <source>Chaos Translate is a character recognition and translation tool. Check out the source code at: </source>
+        <translation>一键文字识别及在线翻译。点击以查看源代码：</translation>
+    </message>
+    <message>
+        <location filename="../../AboutDialog.ui" line="73"/>
+        <source>https://github.com/wlssirius/ChaosTranslate</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../AboutDialog.ui" line="80"/>
+        <source>Copyright (C) 2020  Wei Lisi (Willis) &lt;weilisi16@gmail.com&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../AboutDialog.ui" line="90"/>
+        <source>If you feel this is useful, please support me at:
+paypal: weilisi16@gmail.com
+Alipay:</source>
+        <translation>如果你喜欢Chaos翻译，请通过以下方式支持我们：
+Paypal账号：weilisi16@gmail.com
+支付宝：</translation>
+    </message>
+    <message>
+        <location filename="../../AboutDialog.ui" line="145"/>
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+</context>
+<context>
     <name>ChaosTranslate</name>
     <message>
-        <location filename="../../ChaosTranslate.cpp" line="97"/>
+        <location filename="../../ChaosTranslate.cpp" line="116"/>
         <source>Recognizing</source>
         <translation>正在识别</translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.cpp" line="108"/>
+        <location filename="../../ChaosTranslate.cpp" line="127"/>
         <source>Translating</source>
         <translation>正在翻译</translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.h" line="31"/>
+        <location filename="../../ChaosTranslate.h" line="50"/>
         <source>Invalid Application. Please select again.</source>
         <translation>无法检测到程序，请重新进行选择。</translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.h" line="32"/>
+        <location filename="../../ChaosTranslate.h" line="51"/>
         <source>Failed to capture. Application is minimized.</source>
         <translation>无法获取程序截图，程序已最小化。</translation>
     </message>
@@ -107,21 +155,31 @@
         <translation>翻译引擎</translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.ui" line="394"/>
+        <location filename="../../ChaosTranslate.ui" line="363"/>
+        <source>About</source>
+        <translation>关于</translation>
+    </message>
+    <message>
+        <location filename="../../ChaosTranslate.ui" line="401"/>
         <source>Yandex</source>
         <translation>Yandex</translation>
+    </message>
+    <message>
+        <location filename="../../ChaosTranslate.ui" line="406"/>
+        <source>About Chaos Translate</source>
+        <translation type="unfinished">关于Chaos翻译</translation>
     </message>
     <message>
         <source>Dictionary</source>
         <translation type="vanished">词典</translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.ui" line="381"/>
+        <location filename="../../ChaosTranslate.ui" line="388"/>
         <source>Google</source>
         <translation>谷歌</translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.ui" line="389"/>
+        <location filename="../../ChaosTranslate.ui" line="396"/>
         <source>Bing</source>
         <translation>必应</translation>
     </message>
@@ -175,28 +233,28 @@
 <context>
     <name>GlossaryManager</name>
     <message>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="121"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="139"/>
         <source>Save Dictionary</source>
         <translation>导出词典</translation>
     </message>
     <message>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="121"/>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="170"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="139"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="188"/>
         <source>XML Files (*.xml)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="170"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="188"/>
         <source>Load Dictionary</source>
         <translation>导入词典</translation>
     </message>
     <message>
-        <location filename="../../Glossary/GlossaryManager.h" line="23"/>
+        <location filename="../../Glossary/GlossaryManager.h" line="40"/>
         <source>Dictionary is empty!</source>
         <translation>未找到有效词条！</translation>
     </message>
     <message>
-        <location filename="../../Glossary/GlossaryManager.h" line="24"/>
+        <location filename="../../Glossary/GlossaryManager.h" line="41"/>
         <source>Invalid dictionary file!</source>
         <translation>无效词典文件！</translation>
     </message>
@@ -1005,12 +1063,12 @@
 <context>
     <name>SelectionCanvas</name>
     <message>
-        <location filename="../../SelectionCanvas.cpp" line="19"/>
+        <location filename="../../SelectionCanvas.cpp" line="37"/>
         <source>Please pick target font color</source>
         <translation>请点击选取目标字体颜色</translation>
     </message>
     <message>
-        <location filename="../../SelectionCanvas.cpp" line="23"/>
+        <location filename="../../SelectionCanvas.cpp" line="41"/>
         <source>Please select target capture region</source>
         <translation>请框选目标检测区域</translation>
     </message>

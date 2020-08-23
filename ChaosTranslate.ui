@@ -358,8 +358,15 @@
     <addaction name="actionBing"/>
     <addaction name="actionYandex"/>
    </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuLanguage"/>
    <addaction name="menuTranslate_API"/>
+   <addaction name="menuAbout"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -392,6 +399,11 @@
   <action name="actionYandex">
    <property name="text">
     <string>Yandex</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About Chaos Translate</string>
    </property>
   </action>
  </widget>

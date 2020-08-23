@@ -33,6 +33,7 @@ ChaosTranslate::ChaosTranslate(QWidget* parent)
 
 	createLanguageMenu();
 	createEngineMenu();
+	createAboutMenu();
 	createToolbar();
 	createTextEdit();	
 
@@ -280,6 +281,15 @@ void ChaosTranslate::onInvalidApp()
 	}
 }
 
+void ChaosTranslate::onAboutDialog(bool triggered)
+{
+	if (!m_aboutDialog)
+	{
+		m_aboutDialog = new AboutDialog();
+	}
+	m_aboutDialog->show();
+}
+
 void ChaosTranslate::onMsgBox(QString str)
 {
 	QMessageBox msg;
@@ -459,6 +469,12 @@ void ChaosTranslate::createEngineMenu()
 	m_apiActionGroup->setExclusive(true);
 }
 
+void ChaosTranslate::createAboutMenu()
+{
+	QAction* aboutAction = findChild<QAction*>("actionAbout");
+	connect(aboutAction, SIGNAL(triggered(bool)), this, SLOT(onAboutDialog(bool)));
+}
+
 
 void ChaosTranslate::createToolbar()
 {
@@ -556,6 +572,11 @@ void ChaosTranslate::changeEvent(QEvent* event)
 void ChaosTranslate::closeEvent(QCloseEvent* event)
 {
 	m_glossary.closeDialog();
+	if (m_aboutDialog)
+	{
+		m_aboutDialog->close();
+		delete m_aboutDialog;
+	}
 }
 
 void ChaosTranslate::translateAPIChanged(QAction* action)

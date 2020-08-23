@@ -29,6 +29,7 @@
 #include "ApplicationWatcher.h"
 #include "SelectionCanvas.h"
 #include "GlossaryManager.h"
+#include "AboutDialog.h"
 #include "QString"
 #include "QColorPicker.h"
 #include "SettingManager.h"
@@ -73,6 +74,8 @@ public slots:
 	void onAppSelected();
 	void onInvalidApp();
 
+	void onAboutDialog(bool triggered);
+
 	void onMsgBox(QString str);
 
 signals:
@@ -104,6 +107,7 @@ private:
 	void loadLanguage(const QString& rLanguage);
 	void createLanguageMenu();
 	void createEngineMenu();
+	void createAboutMenu();
 	void createToolbar();
 	void createTextEdit();
 	std::shared_ptr<QImage> convertPixToQImage(std::shared_ptr<PIX>& pix);
@@ -129,6 +133,8 @@ private:
 	QAction* m_googleAction;
 	QAction* m_bingAction;
 	QAction* m_yandexAction;
+
+	AboutDialog* m_aboutDialog = nullptr;
 
 	QOnlineTranslator m_translator;
 	QOnlineTranslator::Language m_sourceLanguage = QOnlineTranslator::Language::Japanese;

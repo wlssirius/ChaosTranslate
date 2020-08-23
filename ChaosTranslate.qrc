@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="ChaosTranslate">
+    <file>Resources/Icon/qr.png</file>
     <file>Resources/Icon/Chaos.png</file>
   </qresource>
 </RCC>
