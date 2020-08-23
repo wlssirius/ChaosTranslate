@@ -4,22 +4,22 @@
 <context>
     <name>ChaosTranslate</name>
     <message>
-        <location filename="../../ChaosTranslate.cpp" line="70"/>
+        <location filename="../../ChaosTranslate.cpp" line="97"/>
         <source>Recognizing</source>
         <translation>正在识别</translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.cpp" line="81"/>
+        <location filename="../../ChaosTranslate.cpp" line="108"/>
         <source>Translating</source>
         <translation>正在翻译</translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.h" line="30"/>
+        <location filename="../../ChaosTranslate.h" line="31"/>
         <source>Invalid Application. Please select again.</source>
         <translation>无法检测到程序，请重新进行选择。</translation>
     </message>
     <message>
-        <location filename="../../ChaosTranslate.h" line="31"/>
+        <location filename="../../ChaosTranslate.h" line="32"/>
         <source>Failed to capture. Application is minimized.</source>
         <translation>无法获取程序截图，程序已最小化。</translation>
     </message>
@@ -175,18 +175,18 @@
 <context>
     <name>GlossaryManager</name>
     <message>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="118"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="121"/>
         <source>Save Dictionary</source>
         <translation>导出词典</translation>
     </message>
     <message>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="118"/>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="167"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="121"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="170"/>
         <source>XML Files (*.xml)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../Glossary/GlossaryManager.cpp" line="167"/>
+        <location filename="../../Glossary/GlossaryManager.cpp" line="170"/>
         <source>Load Dictionary</source>
         <translation>导入词典</translation>
     </message>

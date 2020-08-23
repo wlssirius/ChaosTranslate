@@ -1,6 +1,6 @@
-/*
+/*  
 *   Copyright (C) 2019-2020  Wei Lisi (Willis) <weilisi16@gmail.com>
-*	This file is part of ChaosTranslate
+*	This file is part of ChaosTranslate 
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -16,27 +16,12 @@
 *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef Q_COLOR_PICKER_HEADER
-#define Q_COLOR_PICKER_HEADER
 
-#include <QPushButton>
-#include <QColor>
+#ifndef VERSION_INFO_HEADER
+#define VERSION_INFO_HEADER
 
-class QColorPicker : public QPushButton
-{
-    Q_OBJECT
-public:
-    QColorPicker(QWidget* parent);
-
-    void setColor(const QColor& color);
-    const QColor& getColor();
-
-public slots:
-    void updateColor();
-    void changeColor();
-
-private:
-    QColor color;
-};
+#define MAJOR_VERSION 0
+#define MINOR_VERSION 1
+#define PATCH 0
 
 #endif

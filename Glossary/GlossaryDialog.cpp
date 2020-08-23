@@ -13,8 +13,8 @@ GlossaryDialog::GlossaryDialog(std::pair<QOnlineTranslator::Language, QOnlineTra
 	m_sourceLanLineEdit = findChild<QLineEdit*>("sourceLanguageLineEdit");
 	m_targetLanLineEdit = findChild<QLineEdit*>("targetLanguageLineEdit");
 
-	QString sourceLanguage = QVariant::fromValue(languages.first).toString();
-	QString targetLanguage = QVariant::fromValue(languages.second).toString();
+	QString sourceLanguage = QOnlineTranslator::languageName(languages.first);
+	QString targetLanguage = QOnlineTranslator::languageName(languages.second);
 	m_sourceLanLineEdit->setText(sourceLanguage);
 	m_targetLanLineEdit->setText(targetLanguage);
 
@@ -71,12 +71,12 @@ void GlossaryDialog::checkEmptyWord(const QModelIndex& index)
 
 void GlossaryDialog::setSourceLanguage(QOnlineTranslator::Language lan)
 {
-	QString sourceLanguage = QVariant::fromValue(lan).toString();
+	QString sourceLanguage = QOnlineTranslator::languageName(lan);
 	m_sourceLanLineEdit->setText(sourceLanguage);
 }
 
 void GlossaryDialog::setTargetLanguage(QOnlineTranslator::Language lan)
 {
-	QString targetLanguage = QVariant::fromValue(lan).toString();
+	QString targetLanguage = QOnlineTranslator::languageName(lan);
 	m_targetLanLineEdit->setText(targetLanguage);
 }
