@@ -187,6 +187,11 @@ void GlossaryManager::loadDictionary()
 	QString fileName = QFileDialog::getOpenFileName(m_dialog,
 		tr("Load Dictionary"), "", tr("XML Files (*.xml)"));
 
+	if (fileName.isEmpty())
+	{
+		return;
+	}
+
 	using namespace rapidxml;
 
 	xml_document<> doc;

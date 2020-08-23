@@ -167,7 +167,7 @@ Paypal账号：weilisi16@gmail.com
     <message>
         <location filename="../../ChaosTranslate.ui" line="406"/>
         <source>About Chaos Translate</source>
-        <translation type="unfinished">关于Chaos翻译</translation>
+        <translation>关于Chaos翻译</translation>
     </message>
     <message>
         <source>Dictionary</source>
@@ -257,6 +257,24 @@ Paypal账号：weilisi16@gmail.com
         <location filename="../../Glossary/GlossaryManager.h" line="41"/>
         <source>Invalid dictionary file!</source>
         <translation>无效词典文件！</translation>
+    </message>
+</context>
+<context>
+    <name>GlossaryModel</name>
+    <message>
+        <location filename="../../Glossary/GlossaryModel.cpp" line="58"/>
+        <source>Text</source>
+        <translation>原文</translation>
+    </message>
+    <message>
+        <location filename="../../Glossary/GlossaryModel.cpp" line="60"/>
+        <source>Translate</source>
+        <translation>翻译</translation>
+    </message>
+    <message>
+        <location filename="../../Glossary/GlossaryModel.cpp" line="104"/>
+        <source>Original Text shouldn&apos;t be empty</source>
+        <translation>原文不能为空</translation>
     </message>
 </context>
 <context>

@@ -55,9 +55,9 @@ QVariant GlossaryModel::headerData(int section, Qt::Orientation orientation, int
         switch (section)
         {
         case 0:
-            return QString("Text");
+            return tr("Text");
         case 1:
-            return QString("Translate");
+            return tr("Translate");
         default:
             return QVariant();
         }
@@ -101,7 +101,7 @@ bool GlossaryModel::setData(const QModelIndex& index, const QVariant& value, int
             if (value.toString().size() == 0)
             {
                 QMessageBox msg;
-                msg.setText("Original Text shouldn't be empty");
+                msg.setText(tr("Original Text shouldn't be empty"));
                 msg.exec();
                 return false;
             }
