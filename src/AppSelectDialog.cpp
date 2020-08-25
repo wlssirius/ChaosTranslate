@@ -37,7 +37,8 @@ AppSelectDialog::AppSelectDialog(std::vector<ApplicationWatcher::appInfo> appLis
 		AppItem* item = new AppItem(appInfo.ptr);
 		auto pixmap = QtWin::fromHICON(appInfo.icon);
 		item->setIcon(pixmap);
-		QString title = QString::fromLocal8Bit(appInfo.name.c_str());
+		QString title = QString::fromUtf16((const ushort*)(appInfo.name.c_str()));
+
 		item->setText(title);
 		m_listWidget->addItem(item);
 	}

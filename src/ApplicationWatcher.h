@@ -34,7 +34,7 @@ class ApplicationWatcher
 {
 public:
 	struct appInfo {
-		std::string name;
+		std::wstring name;
 		HICON icon;
 		HWND ptr;
 	};

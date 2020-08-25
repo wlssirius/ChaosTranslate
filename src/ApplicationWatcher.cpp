@@ -100,23 +100,26 @@ std::vector<ApplicationWatcher::appInfo> ApplicationWatcher::getAppInfoList()
 {
     auto EnumWindowsProc = [](HWND hWnd, LPARAM lParam)
     {
-        auto apps = (std::vector<appInfo>*)lParam;
-        int length = GetWindowTextLengthA(hWnd);
-        std::string title(length + 1, NULL);
-        GetWindowTextA(hWnd, const_cast<char*>(title.c_str()), length + 1);
-        HICON icon = reinterpret_cast<HICON>(::SendMessageW(hWnd, WM_GETICON, ICON_SMALL, 0));
-        if (icon == nullptr)
+        if (IsWindowVisible(hWnd))
         {
-            icon = (HICON)GetClassLong(hWnd, GCLP_HICON);
-        }
-        if (length > 0 && icon!=NULL)  
-        {
-            int length = GetWindowTextLengthA(hWnd);
-            appInfo info;
-            info.icon = icon;
-            info.name = title;
-            info.ptr = hWnd;
-            apps->push_back(info);
+            auto apps = (std::vector<appInfo>*)lParam;
+                int length = GetWindowTextLengthA(hWnd);
+                std::wstring title(length + 1, NULL);
+                GetWindowTextW(hWnd, const_cast<wchar_t*>(title.c_str()), length + 1);
+                HICON icon = reinterpret_cast<HICON>(::SendMessageW(hWnd, WM_GETICON, ICON_SMALL, 0));
+                if (icon == nullptr)
+                {
+                    icon = (HICON)GetClassLong(hWnd, GCLP_HICON);
+                }
+            if (length > 0 && icon != NULL)
+            {
+                int length = GetWindowTextLengthA(hWnd);
+                appInfo info;
+                info.icon = icon;
+                info.name = title;
+                info.ptr = hWnd;
+                apps->push_back(info);
+            }
         }
         return TRUE;
     };
