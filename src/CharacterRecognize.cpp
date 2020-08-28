@@ -23,7 +23,7 @@
 QString ocr(PIX* pix, QString language)
 {
     tesseract::TessBaseAPI tess;
-    if (tess.Init("D:/GitHub/tessdata_best/tessdata", language.toStdString().c_str()))
+    if (tess.Init("tessdata_best", language.toStdString().c_str()))
     {
         std::cout << "OCRTesseract: Could not initialize tesseract." << std::endl;
         return 1;
@@ -37,7 +37,7 @@ QString ocr(PIX* pix, QString language)
     if (tess.FindLinesCreateBlockList())
     {
         auto thresholded = tess.GetThresholdedImage();
-        pixWrite("D:/TestFile_Threshold.png", thresholded, IFF_PNG);
+        pixWrite("TestFile_Threshold.png", thresholded, IFF_PNG);
         tess.SetImage(thresholded);
     }
     tess.Recognize(0);
@@ -45,7 +45,7 @@ QString ocr(PIX* pix, QString language)
     QString result = QString::fromUtf8(text); 
     auto thresholded = tess.GetThresholdedImage();
     
-    pixWrite("D:/TestFile_Threshold.png", thresholded, IFF_PNG);
+    pixWrite("TestFile_Threshold.png", thresholded, IFF_PNG);
     
 
     // cleanup

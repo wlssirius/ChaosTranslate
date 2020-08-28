@@ -1,3 +1,6 @@
 [submodule "submodules/QOnlineTranslator"]
 	path = submodules/QOnlineTranslator
 	url = https://github.com/crow-translate/QOnlineTranslator.git
+[submodule "submodules/tessdata_best"]
+	path = submodules/tessdata_best
+	url = https://github.com/tesseract-ocr/tessdata_best.git
