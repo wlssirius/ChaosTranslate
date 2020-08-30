@@ -19,4 +19,6 @@ Windows
 1. Make sure all dependencies in Requirements are installed  
 2. Clone this branch and update submodule
   >git submodule update --init --recursive
-3. Compile using CMake   
+3. Open CMake GUI, and set the project directory as source path
+4. (If you used vcpkg to install tesseractOCR) Click Configure, choose "Specify toolchain file for cross-compiling" and input path to vcpkg.cmake   
+5. Generate
