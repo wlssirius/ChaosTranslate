@@ -15,7 +15,9 @@
 *   You should have received a copy of the GNU General Public License
 *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
+#ifndef UNICODE
+#define UNICODE
+#endif
 #include "ApplicationWatcher.h"
 #include "winuser.h"
 #include "memory.h"

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>337</width>
-    <height>119</height>
+    <height>154</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,13 +16,13 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>250</y>
+     <x>100</x>
+     <y>100</y>
      <width>211</width>
      <height>33</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout">
+   <layout class="QHBoxLayout" name="_2">
     <property name="spacing">
      <number>6</number>
     </property>
@@ -54,7 +54,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
