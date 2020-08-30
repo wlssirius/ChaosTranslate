@@ -20,8 +20,8 @@
 
 LanguageManager::LanguageManager()
 {
-    initTessLanguages();
     generateTessQtMapping();
+    initTessLanguages();
 }
 
 
@@ -68,11 +68,14 @@ int LanguageManager::getLanguageIdx(QOnlineTranslator::Language language) const
 void LanguageManager::initTessLanguages()
 {
     for (auto& p : std::filesystem::directory_iterator(m_tessDataPath))
-    {
-        auto e = p.path().extension();
+    { 
         if (p.path().extension() == m_extension)
         {
-            m_tessLanguages.push_back(p.path().filename().replace_extension("").string());
+            std::string tessLanguage = p.path().filename().replace_extension("").string();
+            if (tessToQt(QString::fromStdString(tessLanguage)) != QOnlineTranslator::Language::Auto)
+            {
+                m_tessLanguages.push_back(tessLanguage);
+            }
         }
     }
 }

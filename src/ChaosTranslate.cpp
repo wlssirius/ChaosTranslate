@@ -138,7 +138,7 @@ void ChaosTranslate::captureAndTranslate(bool clicked)
 		return;
 	}
 
-	std::shared_ptr<PIX> pix = captureApp();
+	PIX* pix = captureApp();
 	if (!pix)
 	{
 		switch (m_watcher.getErrorCode())
@@ -156,6 +156,7 @@ void ChaosTranslate::captureAndTranslate(bool clicked)
 	emit setOriginalText(tr("Recognizing"));
 	processImg(pix);
 	ocrTranslate(pix);
+	pixDestroy(&pix);
 };
 
 void ChaosTranslate::translate(bool clicked)
@@ -187,7 +188,7 @@ void ChaosTranslate::selectRoi(bool clicked)
 		return;
 	}
 	auto windowRect = m_watcher.getWindowSize();
-	std::shared_ptr<PIX> img = captureApp();
+	PIX* img = captureApp();
 	if (!img)
 	{
 		switch (m_watcher.getErrorCode())
@@ -217,7 +218,7 @@ void ChaosTranslate::selectFontColor(bool clicked)
 		return;
 	}
 	auto windowRect = m_watcher.getWindowSize();
-	std::shared_ptr<PIX> img = captureApp();
+	PIX* img = captureApp();
 	if (!img)
 	{
 		switch (m_watcher.getErrorCode())
@@ -338,12 +339,12 @@ void ChaosTranslate::onMsgBox(QString str)
 }
 
 
-std::shared_ptr<PIX> ChaosTranslate::captureApp()
+PIX* ChaosTranslate::captureApp()
 {
-	return std::shared_ptr<PIX>(m_watcher.capture());
+	return m_watcher.capture();
 }
 
-void ChaosTranslate::processImg(std::shared_ptr<PIX> pix)
+void ChaosTranslate::processImg(PIX* pix)
 {
 	BOX roi;
 	roi.x = m_roi.left;
@@ -352,21 +353,21 @@ void ChaosTranslate::processImg(std::shared_ptr<PIX> pix)
 	roi.h = m_roi.bottom - m_roi.top;
 	if (m_regionalCapture && validROI())
 	{
-		*pix = *pixClipRectangle(pix.get(), &roi, NULL);
+		*pix = *pixClipRectangle(pix, &roi, NULL);
 	}
 	m_capturedImage = convertPixToQImage(pix);
 	m_imageLabel->setPixmap(QPixmap::fromImage(*m_capturedImage));
 	if (m_manualSetFontColor)
 	{
-		thresholdByFontColor(pix.get(), m_color);
+		thresholdByFontColor(pix, m_color);
 	}
 }
 
-void ChaosTranslate::ocrTranslate(std::shared_ptr<PIX> pix)
+void ChaosTranslate::ocrTranslate(PIX* pix)
 {
 
 	QString language = languageMapping::qtToTesseract[m_sourceLanguage];
-	QString capture = ocr(pix.get(), language);
+	QString capture = ocr(pix, language);
 	QStringList list1 = capture.split('\n');
 	QString simplified;
 	for (auto str : list1)
@@ -541,7 +542,7 @@ void ChaosTranslate::createTextEdit()
 	connect(m_tgtLanguageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setTargetLanguage(int)));
 }
 
-std::shared_ptr<QImage> ChaosTranslate::convertPixToQImage(std::shared_ptr<PIX>& pix)
+std::shared_ptr<QImage> ChaosTranslate::convertPixToQImage(PIX* pix)
 {
 	std::shared_ptr<QImage> result = std::make_shared<QImage>(pix->w, pix->h, QImage::Format_ARGB32);
 	for (int y = 0; y < pix->h; y++)
@@ -552,7 +553,7 @@ std::shared_ptr<QImage> ChaosTranslate::convertPixToQImage(std::shared_ptr<PIX>&
 			l_int32 r = 0;
 			l_int32 g = 0;
 			l_int32 b = 0;
-			pixGetRGBPixel(pix.get(), x, y, &r, &g, &b);
+			pixGetRGBPixel(pix, x, y, &r, &g, &b);
 			destrow[x] = qRgba(r, g, b, 255);
 		}
 	}

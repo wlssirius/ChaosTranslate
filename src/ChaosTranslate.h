@@ -97,9 +97,9 @@ protected slots:
 private:
 	const QString m_translatePath = ("Resources/Translation");
 
-	std::shared_ptr<PIX> captureApp();
-	void processImg(std::shared_ptr<PIX> pix);
-	void ocrTranslate(std::shared_ptr<PIX> pix);
+	PIX* captureApp();
+	void processImg(PIX* pix);
+	void ocrTranslate(PIX* pix);
 	bool validROI();
 
 	void switchTranslator(QTranslator& translator, const QString& filename);
@@ -109,7 +109,7 @@ private:
 	void createAboutMenu();
 	void createToolbar();
 	void createTextEdit();
-	std::shared_ptr<QImage> convertPixToQImage(std::shared_ptr<PIX>& pix);
+	std::shared_ptr<QImage> convertPixToQImage(PIX* pix);
 
 	Ui::ChaosTranslateClass ui;
 	QPushButton* m_selectAppButton = nullptr;
