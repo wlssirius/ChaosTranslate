@@ -55,10 +55,18 @@ ChaosTranslate::ChaosTranslate(QWidget* parent)
 		this->loadLanguage(uiLan);
 		QString srcLan = m_settingManager.get(SettingManager::SETTING::SOURCE_LAN);
 		//this->setSourceLanguage(QOnlineTranslator::language(srcLan));
-		m_srcLanguageComboBox->setCurrentIndex(QOnlineTranslator::language(srcLan));
+		int sourceIdx = m_languageManager.getLanguageIdx(QOnlineTranslator::language(srcLan));
+		if (sourceIdx >= 0)
+		{
+			m_srcLanguageComboBox->setCurrentIndex(sourceIdx);
+		}
 		QString tgtLan = m_settingManager.get(SettingManager::SETTING::TARGET_LAN);
+		int targetIdx = m_languageManager.getLanguageIdx(QOnlineTranslator::language(tgtLan));
 		//this->setSourceLanguage(QOnlineTranslator::language(tgtLan));
-		m_tgtLanguageComboBox->setCurrentIndex(QOnlineTranslator::language(tgtLan));
+		if (targetIdx >= 0)
+		{
+			m_tgtLanguageComboBox->setCurrentIndex(targetIdx);
+		}
 		QString engine = m_settingManager.get(SettingManager::SETTING::TRANSLATE_ENGINE);
 		if(engine == "Google")
 		{
@@ -233,13 +241,13 @@ void ChaosTranslate::selectFontColor(bool clicked)
 
 void ChaosTranslate::setSourceLanguage(int idx)
 {
-	m_sourceLanguage = QOnlineTranslator::Language(idx);
+	m_sourceLanguage = m_languageManager.getQtLanguage(idx);
 	m_glossary.setSourceLanguage(m_sourceLanguage);
 }
 
 void ChaosTranslate::setTargetLanguage(int idx)
 {
-	m_targetLanguage = QOnlineTranslator::Language(idx);
+	m_targetLanguage = m_languageManager.getQtLanguage(idx);
 	m_glossary.setTargetLanguage(m_targetLanguage);
 }
 
@@ -350,7 +358,7 @@ void ChaosTranslate::processImg(std::shared_ptr<PIX> pix)
 	m_imageLabel->setPixmap(QPixmap::fromImage(*m_capturedImage));
 	if (m_manualSetFontColor)
 	{
-		thresholdByFontColor(pix.get());
+		thresholdByFontColor(pix.get(), m_color);
 	}
 }
 
@@ -386,42 +394,6 @@ bool ChaosTranslate::validROI()
 		return true;
 	}
 	return false;
-}
-
-void ChaosTranslate::thresholdByFontColor(PIX* pix)
-{
-	unsigned char r1 = m_color.redF() * 255;
-	unsigned char g1 = m_color.greenF() * 255;
-	unsigned char b1 = m_color.blueF() * 255;
-	const auto isSimilarColor = [=](l_int32 r, l_int32 g, l_int32 b)
-	{
-		if ((r - r1) * (r - r1) + (g - g1) * (g - g1) + (b - b1) * (b - b1) <= 1000)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	};
-	for (int i = 0; i < pix->w; i++)
-	{
-		for (int j = 0; j < pix->h; j++)
-		{
-			l_int32 r = 0;
-			l_int32 g = 0;
-			l_int32 b = 0;
-			pixGetRGBPixel(pix, i, j, &r, &g, &b);
-			if (isSimilarColor(r, g, b))
-			{
-				pixSetRGBPixel(pix, i, j, 255, 255, 255);
-			}
-			else
-			{
-				pixSetRGBPixel(pix, i, j, 0, 0, 0);
-			}
-		}
-	}
 }
 
 void ChaosTranslate::switchTranslator(QTranslator& translator, const QString& filename)
@@ -547,14 +519,24 @@ void ChaosTranslate::createTextEdit()
 	m_translateTextEdit = findChild<QTextEdit*>("textEdit_2");
 	connect(this, &ChaosTranslate::setTranslateText, m_translateTextEdit, &QTextEdit::setText); m_srcLanguageComboBox = findChild<QComboBox*>("srcLanguageComboBox");
 	m_tgtLanguageComboBox = findChild<QComboBox*>("tgtLanguageComboBox");
-	for (int idx = 0; idx <= QOnlineTranslator::Language::Zulu; idx++)
-	{
-		QString language = QOnlineTranslator::languageName(QOnlineTranslator::Language(idx));
-		m_srcLanguageComboBox->addItem(language);
-		m_tgtLanguageComboBox->addItem(language);
+	const auto& languages = m_languageManager.getLanguages();
+	for (const auto& lan : languages)
+	{		
+		QOnlineTranslator::Language language = m_languageManager.tessToQt(QString::fromStdString(lan));
+		QString name = QOnlineTranslator::languageName(language);
+		m_srcLanguageComboBox->addItem(name);
+		m_tgtLanguageComboBox->addItem(name);
 	}
-	m_srcLanguageComboBox->setCurrentIndex(m_sourceLanguage);
-	m_tgtLanguageComboBox->setCurrentIndex(m_targetLanguage);
+	int sourceIdx = m_languageManager.getLanguageIdx(m_sourceLanguage);
+	int targetIdx = m_languageManager.getLanguageIdx(m_targetLanguage);
+	if (sourceIdx >= 0)
+	{
+		m_srcLanguageComboBox->setCurrentIndex(sourceIdx);
+	}
+	if (targetIdx >= 0)
+	{
+		m_tgtLanguageComboBox->setCurrentIndex(targetIdx);
+	}
 	connect(m_srcLanguageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setSourceLanguage(int)));
 	connect(m_tgtLanguageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setTargetLanguage(int)));
 }

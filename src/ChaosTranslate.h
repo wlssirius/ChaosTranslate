@@ -34,6 +34,7 @@
 #include "QColorPicker.h"
 #include "SettingManager.h"
 #include "memory"
+#include "LanguageManager.h"
 
 class ChaosTranslate : public QMainWindow
 {
@@ -101,8 +102,6 @@ private:
 	void ocrTranslate(std::shared_ptr<PIX> pix);
 	bool validROI();
 
-	void thresholdByFontColor(PIX* pix);
-
 	void switchTranslator(QTranslator& translator, const QString& filename);
 	void loadLanguage(const QString& rLanguage);
 	void createLanguageMenu();
@@ -151,6 +150,7 @@ private:
 	QString m_appTitle;
 	std::shared_ptr<QImage> m_capturedImage;
 	SettingManager m_settingManager;
+	LanguageManager m_languageManager;
 
 	bool m_regionalCapture = false;
 	bool m_manualSetFontColor = false;

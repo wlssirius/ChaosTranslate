@@ -94,3 +94,40 @@ PIX* otsu(PIX* sourceImage)
 
     return pixb;
 }
+
+
+void thresholdByFontColor(PIX* pix, QColor color)
+{
+    unsigned char r1 = color.redF() * 255;
+    unsigned char g1 = color.greenF() * 255;
+    unsigned char b1 = color.blueF() * 255;
+    const auto isSimilarColor = [=](l_int32 r, l_int32 g, l_int32 b)
+    {
+        if ((r - r1) * (r - r1) + (g - g1) * (g - g1) + (b - b1) * (b - b1) <= 1000)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    };
+    for (int i = 0; i < pix->w; i++)
+    {
+        for (int j = 0; j < pix->h; j++)
+        {
+            l_int32 r = 0;
+            l_int32 g = 0;
+            l_int32 b = 0;
+            pixGetRGBPixel(pix, i, j, &r, &g, &b);
+            if (isSimilarColor(r, g, b))
+            {
+                pixSetRGBPixel(pix, i, j, 255, 255, 255);
+            }
+            else
+            {
+                pixSetRGBPixel(pix, i, j, 0, 0, 0);
+            }
+        }
+    }
+}

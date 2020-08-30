@@ -4,5 +4,6 @@ x64/
 *.user
 *.filters
 *.vcxproj
-src/capture.png
+src/*.png
+src/tessdata_best/
 *.xml
